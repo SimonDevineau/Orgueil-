@@ -1,4 +1,4 @@
-package model;
+package model.interfaces;
 
 /**
  *9 oct. 2012 - EditeurDeTexte.
