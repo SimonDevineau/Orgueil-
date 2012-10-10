@@ -26,16 +26,6 @@ public interface IText {
     public void removeLine();
 
     /**
-     * Deploy the current text
-     */
-    public void deployText();
-
-    /**
-     * Hide the current text
-     */
-    public void hideText();
-
-    /**
      * @return true if the cursor is inside the current text
      */
     public boolean hasCursor();

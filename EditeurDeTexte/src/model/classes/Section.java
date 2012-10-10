@@ -7,19 +7,32 @@ import model.interfaces.ISection;
 import model.interfaces.IText;
 
 /**
- *9 oct. 2012 - EditeurDeTexte.
- *@author Simon Devineau
- *Ecole des Mines de Nantes
- *Major in Computer and Information System Engineering
- *Section.java 
+ * 9 oct. 2012 - EditeurDeTexte.
+ * @author Simon Devineau
+ *         Ecole des Mines de Nantes
+ *         Major in Computer and Information System Engineering
+ *         Section.java
  */
 public class Section implements ISection {
-
     /**
      * @see model.interfaces.ISection#add(model.interfaces.ISection)
      */
     @Override
     public void add(ISection aSection) {
+    }
+
+    /**
+     * @see model.interfaces.ISection#deploySection()
+     */
+    @Override
+    public void deploySection() {
+    }
+
+    /**
+     * @see model.interfaces.ISection#hideSection()
+     */
+    @Override
+    public void hideSection() {
     }
 
     /**
@@ -31,10 +44,10 @@ public class Section implements ISection {
     }
 
     /**
-     * @see model.interfaces.ISection#getChildren()
+     * @see model.interfaces.ISection#getSubSections()
      */
     @Override
-    public ArrayList<ISection> getChildren() {
+    public ArrayList<ISection> getSubSections() {
         return null;
     }
 
