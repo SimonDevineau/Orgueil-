@@ -27,6 +27,17 @@ public interface ILine {
 	 * @return the location of the cursor if the line has the cursor
 	 */
 	public int getCursorLocation();
+	
+	/**
+	 * Delete the current letter if the line has the cursor
+	 */
+	public void deleteUnderCursor();
+	
+	/**
+	 * Insert the "insertion" param under the cursor if the line has the cursor
+	 * @param insertion CharSequence, the sequence to insert.
+	 */
+	public void addUnderCursor(CharSequence insertion);
 
 	/**
 	 * @return the String representation of the ILine
