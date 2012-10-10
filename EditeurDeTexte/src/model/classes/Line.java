@@ -62,7 +62,7 @@ class Line implements ILine {
 		if (hasCursor())
 			_Line.insert(_CursorLocation, insertion);
 	}
-
+	
 	@Override
 	public void replaceUnderCursor(CharSequence replacement) {
 		if (hasCursor()) {
