@@ -10,6 +10,11 @@ package model.interfaces;
 public interface ILine {
 
 	/**
+	 * A constant to indicate that the cursor is not on the line.
+	 */
+	public static final int NO_CURSOR = -1;
+	
+	/**
 	 * @param content
 	 *            , content to append.
 	 */
@@ -37,6 +42,12 @@ public interface ILine {
 	 * @param insertion CharSequence, the sequence to insert.
 	 */
 	public void addUnderCursor(CharSequence insertion);
+	
+	/**
+	 * Replace the following characters by the replacement
+	 * @param replacement, the new string to insert.
+	 */
+	public void replaceUnderCursor(CharSequence replacement);
 
 	/**
 	 * @return the String representation of the ILine
