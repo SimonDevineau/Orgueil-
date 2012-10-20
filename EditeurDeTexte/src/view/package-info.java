@@ -2,7 +2,10 @@
  * This package contains all the classes related with the view
  */
 /**
- * @author Pierre Reliquet, Simon Devineau
- *
+ * 20 oct. 2012 - EditeurDeTexte.
+ * @author Simon Devineau
+ *         Ecole des Mines de Nantes
+ *         Major in Computer and Information System Engineering
+ *         package-info.java
  */
 package view;
