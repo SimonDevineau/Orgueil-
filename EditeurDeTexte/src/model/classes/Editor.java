@@ -4,7 +4,6 @@ import java.util.AbstractCollection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-
 import model.interfaces.IDocument;
 
 /**
@@ -17,7 +16,9 @@ import model.interfaces.IDocument;
  *         instance.
  *         An Editor is composed of several documents.
  */
-//TODO Demander a Pierre si un HashSet est util, faire IBufferMemory, regarder si toutes les méthodes getCurrent... sont bonnes. Trouver un systeme pour le cursor
+// TODO Demander a Pierre si un HashSet est util, faire IBufferMemory, regarder
+// si toutes les méthodes getCurrent... sont bonnes. Trouver un systeme pour le
+// cursor
 public final class Editor {
     // L'utilisation du mot clé volatile permet, en Java version 5 et supérieur,
     // d'éviter le cas où "Singleton.instance" est non-nul,
@@ -89,10 +90,12 @@ public final class Editor {
     public IDocument getCurrentDocument() {
         Iterator<IDocument> iterator = documents.iterator();
         IDocument docTemp = null;
+        IDocument toReturn = null;
         while (iterator.hasNext()
                 && !(docTemp = (IDocument) iterator.next()).isCurrentDocument()) {
+            toReturn = docTemp;
         }
-        return docTemp;
+        return toReturn;
     }
 
     private static void initialize() {
