@@ -5,7 +5,8 @@ package model.interfaces;
  *@author Simon Devineau
  *Ecole des Mines de Nantes
  *Major in Computer and Information System Engineering
- *IEditor.java 
+ *IBufferMemory.java 
  */
-public interface IEditor {
+public interface IBufferMemory {
+    //TODO
 }

@@ -69,6 +69,17 @@ public interface ISection {
     public void setSubSection(ArrayList<ISection> aSubSectionsList);
 
     /**
+     * @return true if the section is the current section.
+     */
+    public boolean isCurrentSection();
+    
+    /**
+     * 
+     * @param isCurrentSection, true if the section is the current section.
+     */
+    public void setIsCurrentSection(boolean isCurrentSection);
+
+    /**
      * @return the description of the current section.
      */
     @Override

@@ -18,19 +18,23 @@ public class Section implements ISection {
     /**
      * The subsections' list of the current section.
      */
-    private List<ISection> subSections  = new ArrayList<ISection>();
+    private List<ISection> subSections      = new ArrayList<ISection>();
     /**
      * The current section title.
      */
-    private ILine          title        = new Line();
+    private ILine          title            = new Line();
     /**
      * The current section text;
      */
-    private IText          introduction = new Text();
+    private IText          introduction     = new Text();
     /**
      * The parent section.
      */
-    private ISection       parent       = new Section();
+    private ISection       parent           = new Section();
+    /**
+     * True if this section is the current section
+     */
+    private boolean        isCurrentSection = false;
 
     /**
      * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
@@ -41,7 +45,8 @@ public class Section implements ISection {
         this.subSections.add(aSection);
     }
 
-    //TODO: Les deux méthodes suivantes ne font pas plutôt parti de la vue plutot que du modele ?
+    // TODO: Les deux méthodes suivantes ne font pas plutôt parti de la vue
+// plutot que du modele ?
     /**
      * @see model.interfaces.ISection#deploySection()
      */
@@ -112,5 +117,21 @@ public class Section implements ISection {
     @Override
     public void setSubSection(ArrayList<ISection> aSubSectionsList) {
         this.subSections = aSubSectionsList;
+    }
+
+    /**
+     * @see model.interfaces.ISection#isCurrentSection()
+     */
+    @Override
+    public boolean isCurrentSection() {
+        return isCurrentSection;
+    }
+
+    /**
+     * @see model.interfaces.ISection#setIsCurrentSection(boolean)
+     */
+    @Override
+    public void setIsCurrentSection(boolean aIsCurrentSection) {
+        this.isCurrentSection = aIsCurrentSection;
     }
 }
