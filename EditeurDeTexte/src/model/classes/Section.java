@@ -1,6 +1,7 @@
 package model.classes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.interfaces.ILine;
 import model.interfaces.ISection;
@@ -15,12 +16,32 @@ import model.interfaces.IText;
  */
 public class Section implements ISection {
     /**
-     * @see model.interfaces.ISection#add(model.interfaces.ISection)
+     * The subsections' list of the current section.
+     */
+    private List<ISection> subSections  = new ArrayList<ISection>();
+    /**
+     * The current section title.
+     */
+    private ILine          title        = new Line();
+    /**
+     * The current section text;
+     */
+    private IText          introduction = new Text();
+    /**
+     * The parent section.
+     */
+    private ISection       parent       = new Section();
+
+    /**
+     * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
      */
     @Override
-    public void add(ISection aSection) {
+    public void addSubSection(ISection aSection) {
+        aSection.setParent(this);
+        this.subSections.add(aSection);
     }
 
+    //TODO: Les deux méthodes suivantes ne font pas plutôt parti de la vue plutot que du modele ?
     /**
      * @see model.interfaces.ISection#deploySection()
      */
@@ -40,7 +61,7 @@ public class Section implements ISection {
      */
     @Override
     public ISection getParent() {
-        return null;
+        return this.parent;
     }
 
     /**
@@ -48,7 +69,7 @@ public class Section implements ISection {
      */
     @Override
     public ArrayList<ISection> getSubSections() {
-        return null;
+        return (ArrayList<ISection>) subSections;
     }
 
     /**
@@ -56,7 +77,7 @@ public class Section implements ISection {
      */
     @Override
     public ILine getTitle() {
-        return null;
+        return title;
     }
 
     /**
@@ -64,6 +85,32 @@ public class Section implements ISection {
      */
     @Override
     public IText getIntroduction() {
-        return null;
+        return introduction;
+    }
+
+    /**
+     * @see model.interfaces.ISection#setParent(model.interfaces.ISection)
+     */
+    @Override
+    public void setParent(ISection aSection) {
+        // Check when we ahve to add the children to the parent list
+        // TODO aSection.addSubSection(this);
+        this.parent = aSection;
+    }
+
+    /**
+     * @see model.interfaces.ISection#setTitle(model.interfaces.IText)
+     */
+    @Override
+    public void setTitle(ILine aLine) {
+        this.title = aLine;
+    }
+
+    /**
+     * @see model.interfaces.ISection#setSubSection(java.util.ArrayList)
+     */
+    @Override
+    public void setSubSection(ArrayList<ISection> aSubSectionsList) {
+        this.subSections = aSubSectionsList;
     }
 }

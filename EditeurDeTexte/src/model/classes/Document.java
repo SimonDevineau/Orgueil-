@@ -6,7 +6,7 @@ package model.classes;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.interfaces.IDocument;
+import model.classes.Section;
 import model.interfaces.IText;
 
 /**
@@ -15,11 +15,11 @@ import model.interfaces.IText;
  *         Ecole des Mines de Nantes
  *         Major in Computer and Information System Engineering
  *         Document.java
+ *         This class implements a single of a Document. A DOcument is composed
+ *         of a an introduction text and a list of sections which can have
+ *         subsections...
  */
-// TODO: Demander ˆ Pierre si un singleton peut implementer une interface, je ne
-// suis pas certain
-public final class Document // implements IDocument {
-{
+public final class Document {
     /**
      * The single instance of the document.
      */

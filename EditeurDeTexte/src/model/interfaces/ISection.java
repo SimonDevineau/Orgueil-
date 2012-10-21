@@ -15,7 +15,7 @@ public interface ISection {
      * @param aSection
      *            , the section to add
      */
-    public void add(ISection aSection);
+    public void addSubSection(ISection aSection);
 
     /**
      * Deploy the current section
@@ -46,6 +46,27 @@ public interface ISection {
      * @return the introduction of the current section
      */
     public IText getIntroduction();
+
+    /**
+     * Set the parent of the section.
+     * @param aSection
+     *            , the new parent
+     */
+    public void setParent(ISection aSection);
+
+    /**
+     * Set the title of the section
+     * @param aText
+     *            , the new title
+     */
+    public void setTitle(ILine aLine);
+
+    /**
+     * Set the list of subsections,
+     * @param aSubSectionsList
+     *            , the new subsections
+     */
+    public void setSubSection(ArrayList<ISection> aSubSectionsList);
 
     /**
      * @return the description of the current section.
