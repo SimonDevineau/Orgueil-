@@ -7,6 +7,6 @@ package model.interfaces;
  * Major in Computer and Information System Engineering
  * ILine.java 
  */
-public interface ILine {
+public interface ILine extends IStorable{
 
 }

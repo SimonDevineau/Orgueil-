@@ -1,12 +1,37 @@
 package model.interfaces;
 
 /**
- *21 oct. 2012 - EditeurDeTexte.
- *@author Simon Devineau
- *Ecole des Mines de Nantes
- *Major in Computer and Information System Engineering
- *IBufferMemory.java 
+ * 21 oct. 2012 - EditeurDeTexte.
+ * @author Simon Devineau & Pierre Reliquet
+ *         Ecole des Mines de Nantes
+ *         Major in Computer and Information System Engineering
+ *         IBufferMemory.java
+ *         This interface defines the behavior of the document stack.
  */
 public interface IBufferMemory {
-    //TODO
+ 
+    /**
+     * @param storable
+     *            , the data to add into the stack
+     * @return, true if the data was added
+     */
+    boolean add(IStorable storable);
+
+    /**
+     * @param storable
+     *            , the data to remove
+     * @return, true if the data was removed.
+     */
+    boolean remove(IStorable storable);
+
+    /**
+     * Remove the last object of the stack
+     * @return the last IStorable object of the stack
+     */
+    IStorable pop();
+    /**
+     * 
+     * @return the last object of teh stack
+     */
+    IStorable peek();
 }

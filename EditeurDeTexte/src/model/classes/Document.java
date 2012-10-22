@@ -174,4 +174,18 @@ public final class Document implements IDocument {
     public void setIsCurrentDocument(boolean aIsCurrentDocument) {
         this.isCurrentDocument = aIsCurrentDocument;
     }
+
+    /**
+     * @return the bufferMemory
+     */
+    public IBufferMemory getBufferMemory() {
+        return bufferMemory;
+    }
+
+    /**
+     * @param bufferMemory the bufferMemory to set
+     */
+    public void setBufferMemory(IBufferMemory bufferMemory) {
+        this.bufferMemory = bufferMemory;
+    }
 }

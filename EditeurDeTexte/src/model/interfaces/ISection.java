@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *         Major in Computer and Information System Engineering
  *         ISection.java
  */
-public interface ISection {
+public interface ISection extends IStorable{
     /**
      * Add a section to the current section (as a child)
      * @param aSection

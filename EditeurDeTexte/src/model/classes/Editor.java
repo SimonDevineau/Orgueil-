@@ -1,8 +1,8 @@
 package model.classes;
 
-import java.util.AbstractCollection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import model.interfaces.IDocument;
 
@@ -30,7 +30,7 @@ public final class Editor {
     /**
      * The list of documents which composed the Editor
      */
-    public AbstractCollection<IDocument> documents = new HashSet<IDocument>();
+    private Set<IDocument> documents = new HashSet<IDocument>();
 
     private Editor() {
         documents = new HashSet<IDocument>();
@@ -80,7 +80,7 @@ public final class Editor {
      * @param documentsList
      *            , the new list of documents.
      */
-    public void setDocuments(AbstractCollection<IDocument> documentsList) {
+    public void setDocuments(Set<IDocument> documentsList) {
         this.documents = documentsList;
     }
 

@@ -1,6 +1,5 @@
 package model.interfaces;
 
-import java.net.URL;
 
 /**
  * 10 oct. 2012 - EditeurDeTexte.
