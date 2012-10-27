@@ -8,4 +8,8 @@ package model.interfaces;
  *ICommand.java 
  */
 public interface ICommand {
+    /**
+     * Execute the command 
+     */
+    void execute();
 }

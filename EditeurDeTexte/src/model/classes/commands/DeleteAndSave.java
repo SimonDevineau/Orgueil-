@@ -10,4 +10,11 @@ import model.interfaces.ICommand;
  *DeleteAndSave.java 
  */
 public class DeleteAndSave implements ICommand {
+
+    /**
+     * @see model.interfaces.ICommand#execute()
+     */
+    @Override
+    public void execute() {
+    }
 }
