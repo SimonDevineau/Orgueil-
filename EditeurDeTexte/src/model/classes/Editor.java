@@ -16,9 +16,7 @@ import model.interfaces.IDocument;
  *         instance.
  *         An Editor is composed of several documents.
  */
-// TODO Demander a Pierre si un HashSet est util, faire IBufferMemory, regarder
-// si toutes les m�thodes getCurrent... sont bonnes. Trouver un systeme pour le
-// cursor
+// TODO Trouver un systeme pour le cursor
 public final class Editor {
     // L'utilisation du mot cle volatile permet, en Java version 5 et superieur,
     // d'eviter le cas ou "Singleton.instance" est non-nul,

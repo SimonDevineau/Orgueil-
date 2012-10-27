@@ -1,6 +1,7 @@
 package model.interfaces;
 
 import java.util.ArrayList;
+import java.util.Observer;
 
 /**
  * 9 oct. 2012 - EditeurDeTexte.
@@ -15,79 +16,85 @@ public interface ISection extends IStorable{
      * @param aSection
      *            , the section to add
      */
-    public void addSubSection(ISection aSection);
+    void addSubSection(ISection aSection);
 
     /**
      * Deploy the current section
      */
-    public void deploySection();
+    void deploySection();
 
     /**
      * Hide the current section
      */
-    public void hideSection();
+    void hideSection();
 
     /**
      * @return the parent of the current section.
      */
-    public ISection getParent();
+    ISection getParent();
 
     /**
      * @return the subsections list of the current section
      */
-    public ArrayList<ISection> getSubSections();
+    ArrayList<ISection> getSubSections();
 
     /**
      * @return the section title
      */
-    public ILine getTitle();
+    ILine getTitle();
 
     /**
      * @return the introduction of the current section
      */
-    public IText getIntroduction();
+    IText getIntroduction();
 
     /**
      * Set the parent of the section.
      * @param aSection
      *            , the new parent
      */
-    public void setParent(ISection aSection);
+    void setParent(ISection aSection);
 
     /**
      * Set the title of the section
      * @param aText
      *            , the new title
      */
-    public void setTitle(ILine aLine);
+    void setTitle(ILine aLine);
 
     /**
      * Set the list of subsections,
      * @param aSubSectionsList
      *            , the new subsections
      */
-    public void setSubSection(ArrayList<ISection> aSubSectionsList);
+    void setSubSection(ArrayList<ISection> aSubSectionsList);
 
     /**
      * @return true if the section is the current section.
      */
-    public boolean isCurrentSection();
+    boolean isCurrentSection();
     
     /**
      * 
      * @param isCurrentSection, true if the section is the current section.
      */
-    public void setIsCurrentSection(boolean isCurrentSection);
+    void setIsCurrentSection(boolean isCurrentSection);
 
     /**
      * @return the description of the current section.
      */
     @Override
-    public String toString();
+    String toString();
 
     /**
      * @return true if anObject is equal to the current section.
      */
     @Override
-    public boolean equals(Object anObject);
+    boolean equals(Object anObject);
+    
+    /**
+     *
+     * @see java.util.Observable#addObserver(Observer)
+     */
+    void addObserver(Observer o);
 }

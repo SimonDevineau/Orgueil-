@@ -2,6 +2,8 @@ package model.classes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import model.interfaces.ILine;
 import model.interfaces.ISection;
@@ -14,7 +16,7 @@ import model.interfaces.IText;
  *         Major in Computer and Information System Engineering
  *         Section.java
  */
-public class Section implements ISection {
+public class Section extends Observable implements ISection {
     /**
      * The subsections' list of the current section.
      */
@@ -22,15 +24,20 @@ public class Section implements ISection {
     /**
      * The current section title.
      */
-    private ILine          title            = new Line();
+    private ILine          title            = Factory.createLine();
     /**
      * The current section text;
      */
-    private IText          introduction     = new Text();
+    private IText          introduction     = Factory.createText();
     /**
      * The parent section.
      */
-    private ISection       parent           = new Section();
+    private ISection       parent           = Factory.createSection();
+    
+    /**
+     * A boolean to indicate if the section is deployed or not
+     */
+    private boolean isDeployed = true;
     /**
      * True if this section is the current section
      */
@@ -45,7 +52,7 @@ public class Section implements ISection {
         this.subSections.add(aSection);
     }
 
-    // TODO: Les deux mŽthodes suivantes ne font pas plut™t parti de la vue
+    // TODO: Les deux mï¿½thodes suivantes ne font pas plutï¿½t parti de la vue
 // plutot que du modele ?
     /**
      * @see model.interfaces.ISection#deploySection()
@@ -133,5 +140,13 @@ public class Section implements ISection {
     @Override
     public void setIsCurrentSection(boolean aIsCurrentSection) {
         this.isCurrentSection = aIsCurrentSection;
+    }
+    
+    /**
+     * @see java.util.Observable#addObserver(Observer)
+     */
+    @Override
+    public synchronized void addObserver(Observer o) {
+    	super.addObserver(o);
     }
 }
