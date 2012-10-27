@@ -25,13 +25,20 @@ public interface IBufferMemory {
     boolean remove(IStorable storable);
 
     /**
+     * 
+     * @param storable, push the storable onto the top of the stack
+     * @return the element that has been pushed onto the top of the stack
+     */
+    IStorable push(IStorable storable);
+    
+    /**
      * Remove the last object of the stack
      * @return the last IStorable object of the stack
      */
     IStorable pop();
     /**
      * 
-     * @return the last object of teh stack
+     * @return the last object of the stack
      */
     IStorable peek();
 }

@@ -3,7 +3,6 @@
  */
 package model.classes;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import model.interfaces.IText;
  *         sections which can have
  *         subsections...
  */
-public final class Document implements IDocument {
+class Document implements IDocument {
     /**
      * The introduction text of the document
      */
@@ -38,7 +37,7 @@ public final class Document implements IDocument {
     /**
      * The buffer memory of this document
      */
-    private IBufferMemory  bufferMemory;
+    private IBufferMemory  bufferMemory = Factory.createBufferMemory();
     /**
      * The path of the document
      */

@@ -10,4 +10,11 @@ import model.interfaces.ICommand;
  *BackSlash.java 
  */
 public class BackSlash implements ICommand {
+
+    /**
+     * @see model.interfaces.ICommand#execute()
+     */
+    @Override
+    public void execute() {
+    }
 }

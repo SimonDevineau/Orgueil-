@@ -10,4 +10,11 @@ import model.interfaces.ICommand;
  *Up.java 
  */
 public class Up implements ICommand {
+
+    /**
+     * @see model.interfaces.ICommand#execute()
+     */
+    @Override
+    public void execute() {
+    }
 }

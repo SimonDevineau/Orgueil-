@@ -10,4 +10,11 @@ import model.interfaces.ICommand;
  *Paste.java 
  */
 public class Paste implements ICommand{
+
+    /**
+     * @see model.interfaces.ICommand#execute()
+     */
+    @Override
+    public void execute() {
+    }
 }

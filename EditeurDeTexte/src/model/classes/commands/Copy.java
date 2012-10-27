@@ -10,4 +10,11 @@ import model.interfaces.ICommand;
  *Copy.java 
  */
 public class Copy implements ICommand {
+
+    /**
+     * @see model.interfaces.ICommand#execute()
+     */
+    @Override
+    public void execute() {
+    }
 }
