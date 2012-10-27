@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *         Major in Computer and Information System Engineering
  *         IText.java
  */
-public interface IText {
+public interface IText extends IStorable{
     /**
      * Add a line to the current text at the cursor position
      * @param aLine

@@ -9,13 +9,13 @@ import java.util.ArrayList;
  *         Major in Computer and Information System Engineering
  *         ISection.java
  */
-public interface ISection {
+public interface ISection extends IStorable{
     /**
      * Add a section to the current section (as a child)
      * @param aSection
      *            , the section to add
      */
-    public void add(ISection aSection);
+    public void addSubSection(ISection aSection);
 
     /**
      * Deploy the current section
@@ -46,6 +46,38 @@ public interface ISection {
      * @return the introduction of the current section
      */
     public IText getIntroduction();
+
+    /**
+     * Set the parent of the section.
+     * @param aSection
+     *            , the new parent
+     */
+    public void setParent(ISection aSection);
+
+    /**
+     * Set the title of the section
+     * @param aText
+     *            , the new title
+     */
+    public void setTitle(ILine aLine);
+
+    /**
+     * Set the list of subsections,
+     * @param aSubSectionsList
+     *            , the new subsections
+     */
+    public void setSubSection(ArrayList<ISection> aSubSectionsList);
+
+    /**
+     * @return true if the section is the current section.
+     */
+    public boolean isCurrentSection();
+    
+    /**
+     * 
+     * @param isCurrentSection, true if the section is the current section.
+     */
+    public void setIsCurrentSection(boolean isCurrentSection);
 
     /**
      * @return the description of the current section.
