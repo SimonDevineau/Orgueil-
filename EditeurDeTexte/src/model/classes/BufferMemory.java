@@ -1,6 +1,5 @@
 package model.classes;
 
-import java.util.List;
 import java.util.Stack;
 
 import model.interfaces.IBufferMemory;
@@ -13,7 +12,7 @@ import model.interfaces.IStorable;
  *         Major in Computer and Information System Engineering
  *         BufferMemory.java
  */
-public class BufferMemory implements IBufferMemory {
+class BufferMemory implements IBufferMemory {
     /**
      * The stack of a document
      */
@@ -65,4 +64,12 @@ public class BufferMemory implements IBufferMemory {
     public void setDocumentStack(Stack<IStorable> documentStack) {
         this.documentStack = documentStack;
     }
+
+    /**
+     * @see model.interfaces.IBufferMemory#push(IStorable)
+     */
+	@Override
+	public IStorable push(IStorable storable) {
+		return documentStack.push(storable);
+	}
 }
