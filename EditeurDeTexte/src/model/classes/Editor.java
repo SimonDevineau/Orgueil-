@@ -24,15 +24,7 @@ public final class Editor {
     /**
      * The single instance of Editor
      */
-    private static volatile Editor       editorInstance;
-    /**
-     * The list of documents which composed the Editor
-     */
-    private Set<IDocument> documents = new HashSet<IDocument>();
-
-    private Editor() {
-        documents = new HashSet<IDocument>();
-    }
+    private static volatile Editor editorInstance;
 
     /**
      * @return the single instance of Editor.
@@ -40,60 +32,6 @@ public final class Editor {
     public static Editor getEditor() {
         initialize();
         return Editor.editorInstance;
-    }
-
-    /**
-     * @param aDocument
-     *            , the document to add
-     * @return true if the document has been added
-     */
-    public boolean addDocument(IDocument aDocument) {
-        return documents.add(aDocument);
-    }
-
-    /**
-     * @param aDocument
-     *            , the document to remove.
-     * @return true if the document has been removed.
-     */
-    public boolean removeDocument(IDocument aDocument) {
-        return documents.remove(aDocument);
-    }
-
-    /**
-     * @return true if the current document has been removed
-     */
-    public boolean removeCurrentDocument() {
-        return documents.remove(getCurrentDocument());
-    }
-
-    /**
-     * @return the list of documents
-     */
-    public HashSet<IDocument> getDocuments() {
-        return (HashSet<IDocument>) documents;
-    }
-
-    /**
-     * @param documentsList
-     *            , the new list of documents.
-     */
-    public void setDocuments(Set<IDocument> documentsList) {
-        this.documents = documentsList;
-    }
-
-    /**
-     * @return the current Document
-     */
-    public IDocument getCurrentDocument() {
-        Iterator<IDocument> iterator = documents.iterator();
-        IDocument docTemp = null;
-        IDocument toReturn = null;
-        while (iterator.hasNext()
-                && !(docTemp = (IDocument) iterator.next()).isCurrentDocument()) {
-            toReturn = docTemp;
-        }
-        return toReturn;
     }
 
     private static void initialize() {
@@ -104,5 +42,68 @@ public final class Editor {
                 }
             }
         }
+    }
+
+    /**
+     * The list of documents which composed the Editor
+     */
+    private Set<IDocument> documents = new HashSet<IDocument>();
+
+    private Editor() {
+        this.documents = new HashSet<IDocument>();
+    }
+
+    /**
+     * @param aDocument
+     *            , the document to add
+     * @return true if the document has been added
+     */
+    public boolean addDocument(IDocument aDocument) {
+        return this.documents.add(aDocument);
+    }
+
+    /**
+     * @return the current Document
+     */
+    public IDocument getCurrentDocument() {
+        Iterator<IDocument> iterator = this.documents.iterator();
+        IDocument docTemp = null;
+        IDocument toReturn = null;
+        while (iterator.hasNext()
+                && !(docTemp = iterator.next()).isCurrentDocument()) {
+            toReturn = docTemp;
+        }
+        return toReturn;
+    }
+
+    /**
+     * @return the list of documents
+     */
+    public HashSet<IDocument> getDocuments() {
+        return (HashSet<IDocument>) this.documents;
+    }
+
+    /**
+     * @return true if the current document has been removed
+     */
+    public boolean removeCurrentDocument() {
+        return this.documents.remove(this.getCurrentDocument());
+    }
+
+    /**
+     * @param aDocument
+     *            , the document to remove.
+     * @return true if the document has been removed.
+     */
+    public boolean removeDocument(IDocument aDocument) {
+        return this.documents.remove(aDocument);
+    }
+
+    /**
+     * @param documentsList
+     *            , the new list of documents.
+     */
+    public void setDocuments(Set<IDocument> documentsList) {
+        this.documents = documentsList;
     }
 }

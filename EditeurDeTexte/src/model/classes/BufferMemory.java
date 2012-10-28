@@ -27,26 +27,10 @@ class BufferMemory implements IBufferMemory {
     }
 
     /**
-     * @see model.interfaces.IBufferMemory#remove(model.interfaces.IStorable)
-     */
-    @Override
-    public boolean remove(IStorable aStorable) {
-        return this.documentStack.remove(aStorable);
-    }
-
-    /**
-     * @see model.interfaces.IBufferMemory#pop()
-     */
-    @Override
-    public IStorable pop() {
-        return this.documentStack.pop();
-    }
-
-    /**
      * @return the documentStack
      */
     public Stack<IStorable> getDocumentStack() {
-        return documentStack;
+        return this.documentStack;
     }
 
     /**
@@ -58,18 +42,34 @@ class BufferMemory implements IBufferMemory {
     }
 
     /**
+     * @see model.interfaces.IBufferMemory#pop()
+     */
+    @Override
+    public IStorable pop() {
+        return this.documentStack.pop();
+    }
+
+    /**
+     * @see model.interfaces.IBufferMemory#push(IStorable)
+     */
+    @Override
+    public IStorable push(IStorable storable) {
+        return this.documentStack.push(storable);
+    }
+
+    /**
+     * @see model.interfaces.IBufferMemory#remove(model.interfaces.IStorable)
+     */
+    @Override
+    public boolean remove(IStorable aStorable) {
+        return this.documentStack.remove(aStorable);
+    }
+
+    /**
      * @param documentStack
      *            the documentStack to set
      */
     public void setDocumentStack(Stack<IStorable> documentStack) {
         this.documentStack = documentStack;
     }
-
-    /**
-     * @see model.interfaces.IBufferMemory#push(IStorable)
-     */
-	@Override
-	public IStorable push(IStorable storable) {
-		return documentStack.push(storable);
-	}
 }

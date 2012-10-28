@@ -9,7 +9,6 @@ package model.interfaces;
  *         This interface defines the behavior of the document stack.
  */
 public interface IBufferMemory {
- 
     /**
      * @param storable
      *            , the data to add into the stack
@@ -18,27 +17,27 @@ public interface IBufferMemory {
     boolean add(IStorable storable);
 
     /**
-     * @param storable
-     *            , the data to remove
-     * @return, true if the data was removed.
+     * @return the last object of the stack
      */
-    boolean remove(IStorable storable);
+    IStorable peek();
 
-    /**
-     * 
-     * @param storable, push the storable onto the top of the stack
-     * @return the element that has been pushed onto the top of the stack
-     */
-    IStorable push(IStorable storable);
-    
     /**
      * Remove the last object of the stack
      * @return the last IStorable object of the stack
      */
     IStorable pop();
+
     /**
-     * 
-     * @return the last object of the stack
+     * @param storable
+     *            , push the storable onto the top of the stack
+     * @return the element that has been pushed onto the top of the stack
      */
-    IStorable peek();
+    IStorable push(IStorable storable);
+
+    /**
+     * @param storable
+     *            , the data to remove
+     * @return, true if the data was removed.
+     */
+    boolean remove(IStorable storable);
 }

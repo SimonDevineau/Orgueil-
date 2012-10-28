@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.interfaces.ICommandVisitor;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
 import model.interfaces.IText;
@@ -33,16 +34,26 @@ public class Section extends Observable implements ISection {
      * The parent section.
      */
     private ISection       parent           = Factory.createSection();
-    
-    /**
-     * A boolean to indicate if the section is deployed or not
-     */
-    private boolean isDeployed = true;
     /**
      * True if this section is the current section
      */
     private boolean        isCurrentSection = false;
 
+    /**
+     * @see java.util.Observable#addObserver(Observer)
+     */
+    @Override
+    public synchronized void addObserver(Observer o) {
+        super.addObserver(o);
+    }
+
+    /**
+     * @see model.interfaces.IStorable#accept(model.interfaces.ICommandVisitor)
+     */
+    @Override
+    public void accept(ICommandVisitor aVisitor) {
+        aVisitor.visit(this);
+    }
     /**
      * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
      */
@@ -62,10 +73,11 @@ public class Section extends Observable implements ISection {
     }
 
     /**
-     * @see model.interfaces.ISection#hideSection()
+     * @see model.interfaces.ISection#getIntroduction()
      */
     @Override
-    public void hideSection() {
+    public IText getIntroduction() {
+        return this.introduction;
     }
 
     /**
@@ -81,7 +93,7 @@ public class Section extends Observable implements ISection {
      */
     @Override
     public ArrayList<ISection> getSubSections() {
-        return (ArrayList<ISection>) subSections;
+        return (ArrayList<ISection>) this.subSections;
     }
 
     /**
@@ -89,15 +101,30 @@ public class Section extends Observable implements ISection {
      */
     @Override
     public ILine getTitle() {
-        return title;
+        return this.title;
     }
 
     /**
-     * @see model.interfaces.ISection#getIntroduction()
+     * @see model.interfaces.ISection#hideSection()
      */
     @Override
-    public IText getIntroduction() {
-        return introduction;
+    public void hideSection() {
+    }
+
+    /**
+     * @see model.interfaces.ISection#isCurrentSection()
+     */
+    @Override
+    public boolean isCurrentSection() {
+        return this.isCurrentSection;
+    }
+
+    /**
+     * @see model.interfaces.ISection#setIsCurrentSection(boolean)
+     */
+    @Override
+    public void setIsCurrentSection(boolean aIsCurrentSection) {
+        this.isCurrentSection = aIsCurrentSection;
     }
 
     /**
@@ -111,14 +138,6 @@ public class Section extends Observable implements ISection {
     }
 
     /**
-     * @see model.interfaces.ISection#setTitle(model.interfaces.IText)
-     */
-    @Override
-    public void setTitle(ILine aLine) {
-        this.title = aLine;
-    }
-
-    /**
      * @see model.interfaces.ISection#setSubSection(java.util.ArrayList)
      */
     @Override
@@ -127,26 +146,10 @@ public class Section extends Observable implements ISection {
     }
 
     /**
-     * @see model.interfaces.ISection#isCurrentSection()
+     * @see model.interfaces.ISection#setTitle(model.interfaces.IText)
      */
     @Override
-    public boolean isCurrentSection() {
-        return isCurrentSection;
-    }
-
-    /**
-     * @see model.interfaces.ISection#setIsCurrentSection(boolean)
-     */
-    @Override
-    public void setIsCurrentSection(boolean aIsCurrentSection) {
-        this.isCurrentSection = aIsCurrentSection;
-    }
-    
-    /**
-     * @see java.util.Observable#addObserver(Observer)
-     */
-    @Override
-    public synchronized void addObserver(Observer o) {
-    	super.addObserver(o);
+    public void setTitle(ILine aLine) {
+        this.title = aLine;
     }
 }

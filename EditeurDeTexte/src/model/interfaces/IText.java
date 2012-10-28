@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *         Major in Computer and Information System Engineering
  *         IText.java
  */
-public interface IText extends IStorable{
+public interface IText extends IStorable {
     /**
      * Add a line to the current text at the cursor position
      * @param aLine
@@ -21,9 +21,9 @@ public interface IText extends IStorable{
     public void addLine(ILine aLine);
 
     /**
-     * Remove the line situated at the cursor position
+     * @return the lines list of the text
      */
-    public void removeLine();
+    public ArrayList<ILine> getLines();
 
     /**
      * @return true if the cursor is inside the current text
@@ -31,7 +31,7 @@ public interface IText extends IStorable{
     public boolean hasCursor();
 
     /**
-     * @return the lines list of the text
+     * Remove the line situated at the cursor position
      */
-    public ArrayList<ILine> getLines();
+    public void removeLine();
 }
