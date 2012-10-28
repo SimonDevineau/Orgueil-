@@ -16,5 +16,6 @@ public class Down implements ICommand {
      */
     @Override
     public void execute() {
+    	System.out.println("Go to south");
     }
 }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommandsConfiguration>
+	<config key="\n" value="model.classes.commands.Down" />
+	<config key="\z" value="model.classes.BufferMemory" />
+</CommandsConfiguration>

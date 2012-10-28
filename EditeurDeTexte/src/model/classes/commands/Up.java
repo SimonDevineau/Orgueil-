@@ -16,5 +16,6 @@ public class Up implements ICommand {
      */
     @Override
     public void execute() {
+    	System.out.println("Go to north");
     }
 }
