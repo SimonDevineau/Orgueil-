@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import model.interfaces.ICommand;
+import model.interfaces.ICommandVisitor;
 
 /**
  * 22 oct. 2012 - EditeurDeTexte.
@@ -29,6 +29,10 @@ public final class CommandExecutor {
 		commandsList = new HashMap<String, ICommand>();
 		loadCommands();
 	}
+    /**
+     * The single instance of CommandExecutor
+     */
+    private static volatile CommandExecutor commandExecutorInstance;
 
 	/**
 	 * @return the commandExecutorInstance
@@ -52,6 +56,25 @@ public final class CommandExecutor {
 	public Map<String, ICommand> getCommandsList() {
 		return commandsList;
 	}
+    /**
+     * The map which contains all the commands
+     */
+    private Map<String, ICommandVisitor> commandsList = new HashMap<String, ICommandVisitor>();
+
+    private CommandExecutor() {
+        this.commandsList = new HashMap<String, ICommandVisitor>();
+    }
+
+    /**
+     * @return the commandsList
+     */
+    public Map<String, ICommandVisitor> getCommandsList() {
+        return this.commandsList;
+    }
+
+    // TODO definir comment est le fichier
+    public void init(File aFile) {
+    }
 
 	/**
 	 * @param commandsList
@@ -125,4 +148,11 @@ public final class CommandExecutor {
 			InstantiationException, IllegalAccessException {
 		new CommandExecutor();
 	}
+    /**
+     * @param commandsList
+     *            the commandsList to set
+     */
+    public void setCommandsList(Map<String, ICommandVisitor> commandsList) {
+        this.commandsList = commandsList;
+    }
 }

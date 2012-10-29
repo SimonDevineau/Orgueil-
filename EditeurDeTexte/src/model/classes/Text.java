@@ -2,17 +2,25 @@ package model.classes;
 
 import java.util.ArrayList;
 
+import model.interfaces.ICommandVisitor;
 import model.interfaces.ILine;
 import model.interfaces.IText;
 
 /**
  * 10 oct. 2012 - EditeurDeTexte.
  * @author Simon Devineau & Pierre Reliquet
- * Ecole des Mines de Nantes
- * Major in Computer and Information System Engineering
- * Text.java 
+ *         Ecole des Mines de Nantes
+ *         Major in Computer and Information System Engineering
+ *         Text.java
  */
 public class Text implements IText {
+    /**
+     * @see model.interfaces.IStorable#accept(model.interfaces.ICommandVisitor)
+     */
+    @Override
+    public void accept(ICommandVisitor aVisitor) {
+        aVisitor.visit(this);
+    }
 
     /**
      * @see model.interfaces.IText#addLine(model.interfaces.ILine)
@@ -22,10 +30,11 @@ public class Text implements IText {
     }
 
     /**
-     * @see model.interfaces.IText#removeLine()
+     * @see model.interfaces.IText#getLines()
      */
     @Override
-    public void removeLine() {
+    public ArrayList<ILine> getLines() {
+        return null;
     }
 
     /**
@@ -37,11 +46,9 @@ public class Text implements IText {
     }
 
     /**
-     * @see model.interfaces.IText#getLines()
+     * @see model.interfaces.IText#removeLine()
      */
     @Override
-    public ArrayList<ILine> getLines() {
-        return null;
+    public void removeLine() {
     }
-
 }

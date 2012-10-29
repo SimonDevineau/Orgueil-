@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.interfaces.IBufferMemory;
+import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
 import model.interfaces.ISection;
 import model.interfaces.IText;
@@ -37,56 +38,21 @@ class Document implements IDocument {
     /**
      * The buffer memory of this document
      */
-    private IBufferMemory  bufferMemory = Factory.createBufferMemory();
+    private IBufferMemory  bufferMemory      = Factory.createBufferMemory();
     /**
      * The path of the document
      */
-    private String path = "";
+    private String         path              = "";
 
     public Document() {
-        introductionText = new Text();
-        sectionsList = new ArrayList<ISection>();
-        path =" ";
+        this.introductionText = new Text();
+        this.sectionsList = new ArrayList<ISection>();
+        this.path = " ";
     }
 
     public Document(String path) {
         this();
         this.path = path;
-    }
-
-    /**
-     * @return the sectionsList
-     */
-    public List<ISection> getSectionsList() {
-        return sectionsList;
-    }
-
-    /**
-     * @param sectionsList
-     *            the sectionsList to set
-     */
-    public void setSectionsList(List<ISection> sectionsList) {
-        this.sectionsList = sectionsList;
-    }
-
-    /**
-     * @see model.interfaces.IDocument#deleteSection()
-     */
-    @Override
-    public boolean deleteSection() {
-        int index = 0;
-        while (this.getCurrentSection().equals(sectionsList.get(index))) {
-            index++;
-        }
-        return this.sectionsList.remove(sectionsList.get(index));
-    }
-
-    /**
-     * @see model.interfaces.IDocument#deleteSection(model.interfaces.ISection)
-     */
-    @Override
-    public boolean deleteSection(ISection aSection) {
-        return this.sectionsList.remove(aSection);
     }
 
     /**
@@ -107,35 +73,30 @@ class Document implements IDocument {
     }
 
     /**
-     * @see model.interfaces.IDocument#getText()
+     * @see model.interfaces.IDocument#deleteSection()
      */
     @Override
-    public IText getText() {
-        return introductionText;
+    public boolean deleteSection() {
+        int index = 0;
+        while (this.getCurrentSection().equals(this.sectionsList.get(index))) {
+            index++;
+        }
+        return this.sectionsList.remove(this.sectionsList.get(index));
     }
 
     /**
-     * @see model.interfaces.IDocument#setText(model.interfaces.IText)
+     * @see model.interfaces.IDocument#deleteSection(model.interfaces.ISection)
      */
     @Override
-    public void setText(IText aText) {
-        this.introductionText = aText;
+    public boolean deleteSection(ISection aSection) {
+        return this.sectionsList.remove(aSection);
     }
 
     /**
-     * @see model.interfaces.IDocument#getPath()
+     * @return the bufferMemory
      */
-    @Override
-    public String getPath() {
-        return path;
-    }
-
-    /**
-     * @see model.interfaces.IDocument#setPath(java.net.URL)
-     */
-    @Override
-    public void setPath(String aString) {
-        this.path = aString;
+    public IBufferMemory getBufferMemory() {
+        return this.bufferMemory;
     }
 
     /**
@@ -159,11 +120,42 @@ class Document implements IDocument {
     }
 
     /**
+     * @see model.interfaces.IDocument#getPath()
+     */
+    @Override
+    public String getPath() {
+        return this.path;
+    }
+
+    /**
+     * @return the sectionsList
+     */
+    public List<ISection> getSectionsList() {
+        return this.sectionsList;
+    }
+
+    /**
+     * @see model.interfaces.IDocument#getText()
+     */
+    @Override
+    public IText getText() {
+        return this.introductionText;
+    }
+
+    /**
      * @see model.interfaces.IDocument#isCurrentDocument()
      */
     @Override
     public boolean isCurrentDocument() {
-        return isCurrentDocument;
+        return this.isCurrentDocument;
+    }
+
+    /**
+     * @param bufferMemory
+     *            the bufferMemory to set
+     */
+    public void setBufferMemory(IBufferMemory bufferMemory) {
+        this.bufferMemory = bufferMemory;
     }
 
     /**
@@ -175,16 +167,34 @@ class Document implements IDocument {
     }
 
     /**
-     * @return the bufferMemory
+     * @see model.interfaces.IDocument#setPath(java.net.URL)
      */
-    public IBufferMemory getBufferMemory() {
-        return bufferMemory;
+    @Override
+    public void setPath(String aString) {
+        this.path = aString;
     }
 
     /**
-     * @param bufferMemory the bufferMemory to set
+     * @param sectionsList
+     *            the sectionsList to set
      */
-    public void setBufferMemory(IBufferMemory bufferMemory) {
-        this.bufferMemory = bufferMemory;
+    public void setSectionsList(List<ISection> sectionsList) {
+        this.sectionsList = sectionsList;
+    }
+
+    /**
+     * @see model.interfaces.IDocument#setText(model.interfaces.IText)
+     */
+    @Override
+    public void setText(IText aText) {
+        this.introductionText = aText;
+    }
+
+    /**
+     * @see model.interfaces.IStorable#accept(model.interfaces.ICommandVisitor)
+     */
+    @Override
+    public void accept(ICommandVisitor aVisitor) {
+        aVisitor.visit(this);
     }
 }

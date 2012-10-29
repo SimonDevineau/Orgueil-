@@ -1,28 +1,13 @@
 package model.interfaces;
 
-
 /**
  * 10 oct. 2012 - EditeurDeTexte.
  * @author Simon Devineau & Pierre Reliquet
- * Ecole des Mines de Nantes
- * Major in Computer and Information System Engineering
- * IDocument.java 
+ *         Ecole des Mines de Nantes
+ *         Major in Computer and Information System Engineering
+ *         IDocument.java
  */
-public interface IDocument {
-    /**
-     * @return true if the current section, the one which has the cursor, has
-     *         been
-     *         deleted successfully.
-     */
-    public boolean deleteSection();
-
-    /**
-     * @param section
-     *            the section to delete
-     * @return true if the section has been deleted successfully
-     */
-    public boolean deleteSection(ISection section);
-
+public interface IDocument extends IStorable{
     /**
      * @param section
      *            , the section to insert after the current section, the one
@@ -39,6 +24,28 @@ public interface IDocument {
     public boolean appendSection(ISection section);
 
     /**
+     * @return true if the current section, the one which has the cursor, has
+     *         been
+     *         deleted successfully.
+     */
+    public boolean deleteSection();
+
+    /**
+     * @param section
+     *            the section to delete
+     * @return true if the section has been deleted successfully
+     */
+    public boolean deleteSection(ISection section);
+
+    /**
+     * @param obj
+     *            , the object to be tested
+     * @return true if obj is equal with this
+     */
+    @Override
+    public boolean equals(Object obj);
+
+    /**
      * @return the current section, the only one which has the cursor
      */
     public ISection getCurrentSection();
@@ -47,6 +54,16 @@ public interface IDocument {
      * @return the current section index , the only one which has the cursor
      */
     public int getIndexCurrentSection();
+
+    /**
+     * @return the document path
+     */
+    public String getPath();
+
+    /**
+     * @return the current introduction text of the document.
+     */
+    public IText getText();
 
     /**
      * @return true if it is the current document
@@ -60,9 +77,10 @@ public interface IDocument {
     public void setIsCurrentDocument(boolean isCurrentDocument);
 
     /**
-     * @return the current introduction text of the document.
+     * @param url
+     *            , the new path
      */
-    public IText getText();
+    public void setPath(String uString);
 
     /**
      * Sets the new introduction text
@@ -72,27 +90,8 @@ public interface IDocument {
     public void setText(IText text);
 
     /**
-     * @return the document path
-     */
-    public String getPath();
-
-    /**
-     * @param url
-     *            , the new path
-     */
-    public void setPath(String uString);
-
-    /**
      * @return the string representation of the document.
      */
     @Override
     public String toString();
-	
-    /**
-     * @param obj
-     *            , the object to be tested
-     * @return true if obj is equal with this
-     */
-    @Override
-    public boolean equals(Object obj);
 }

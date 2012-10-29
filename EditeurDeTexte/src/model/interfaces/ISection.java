@@ -10,7 +10,12 @@ import java.util.Observer;
  *         Major in Computer and Information System Engineering
  *         ISection.java
  */
-public interface ISection extends IStorable{
+public interface ISection extends IStorable {
+    /**
+     * @see java.util.Observable#addObserver(Observer)
+     */
+    void addObserver(Observer o);
+
     /**
      * Add a section to the current section (as a child)
      * @param aSection
@@ -24,9 +29,15 @@ public interface ISection extends IStorable{
     void deploySection();
 
     /**
-     * Hide the current section
+     * @return true if anObject is equal to the current section.
      */
-    void hideSection();
+    @Override
+    boolean equals(Object anObject);
+
+    /**
+     * @return the introduction of the current section
+     */
+    IText getIntroduction();
 
     /**
      * @return the parent of the current section.
@@ -44,9 +55,20 @@ public interface ISection extends IStorable{
     ILine getTitle();
 
     /**
-     * @return the introduction of the current section
+     * Hide the current section
      */
-    IText getIntroduction();
+    void hideSection();
+
+    /**
+     * @return true if the section is the current section.
+     */
+    boolean isCurrentSection();
+
+    /**
+     * @param isCurrentSection
+     *            , true if the section is the current section.
+     */
+    void setIsCurrentSection(boolean isCurrentSection);
 
     /**
      * Set the parent of the section.
@@ -56,13 +78,6 @@ public interface ISection extends IStorable{
     void setParent(ISection aSection);
 
     /**
-     * Set the title of the section
-     * @param aText
-     *            , the new title
-     */
-    void setTitle(ILine aLine);
-
-    /**
      * Set the list of subsections,
      * @param aSubSectionsList
      *            , the new subsections
@@ -70,31 +85,15 @@ public interface ISection extends IStorable{
     void setSubSection(ArrayList<ISection> aSubSectionsList);
 
     /**
-     * @return true if the section is the current section.
+     * Set the title of the section
+     * @param aText
+     *            , the new title
      */
-    boolean isCurrentSection();
-    
-    /**
-     * 
-     * @param isCurrentSection, true if the section is the current section.
-     */
-    void setIsCurrentSection(boolean isCurrentSection);
+    void setTitle(ILine aLine);
 
     /**
      * @return the description of the current section.
      */
     @Override
     String toString();
-
-    /**
-     * @return true if anObject is equal to the current section.
-     */
-    @Override
-    boolean equals(Object anObject);
-    
-    /**
-     *
-     * @see java.util.Observable#addObserver(Observer)
-     */
-    void addObserver(Observer o);
 }
