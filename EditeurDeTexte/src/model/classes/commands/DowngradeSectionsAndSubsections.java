@@ -1,18 +1,19 @@
 package model.classes.commands;
 
 import model.interfaces.ICommandVisitor;
+import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
 import model.interfaces.IText;
 
 /**
  * 22 oct. 2012 - EditeurDeTexte.
- * @author Simon Devineau
+ * @author Simon Devineau & Pierre Reliquet
  *         Ecole des Mines de Nantes
  *         Major in Computer and Information System Engineering
  *         DowngradeSectionsAndSubsections.java
  */
-public class DowngradeSectionsAndSubsections implements ICommandVisitor {
+class DowngradeSectionsAndSubsections implements ICommandVisitor {
 
     /**
      * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
@@ -33,5 +34,12 @@ public class DowngradeSectionsAndSubsections implements ICommandVisitor {
      */
     @Override
     public void visit(IText aText) {
+    }
+
+    /**
+     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IDocument)
+     */
+    @Override
+    public void visit(IDocument aDocument) {
     }
 }

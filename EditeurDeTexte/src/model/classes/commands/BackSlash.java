@@ -1,6 +1,7 @@
 package model.classes.commands;
 
 import model.interfaces.ICommandVisitor;
+import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
 import model.interfaces.IText;
@@ -12,7 +13,7 @@ import model.interfaces.IText;
  *         Major in Computer and Information System Engineering
  *         BackSlash.java
  */
-public class BackSlash implements ICommandVisitor {
+class BackSlash implements ICommandVisitor {
     /**
      * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
      */
@@ -32,5 +33,12 @@ public class BackSlash implements ICommandVisitor {
      */
     @Override
     public void visit(IText aText) {
+    }
+
+    /**
+     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IDocument)
+     */
+    @Override
+    public void visit(IDocument aDocument) {
     }
 }
