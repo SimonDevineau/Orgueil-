@@ -4,6 +4,7 @@
 package model.classes;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import model.interfaces.IBufferMemory;
@@ -104,7 +105,15 @@ class Document implements IDocument {
      */
     @Override
     public ISection getCurrentSection() {
-        return this.sectionsList.get(this.getIndexCurrentSection());
+        Iterator<ISection> current = getSectionsList().iterator();
+        ISection currentSection;
+        int sectionsSize = sectionsList.size();
+        int currentIndex = 0;
+        while(currentIndex < sectionsSize && !getSectionsList().get(currentIndex).isCurrentSection())
+			currentIndex++;
+		if(currentIndex == sectionsSize)
+			throw new RuntimeException("No current section found!");
+		return getSectionsList().get(currentIndex).getCurrentSection();
     }
 
     /**

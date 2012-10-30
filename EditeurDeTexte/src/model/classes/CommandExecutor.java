@@ -18,22 +18,17 @@ public final class CommandExecutor {
 	/**
 	 * The single instance of CommandExecutor
 	 */
-	private static volatile CommandExecutor commandExecutorInstance;
+	private static volatile CommandExecutor commandExecutorInstance = new CommandExecutor();
 	/**
 	 * The map which contains all the commands
 	 */
-	private Map<String, ICommand> commandsList = new HashMap<String, ICommand>();
+	private Map<String, ICommandVisitor> commandsList = new HashMap<String, ICommandVisitor>();
 
-	private CommandExecutor() throws ClassNotFoundException,
-			InstantiationException, IllegalAccessException {
-		commandsList = new HashMap<String, ICommand>();
+	private CommandExecutor() {
+		commandsList = new HashMap<String, ICommandVisitor>();
 		loadCommands();
 	}
-    /**
-     * The single instance of CommandExecutor
-     */
-    private static volatile CommandExecutor commandExecutorInstance;
-
+	
 	/**
 	 * @return the commandExecutorInstance
 	 */
@@ -50,21 +45,6 @@ public final class CommandExecutor {
 		CommandExecutor.commandExecutorInstance = commandExecutorInstance;
 	}
 
-	/**
-	 * @return the commandsList
-	 */
-	public Map<String, ICommand> getCommandsList() {
-		return commandsList;
-	}
-    /**
-     * The map which contains all the commands
-     */
-    private Map<String, ICommandVisitor> commandsList = new HashMap<String, ICommandVisitor>();
-
-    private CommandExecutor() {
-        this.commandsList = new HashMap<String, ICommandVisitor>();
-    }
-
     /**
      * @return the commandsList
      */
@@ -72,15 +52,11 @@ public final class CommandExecutor {
         return this.commandsList;
     }
 
-    // TODO definir comment est le fichier
-    public void init(File aFile) {
-    }
-
 	/**
 	 * @param commandsList
 	 *            the commandsList to set
 	 */
-	public void setCommandsList(Map<String, ICommand> commandsList) {
+	public void setCommandsList(Map<String, ICommandVisitor> commandsList) {
 		this.commandsList = commandsList;
 	}
 
@@ -115,15 +91,15 @@ public final class CommandExecutor {
 				Class[] interfacesImplemented = tmpClass.getInterfaces();
 				boolean iCommandImplemented = false;
 				for (Class anInterfaceImplemented : interfacesImplemented) {
-					if (anInterfaceImplemented.equals(ICommand.class))
+					if (anInterfaceImplemented.equals(ICommandVisitor.class))
 						iCommandImplemented = true;
 				}
 
 				// if the interface ICommand is implemented we can add it.
 				if (iCommandImplemented) {
 					commandsList
-							.put(current, (ICommand) tmpClass.newInstance());
-					((ICommand) tmpClass.newInstance()).execute();
+							.put(current, (ICommandVisitor) tmpClass.newInstance());
+					//((ICommandVisitor) tmpClass.newInstance()).execute();
 				} else { // we write in the logger that it the interface is not
 							// implemented
 					utilities.Logger.error(fullName
@@ -148,11 +124,5 @@ public final class CommandExecutor {
 			InstantiationException, IllegalAccessException {
 		new CommandExecutor();
 	}
-    /**
-     * @param commandsList
-     *            the commandsList to set
-     */
-    public void setCommandsList(Map<String, ICommandVisitor> commandsList) {
-        this.commandsList = commandsList;
-    }
+
 }

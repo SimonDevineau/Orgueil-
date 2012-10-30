@@ -43,6 +43,11 @@ public interface ISection extends IStorable {
      * @return the parent of the current section.
      */
     ISection getParent();
+    
+    /**
+     * @return the current section used by the editor (browsing the tree to find the real current one)
+     */
+    ISection getCurrentSection();
 
     /**
      * @return the subsections list of the current section

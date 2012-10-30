@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.interfaces.ICommandVisitor;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
 import model.interfaces.IText;
@@ -142,10 +143,34 @@ public class Section extends Observable implements ISection {
 	}
 
 	/**
+	 * @see model.interfaces.ISection#getCurrentSection()
+	 */
+	@Override
+	public ISection getCurrentSection() {
+		int subSectionsSize = getSubSections().size();
+		if(getSubSections() == null || subSectionsSize == 0)
+			return this;
+		int currentIndex = 0;
+		while(currentIndex < subSectionsSize && !getSubSections().get(currentIndex).isCurrentSection())
+			currentIndex++;
+		if(currentIndex == subSectionsSize)
+			return this;
+		else
+			return getSubSections().get(currentIndex).getCurrentSection();
+	}
+	
+	/**
 	 * @see java.util.Observable#addObserver(Observer)
 	 */
 	@Override
 	public synchronized void addObserver(Observer o) {
 		super.addObserver(o);
 	}
+
+	@Override
+	public void accept(ICommandVisitor visitor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
