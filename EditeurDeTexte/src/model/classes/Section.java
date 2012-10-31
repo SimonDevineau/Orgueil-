@@ -63,24 +63,6 @@ class Section extends Observable implements ISection {
         this.subSections.add(aSection);
     }
 
-    // TODO: Les deux m�thodes suivantes ne font pas plut�t parti de la vue
-    // plutot que du modele ?
-    /**
-     * @see model.interfaces.ISection#deploySection()
-     */
-    @Override
-    public void deploySection() {
-        currentState = deployedState;
-    }
-
-    /**
-     * @see model.interfaces.ISection#hideSection()
-     */
-    @Override
-    public void hideSection() {
-        currentState = hiddenState;
-    }
-
     /**
      * @see model.interfaces.ISection#getParent()
      */

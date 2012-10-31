@@ -1,5 +1,6 @@
 package model.classes.commands;
 
+import model.classes.Editor;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
 import model.interfaces.ILine;
@@ -21,6 +22,11 @@ class DeleteAndSave implements ICommandVisitor {
      */
     @Override
     public void visit(ILine aLine) {
+        if(aLine!=null){
+            Editor.getEditor().getCurrentDocument().getBufferMemory().push(aLine);
+            aLine.re
+        }
+            
     }
 
     /**

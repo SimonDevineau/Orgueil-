@@ -24,11 +24,6 @@ public interface ISection extends IStorable {
     void addSubSection(ISection aSection);
 
     /**
-     * Deploy the current section
-     */
-    void deploySection();
-
-    /**
      * @return true if anObject is equal to the current section.
      */
     @Override
@@ -43,9 +38,10 @@ public interface ISection extends IStorable {
      * @return the parent of the current section.
      */
     ISection getParent();
-    
+
     /**
-     * @return the current section used by the editor (browsing the tree to find the real current one)
+     * @return the current section used by the editor (browsing the tree to find
+     *         the real current one)
      */
     ISection getCurrentSection();
 
@@ -58,11 +54,6 @@ public interface ISection extends IStorable {
      * @return the section title
      */
     ILine getTitle();
-
-    /**
-     * Hide the current section
-     */
-    void hideSection();
 
     /**
      * @return true if the section is the current section.
