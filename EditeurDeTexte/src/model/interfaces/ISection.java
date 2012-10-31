@@ -48,6 +48,11 @@ public interface ISection extends IStorable {
      * @return the current section used by the editor (browsing the tree to find the real current one)
      */
     ISection getCurrentSection();
+    
+    /**
+     * @return the index of the current section or -1 if there is no current section in the subsections. 
+     */
+    int indexOfCurrentSection();
 
     /**
      * @return the subsections list of the current section
