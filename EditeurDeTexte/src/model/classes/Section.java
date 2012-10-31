@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.classes.states.StateFactory;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
+import model.interfaces.IState;
 import model.interfaces.IText;
 
 /**
@@ -33,15 +35,29 @@ public class Section extends Observable implements ISection {
      * The parent section.
      */
     private ISection       parent           = Factory.createSection();
+    
     /**
-     * A boolean to indicate if the section is deployed or not
+     * The current state which is used to print the section. This is used to implement the state pattern.
+     * It enables to delegate instead of doing some switch case with ifs. 
      */
-    private boolean        isDeployed       = true;
+    private IState currentState;
+    
+    private IState deployedState;
+    
+    private IState hiddenState;
+    
     /**
      * True if this section is the current section
      */
     private boolean        isCurrentSection = false;
 
+    
+    public Section() {
+		hiddenState = StateFactory.createHiddenState(this);
+		deployedState = StateFactory.createDeployedState(this);
+		currentState = deployedState;
+	}
+    
     /**
      * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
      */
@@ -58,6 +74,7 @@ public class Section extends Observable implements ISection {
      */
     @Override
     public void deploySection() {
+    	currentState = deployedState;
     }
 
     /**
@@ -65,6 +82,7 @@ public class Section extends Observable implements ISection {
      */
     @Override
     public void hideSection() {
+    	currentState = hiddenState;
     }
 
     /**
@@ -173,5 +191,10 @@ public class Section extends Observable implements ISection {
 	public void accept(ICommandVisitor visitor) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public String toString() {
+		return currentState.toString();
 	}
 }
