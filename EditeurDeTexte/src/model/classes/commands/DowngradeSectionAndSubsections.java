@@ -13,7 +13,7 @@ import model.interfaces.IText;
  *         Major in Computer and Information System Engineering
  *         DowngradeSectionsAndSubsections.java
  */
-class DowngradeSectionsAndSubsections implements ICommandVisitor {
+class DowngradeSectionAndSubsections implements ICommandVisitor {
 
     /**
      * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)

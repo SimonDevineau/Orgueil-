@@ -7,7 +7,7 @@ package model.interfaces;
  *         Major in Computer and Information System Engineering
  *         IDocument.java
  */
-public interface IDocument extends IStorable{
+public interface IDocument extends IStorable {
     /**
      * @param section
      *            , the section to insert after the current section, the one
@@ -64,6 +64,11 @@ public interface IDocument extends IStorable{
      * @return the current introduction text of the document.
      */
     public IText getText();
+
+    /**
+     * @return the buffer memory of the document
+     */
+    public IBufferMemory getBufferMemory();
 
     /**
      * @return true if it is the current document

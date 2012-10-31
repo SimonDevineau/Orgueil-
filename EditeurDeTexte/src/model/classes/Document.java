@@ -93,10 +93,11 @@ class Document implements IDocument {
     public boolean deleteSection(ISection aSection) {
         return this.sectionsList.remove(aSection);
     }
-
     /**
-     * @return the bufferMemory
+     * 
+     * @see model.interfaces.IDocument#getBufferMemory()
      */
+    @Override
     public IBufferMemory getBufferMemory() {
         return this.bufferMemory;
     }

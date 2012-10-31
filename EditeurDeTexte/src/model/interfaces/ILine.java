@@ -40,11 +40,6 @@ public interface ILine extends IStorable {
     public boolean equals(Object obj);
 
     /**
-     * @return the location of the cursor if the line has the cursor
-     */
-    public int getCursorLocation();
-
-    /**
      * Return true if the current ILine has the cursor and false otherwise
      * @return a boolean which indicates if the line has the cursor.
      */

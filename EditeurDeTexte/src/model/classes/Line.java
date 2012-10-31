@@ -14,7 +14,6 @@ class Line implements ILine {
      * string each time that a char is added.
      */
     private StringBuilder _Line;
-    private int           _CursorLocation = NO_CURSOR;
 
     /**
      * Default constructor which creates an empty line
@@ -37,7 +36,8 @@ class Line implements ILine {
     public void addUnderCursor(CharSequence insertion) {
         // TODO vérifier si c'est _CursorLocation ou _CursorLocation+1
         if (this.hasCursor()) {
-            this._Line.insert(this._CursorLocation, insertion);
+            this._Line.insert(Cursor.getCursorInstance().getCurrentPosition(),
+                    insertion);
         }
     }
 
@@ -49,18 +49,9 @@ class Line implements ILine {
     @Override
     public void deleteUnderCursor() {
         if (this.hasCursor()) {
-            this._Line.deleteCharAt(this._CursorLocation);
+            this._Line.deleteCharAt(Cursor.getCursorInstance()
+                    .getCurrentPosition());
         }
-    }
-
-    @Override
-    public int getCursorLocation() {
-        return this._CursorLocation;
-    }
-
-    @Override
-    public boolean hasCursor() {
-        return this._CursorLocation != NO_CURSOR;
     }
 
     @Override
@@ -69,12 +60,15 @@ class Line implements ILine {
             // TODO vérifier les index
             // Copying the start of the line (before the cursor)
             StringBuilder tmp = new StringBuilder(this._Line.substring(0,
-                    this._CursorLocation));
+                    Cursor.getCursorInstance().getCurrentPosition()));
             // Adding the replacement
             tmp.append(replacement);
             // TODO vérifier les index
             // Calculating the new cursor location
-            int newCursorLocation = this._CursorLocation + replacement.length();
+            int newCursorLocation = Cursor.getCursorInstance()
+                    .getCurrentPosition()
+                    + replacement.length()
+                    + replacement.length();
             // If the line is longer than the new cursor location we need
             // to append the rest of the line
             if (this._Line.length() > newCursorLocation) {
@@ -82,7 +76,7 @@ class Line implements ILine {
             }
             // We store the new variables.
             this._Line = tmp;
-            this._CursorLocation = newCursorLocation;
+            Cursor.getCursorInstance().setCurrentPosition(newCursorLocation);
         }
     }
 
@@ -92,5 +86,14 @@ class Line implements ILine {
     @Override
     public void accept(ICommandVisitor aVisitor) {
         aVisitor.visit(this);
+    }
+
+    /**
+     * @see model.interfaces.ILine#hasCursor()
+     */
+    @Override
+    public boolean hasCursor() {
+        //TODO equals or ==, plutot == car on veut que ca soit la meme case m�moire
+        return Cursor.getCursorInstance().getCurrentLine().equals(this);
     }
 }
