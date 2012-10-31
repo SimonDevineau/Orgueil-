@@ -1,5 +1,6 @@
 package model.classes.commands;
 
+import model.classes.Cursor;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
 import model.interfaces.ILine;
@@ -13,7 +14,7 @@ import model.interfaces.IText;
  *         Major in Computer and Information System Engineering
  *         Peep.java
  */
-class Peep implements ICommandVisitor{
+class Pop implements ICommandVisitor{
 
     /**
      * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
@@ -41,5 +42,8 @@ class Peep implements ICommandVisitor{
      */
     @Override
     public void visit(IDocument aDocument) {
+        if(aDocument.equals(Cursor.getCursorInstance().getCurrentDocument())){
+            aDocument.getBufferMemory().pop();
+        }
     }
 }

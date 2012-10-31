@@ -1,5 +1,6 @@
 package model.classes.commands;
 
+import model.classes.Cursor;
 import model.classes.Editor;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
@@ -21,7 +22,7 @@ class Copy implements ICommandVisitor {
     @Override
     public void visit(ILine aLine) {
         if(aLine!=null)
-        Editor.getEditor().getCurrentDocument().getBufferMemory().push(aLine);
+        Cursor.getCursorInstance().getCurrentDocument().getBufferMemory().push(aLine);
     }
 
     /**

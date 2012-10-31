@@ -27,7 +27,7 @@ class Document implements IDocument {
     /**
      * The introduction text of the document
      */
-    private IText          introductionText  = new Text();
+    private IText          introductionText  = Factory.createText();
     /**
      * The sections list of the document
      */
@@ -46,7 +46,8 @@ class Document implements IDocument {
     private String         path              = "";
 
     public Document() {
-        this.introductionText = new Text();
+        this.introductionText = Factory.createText();
+        ;
         this.sectionsList = new ArrayList<ISection>();
         this.path = " ";
         Cursor.getCursorInstance().setCurrentDocument(this);
@@ -93,8 +94,8 @@ class Document implements IDocument {
     public boolean deleteSection(ISection aSection) {
         return this.sectionsList.remove(aSection);
     }
+
     /**
-     * 
      * @see model.interfaces.IDocument#getBufferMemory()
      */
     @Override

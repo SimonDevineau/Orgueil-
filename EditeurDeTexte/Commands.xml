@@ -8,7 +8,7 @@
     <config key="\k" value="model.classes.commands.DeleteAndSave" />
     <config key="\w" value="model.classes.commands.Copy" />
     <config key="\y" value="model.classes.commands.Paste" />
-    <config key="\x" value="model.classes.commands.Peep" />
+    <config key="\x" value="model.classes.commands.Pop" />
     <config key="\d" value="model.classes.commands.DowngradeSection" />
     <config key="\D" value="model.classes.commands.DowngradeSectionAndSubsections" />
     <config key="\g" value="model.classes.commands.UpgradeSection" />

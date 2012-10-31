@@ -19,6 +19,12 @@ public interface IText extends IStorable {
      *            , the line to add
      */
     public void addLine(ILine aLine);
+    /**
+     * add a Line after the current line
+     * @param currentLine, the current line
+     * @param lineToPaste, the line to paste
+     */
+    public void addLine(ILine currentLine, ILine lineToPaste);
 
     /**
      * @return the lines list of the text
@@ -32,6 +38,7 @@ public interface IText extends IStorable {
 
     /**
      * Remove the line situated at the cursor position
+     * @param aLine
      */
-    public void removeLine();
+    void removeLine(ILine aLine);
 }

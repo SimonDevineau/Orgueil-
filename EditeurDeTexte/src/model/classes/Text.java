@@ -1,6 +1,7 @@
 package model.classes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.interfaces.ICommandVisitor;
 import model.interfaces.ILine;
@@ -13,7 +14,16 @@ import model.interfaces.IText;
  *         Major in Computer and Information System Engineering
  *         Text.java
  */
-public class Text implements IText {
+class Text implements IText {
+    /**
+     * The list of lines
+     */
+    private List<ILine> linesList = new ArrayList<ILine>();
+
+    public Text() {
+        linesList = new ArrayList<ILine>();
+    }
+
     /**
      * @see model.interfaces.IStorable#accept(model.interfaces.ICommandVisitor)
      */
@@ -46,9 +56,37 @@ public class Text implements IText {
     }
 
     /**
-     * @see model.interfaces.IText#removeLine()
+     * @see model.interfaces.IText#removeLine(ILine aLine)
      */
     @Override
-    public void removeLine() {
+    public void removeLine(ILine aLine) {
+        if (aLine != null)
+            linesList.remove(aLine);
+    }
+
+    /**
+     * @return the linesList
+     */
+    public List<ILine> getLinesList() {
+        return linesList;
+    }
+
+    /**
+     * @param linesList
+     *            the linesList to set
+     */
+    public void setLinesList(List<ILine> linesList) {
+        this.linesList = linesList;
+    }
+
+    /**
+     * @see model.interfaces.IText#addLine(model.interfaces.ILine,
+     *      model.interfaces.ILine)
+     */
+    @Override
+    public void addLine(ILine aCurrentLine, ILine aLineToPaste) {
+        if (aCurrentLine != null && aLineToPaste != null) {
+            linesList.add(linesList.lastIndexOf(aCurrentLine), aLineToPaste);
+        }
     }
 }
