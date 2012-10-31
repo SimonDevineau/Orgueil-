@@ -105,8 +105,6 @@ class Document implements IDocument {
      */
     @Override
     public ISection getCurrentSection() {
-        Iterator<ISection> current = getSectionsList().iterator();
-        ISection currentSection;
         int sectionsSize = sectionsList.size();
         int currentIndex = 0;
         while(currentIndex < sectionsSize && !getSectionsList().get(currentIndex).isCurrentSection())

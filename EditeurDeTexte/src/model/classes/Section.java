@@ -17,7 +17,7 @@ import model.interfaces.IText;
  * @author Simon Devineau Ecole des Mines de Nantes Major in Computer and
  *         Information System Engineering Section.java
  */
-public class Section extends Observable implements ISection {
+class Section extends Observable implements ISection {
 
     /**
      * The subsections' list of the current section.
@@ -189,8 +189,7 @@ public class Section extends Observable implements ISection {
     
 	@Override
 	public void accept(ICommandVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+	    visitor.visit(this);
 	}
 	
 	@Override
