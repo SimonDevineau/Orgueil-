@@ -1,6 +1,8 @@
 package model.classes;
 
 import model.interfaces.IBufferMemory;
+import model.interfaces.ICommandVisitor;
+import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
 import model.interfaces.IText;
@@ -43,5 +45,20 @@ public class Factory {
      */
     public static IText createText() {
         return new Text();
+    }
+
+    /**
+     * @return a new Document
+     */
+    public static IDocument createDocument() {
+        return new Document();
+    }
+
+    /**
+     * @param path, the path where the document will be saved
+     * @return a new Document
+     */
+    public static IDocument createDocument(String path) {
+        return new Document(path);
     }
 }

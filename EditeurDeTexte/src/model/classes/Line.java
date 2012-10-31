@@ -21,6 +21,7 @@ class Line implements ILine {
      */
     Line() {
         this._Line = new StringBuilder();
+        Cursor.getCursorInstance().setCurrentLine(this);
     }
 
     /**

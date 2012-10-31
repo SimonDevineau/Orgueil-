@@ -18,7 +18,6 @@ import model.interfaces.IText;
  *         Information System Engineering Section.java
  */
 class Section extends Observable implements ISection {
-
     /**
      * The subsections' list of the current section.
      */
@@ -35,29 +34,26 @@ class Section extends Observable implements ISection {
      * The parent section.
      */
     private ISection       parent           = Factory.createSection();
-    
     /**
-     * The current state which is used to print the section. This is used to implement the state pattern.
-     * It enables to delegate instead of doing some switch case with ifs. 
+     * The current state which is used to print the section. This is used to
+     * implement the state pattern.
+     * It enables to delegate instead of doing some switch case with ifs.
      */
-    private IState currentState;
-    
-    private IState deployedState;
-    
-    private IState hiddenState;
-    
+    private IState         currentState;
+    private IState         deployedState;
+    private IState         hiddenState;
     /**
      * True if this section is the current section
      */
     private boolean        isCurrentSection = false;
 
-    
     public Section() {
-		hiddenState = StateFactory.createHiddenState(this);
-		deployedState = StateFactory.createDeployedState(this);
-		currentState = deployedState;
-	}
-    
+        hiddenState = StateFactory.createHiddenState(this);
+        deployedState = StateFactory.createDeployedState(this);
+        currentState = deployedState;
+        Cursor.getCursorInstance().setCurrentSection(this);
+    }
+
     /**
      * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
      */
@@ -74,7 +70,7 @@ class Section extends Observable implements ISection {
      */
     @Override
     public void deploySection() {
-    	currentState = deployedState;
+        currentState = deployedState;
     }
 
     /**
@@ -82,7 +78,7 @@ class Section extends Observable implements ISection {
      */
     @Override
     public void hideSection() {
-    	currentState = hiddenState;
+        currentState = hiddenState;
     }
 
     /**
@@ -161,23 +157,24 @@ class Section extends Observable implements ISection {
             this.parent.setIsCurrentSection(aIsCurrentSection);
         }
     }
-    
+
     /**
-	 * @see model.interfaces.ISection#getCurrentSection()
-	 */
-	@Override
-	public ISection getCurrentSection() {
-		int subSectionsSize = getSubSections().size();
-		if(getSubSections() == null || subSectionsSize == 0)
-			return this;
-		int currentIndex = 0;
-		while(currentIndex < subSectionsSize && !getSubSections().get(currentIndex).isCurrentSection())
-			currentIndex++;
-		if(currentIndex == subSectionsSize)
-			return this;
-		else
-			return getSubSections().get(currentIndex).getCurrentSection();
-	}
+     * @see model.interfaces.ISection#getCurrentSection()
+     */
+    @Override
+    public ISection getCurrentSection() {
+        int subSectionsSize = getSubSections().size();
+        if (getSubSections() == null || subSectionsSize == 0)
+            return this;
+        int currentIndex = 0;
+        while (currentIndex < subSectionsSize
+                && !getSubSections().get(currentIndex).isCurrentSection())
+            currentIndex++;
+        if (currentIndex == subSectionsSize)
+            return this;
+        else
+            return getSubSections().get(currentIndex).getCurrentSection();
+    }
 
     /**
      * @see java.util.Observable#addObserver(Observer)
@@ -186,14 +183,14 @@ class Section extends Observable implements ISection {
     public synchronized void addObserver(Observer o) {
         super.addObserver(o);
     }
-    
-	@Override
-	public void accept(ICommandVisitor visitor) {
-	    visitor.visit(this);
-	}
-	
-	@Override
-	public String toString() {
-		return currentState.toString();
-	}
+
+    @Override
+    public void accept(ICommandVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return currentState.toString();
+    }
 }

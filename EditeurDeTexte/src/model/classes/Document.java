@@ -49,6 +49,7 @@ class Document implements IDocument {
         this.introductionText = new Text();
         this.sectionsList = new ArrayList<ISection>();
         this.path = " ";
+        Cursor.getCursorInstance().setCurrentDocument(this);
     }
 
     public Document(String path) {
@@ -107,11 +108,12 @@ class Document implements IDocument {
     public ISection getCurrentSection() {
         int sectionsSize = sectionsList.size();
         int currentIndex = 0;
-        while(currentIndex < sectionsSize && !getSectionsList().get(currentIndex).isCurrentSection())
-			currentIndex++;
-		if(currentIndex == sectionsSize)
-			throw new RuntimeException("No current section found!");
-		return getSectionsList().get(currentIndex).getCurrentSection();
+        while (currentIndex < sectionsSize
+                && !getSectionsList().get(currentIndex).isCurrentSection())
+            currentIndex++;
+        if (currentIndex == sectionsSize)
+            throw new RuntimeException("No current section found!");
+        return getSectionsList().get(currentIndex).getCurrentSection();
     }
 
     /**

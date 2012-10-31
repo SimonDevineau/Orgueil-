@@ -25,6 +25,10 @@ public final class Editor {
      * The single instance of Editor
      */
     private static volatile Editor editorInstance;
+    /**
+     * The cursor of the Editor
+     */
+    private Cursor cursor = Cursor.getCursorInstance();
 
     /**
      * @return the single instance of Editor.
@@ -51,6 +55,7 @@ public final class Editor {
 
     private Editor() {
         this.documents = new HashSet<IDocument>();
+        cursor = Cursor.getCursorInstance();
     }
 
     /**
