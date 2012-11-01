@@ -6,7 +6,6 @@ import model.interfaces.ILine;
 import model.interfaces.ISection;
 import model.interfaces.IText;
 
-
 /**
  * 22 oct. 2012 - EditeurDeTexte.
  * @author Simon Devineau & Pierre Reliquet
@@ -15,7 +14,6 @@ import model.interfaces.IText;
  *         DeployOrHide.java
  */
 class DeployOrHide implements ICommandVisitor {
-
     /**
      * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
      */
@@ -28,6 +26,8 @@ class DeployOrHide implements ICommandVisitor {
      */
     @Override
     public void visit(ISection aSection) {
+        if(aSection!=null)
+        aSection.setIsCurrentSection(!aSection.isCurrentSection());
     }
 
     /**
@@ -43,5 +43,4 @@ class DeployOrHide implements ICommandVisitor {
     @Override
     public void visit(IDocument aDocument) {
     }
-
 }

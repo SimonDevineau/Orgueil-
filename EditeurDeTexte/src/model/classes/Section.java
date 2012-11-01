@@ -18,25 +18,24 @@ import model.interfaces.IText;
  * @author Simon Devineau Ecole des Mines de Nantes Major in Computer and
  *         Information System Engineering Section.java
  */
-public class Section extends Observable implements ISection {
-
-	/**
-	 * The subsections' list of the current section.
-	 */
-	private List<ISection> subSections = new ArrayList<ISection>();
-	/**
-	 * The current section title.
-	 */
-	private ILine title = Factory.createLine();
-	/**
-	 * The current section text;
-	 */
-	private IText introduction = Factory.createText();
-	/**
-	 * The parent section.
-	 */
-	private ISection parent = Factory.createSection();
-
+class Section extends Observable implements ISection {
+    /**
+     * The subsections' list of the current section.
+     */
+    private List<ISection> subSections      = new ArrayList<ISection>();
+    /**
+     * The current section title.
+     */
+    private ILine          title            = Factory.createLine();
+    /**
+     * The current section text;
+     */
+    private IText          introduction     = Factory.createText();
+    /**
+     * The parent section.
+     */
+    private ISection       parent           = Factory.createSection();
+   
 	/**
 	 * The current state which is used to print the section. This is used to
 	 * implement the state pattern. It enables to delegate instead of doing some
@@ -53,38 +52,23 @@ public class Section extends Observable implements ISection {
 	 */
 	private boolean isCurrentSection = false;
 
-	public Section() {
-		hiddenState = StateFactory.createHiddenState(this);
-		deployedState = StateFactory.createDeployedState(this);
-		currentState = deployedState;
-	}
 
-	/**
-	 * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
-	 */
-	@Override
-	public void addSubSection(ISection aSection) {
-		aSection.setParent(this);
-		this.subSections.add(aSection);
-	}
+    public Section() {
+        hiddenState = StateFactory.createHiddenState(this);
+        deployedState = StateFactory.createDeployedState(this);
+        currentState = deployedState;
+        Cursor.getCursorInstance().setCurrentSection(this);
+    }
 
-	// TODO: Les deux m�thodes suivantes ne font pas plut�t parti de la vue
-	// plutot que du modele ?
-	/**
-	 * @see model.interfaces.ISection#deploySection()
-	 */
-	@Override
-	public void deploySection() {
-		currentState = deployedState;
-	}
+    /**
+     * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
+     */
+    @Override
+    public void addSubSection(ISection aSection) {
+        aSection.setParent(this);
+        this.subSections.add(aSection);
+    }
 
-	/**
-	 * @see model.interfaces.ISection#hideSection()
-	 */
-	@Override
-	public void hideSection() {
-		currentState = hiddenState;
-	}
 
 	/**
 	 * @see model.interfaces.ISection#getParent()
@@ -144,36 +128,35 @@ public class Section extends Observable implements ISection {
 		this.subSections = aSubSectionsList;
 	}
 
-	/**
-	 * @see model.interfaces.ISection#isCurrentSection()
-	 */
-	@Override
-	public boolean isCurrentSection() {
-		return isCurrentSection;
-	}
 
-	/**
-	 * @see model.interfaces.ISection#setIsCurrentSection(boolean)
-	 */
-	@Override
-	public void setIsCurrentSection(boolean aIsCurrentSection) {
-		this.isCurrentSection = aIsCurrentSection;
-		if (this.parent != null) {
-			this.parent.setIsCurrentSection(aIsCurrentSection);
-		}
-	}
+    /**
+     * @see model.interfaces.ISection#setIsCurrentSection(boolean)
+     */
+    @Override
+    public void setIsCurrentSection(boolean aIsCurrentSection) {
+        this.isCurrentSection = aIsCurrentSection;
+        if (this.parent != null) {
+            this.parent.setIsCurrentSection(aIsCurrentSection);
+        }
+    }
 
-	/**
-	 * @see model.interfaces.ISection#getCurrentSection()
-	 */
-	@Override
-	public ISection getCurrentSection() {
-		int currentIndex = indexOfCurrentSection();
-		if (currentIndex == -1)
-			return this;
-		else
-			return getSubSections().get(currentIndex).getCurrentSection();
-	}
+    /**
+     * @see model.interfaces.ISection#getCurrentSection()
+     */
+    @Override
+    public ISection getCurrentSection() {
+        int subSectionsSize = getSubSections().size();
+        if (getSubSections() == null || subSectionsSize == 0)
+            return this;
+        int currentIndex = 0;
+        while (currentIndex < subSectionsSize
+                && !getSubSections().get(currentIndex).isCurrentSection())
+            currentIndex++;
+        if (currentIndex == subSectionsSize)
+            return this;
+        else
+            return getSubSections().get(currentIndex).getCurrentSection();
+    }
 
 	/**
 	 * @see java.util.Observable#addObserver(Observer)
@@ -208,4 +191,13 @@ public class Section extends Observable implements ISection {
 		else
 			return currentIndex;
 	}
+
+    /**
+     * @see model.interfaces.ISection#isCurrentSection()
+     */
+    @Override
+    public boolean isCurrentSection() {
+        return isCurrentSection;
+    }
+
 }

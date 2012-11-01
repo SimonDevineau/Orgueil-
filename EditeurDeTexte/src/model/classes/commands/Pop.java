@@ -1,5 +1,6 @@
 package model.classes.commands;
 
+import model.classes.Cursor;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
 import model.interfaces.ILine;
@@ -11,9 +12,9 @@ import model.interfaces.IText;
  * @author Simon Devineau & Pierre Reliquet
  *         Ecole des Mines de Nantes
  *         Major in Computer and Information System Engineering
- *         DowngradeSectionsAndSubsections.java
+ *         Peep.java
  */
-class DowngradeSectionsAndSubsections implements ICommandVisitor {
+class Pop implements ICommandVisitor{
 
     /**
      * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
@@ -41,5 +42,8 @@ class DowngradeSectionsAndSubsections implements ICommandVisitor {
      */
     @Override
     public void visit(IDocument aDocument) {
+        if(aDocument.equals(Cursor.getCursorInstance().getCurrentDocument())){
+            aDocument.getBufferMemory().pop();
+        }
     }
 }
