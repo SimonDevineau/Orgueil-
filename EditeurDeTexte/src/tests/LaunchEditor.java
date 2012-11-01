@@ -2,6 +2,8 @@ package tests;
 
 import javax.swing.text.Document;
 
+import utilities.Utilities;
+
 import model.classes.Factory;
 import model.interfaces.IDocument;
 import controllers.Controller;
@@ -16,7 +18,7 @@ import controllers.FactoryController;
  */
 public class LaunchEditor {
     public static void main(String[] args) {
+        Utilities.changeMenuBar();
         Controller controller = FactoryController.createController();
-        
     }
 }

@@ -2,20 +2,29 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.classes.Editor;
+
 public class MainForm extends JFrame {
     /**
 	 * 
 	 */
     private static final long      serialVersionUID     = 3140124981567096416L;
+    public static final String     DEFAULT_TITLE        = "Text Editor";
     private static final String    DEFAULT_COMMAND_LINE = "Please, type your command here to start using the software";
     private static final int       DEFAULT_COLUMN_WIDTH = 40;
     private static final Dimension DEFAULT_DIMENSION    = new Dimension(640,
@@ -29,6 +38,9 @@ public class MainForm extends JFrame {
                                                                 "Validate");
 
     public MainForm() {
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(
+                Editor.class.getResource("images/notes.png")));
+        this.setTitle(DEFAULT_TITLE);
         this.setSize(DEFAULT_DIMENSION);
         this.setLayout(new GridLayout(2, 1));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

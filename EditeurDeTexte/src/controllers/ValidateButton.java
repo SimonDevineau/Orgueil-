@@ -13,6 +13,7 @@ import javax.swing.JTextField;
  *         Major in Computer and Information System Engineering
  *         ValidateButton.java
  */
+@SuppressWarnings("serial")
 public class ValidateButton extends AbstractAction {
     private JTextField input;
 

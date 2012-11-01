@@ -4,12 +4,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 import model.classes.Cursor;
 import model.interfaces.IDocument;
-
-import view.MainForm;
 
 /**
  * 1 nov. 2012 - EditeurDeTexte.
@@ -17,6 +14,7 @@ import view.MainForm;
  *         Ecole des Mines de Nantes
  *         Major in Computer and Information System Engineering
  *         DisplayText.java
+ *         This class updates the contents of the view when a modification is done on a document
  */
 public class DisplayText implements Observer {
     /**

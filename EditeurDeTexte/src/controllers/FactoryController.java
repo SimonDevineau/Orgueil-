@@ -3,7 +3,6 @@ package controllers;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import view.MainForm;
 
 /**
  * 1 nov. 2012 - EditeurDeTexte.
