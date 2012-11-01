@@ -11,9 +11,9 @@ import model.interfaces.IText;
  * @author Simon Devineau & Pierre Reliquet
  *         Ecole des Mines de Nantes
  *         Major in Computer and Information System Engineering
- *         Peep.java
+ *         DowngradeSectionsAndSubsections.java
  */
-class Peep implements ICommandVisitor{
+class DowngradeSectionAndSubsections implements ICommandVisitor {
 
     /**
      * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)

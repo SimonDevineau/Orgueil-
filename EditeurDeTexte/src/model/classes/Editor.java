@@ -2,6 +2,7 @@ package model.classes;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Observable;
 import java.util.Set;
 
 import model.interfaces.IDocument;
@@ -17,7 +18,7 @@ import model.interfaces.IDocument;
  *         An Editor is composed of several documents.
  */
 // TODO Trouver un systeme pour le cursor
-public final class Editor {
+public final class Editor extends Observable {
     // L'utilisation du mot cle volatile permet, en Java version 5 et superieur,
     // d'eviter le cas ou "Singleton.instance" est non-nul,
     // mais pas encore "reellement" instancie.
@@ -25,6 +26,10 @@ public final class Editor {
      * The single instance of Editor
      */
     private static volatile Editor editorInstance;
+    /**
+     * The cursor of the Editor
+     */
+    private Cursor                 cursor = Cursor.getCursorInstance();
 
     /**
      * @return the single instance of Editor.
@@ -51,6 +56,7 @@ public final class Editor {
 
     private Editor() {
         this.documents = new HashSet<IDocument>();
+        cursor = Cursor.getCursorInstance();
     }
 
     /**
@@ -59,6 +65,8 @@ public final class Editor {
      * @return true if the document has been added
      */
     public boolean addDocument(IDocument aDocument) {
+        this.setChanged();
+        this.notifyObservers();
         return this.documents.add(aDocument);
     }
 
@@ -105,5 +113,7 @@ public final class Editor {
      */
     public void setDocuments(Set<IDocument> documentsList) {
         this.documents = documentsList;
+        this.setChanged();
+        this.notifyObservers();
     }
 }

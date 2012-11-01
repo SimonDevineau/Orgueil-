@@ -20,12 +20,13 @@ class Line extends Observable implements ILine {
 	private StringBuilder _Line;
 	private int _CursorLocation = NO_CURSOR;
 
-	/**
-	 * Default constructor which creates an empty line
-	 */
-	Line() {
-		this._Line = new StringBuilder();
-	}
+    /**
+     * Default constructor which creates an empty line
+     */
+    Line() {
+        this._Line = new StringBuilder();
+        Cursor.getCursorInstance().setCurrentLine(this);
+    }
 
 	/**
 	 * The constructor to create a line using the CharSequence as starting text.
@@ -44,6 +45,7 @@ class Line extends Observable implements ILine {
 			this._Line.insert(this._CursorLocation, insertion);
 		}
 	}
+
 
 	@Override
 	public void append(CharSequence content) {
@@ -66,7 +68,7 @@ class Line extends Observable implements ILine {
 	public boolean hasCursor() {
 		return this._CursorLocation != NO_CURSOR;
 	}
-
+ 
 	@Override
 	public void replaceUnderCursor(CharSequence replacement) {
 		if (this.hasCursor()) {
@@ -121,4 +123,14 @@ class Line extends Observable implements ILine {
 	public int length() {
 		return _Line.length();
 	}
+  
+/*
+    *//**
+     * @see model.interfaces.ILine#hasCursor()
+     *//*
+    @Override
+    public boolean hasCursor() {
+        //TODO equals or ==, plutot == car on veut que ca soit la meme case mémoire
+        return Cursor.getCursorInstance().getCurrentLine().equals(this);
+    }*/
 }
