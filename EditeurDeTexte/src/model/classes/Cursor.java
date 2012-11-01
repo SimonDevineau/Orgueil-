@@ -34,8 +34,8 @@ public final class Cursor {
     private int                    currentPosition = 0;
 
     private Cursor() {
-        this.currentLine = Factory.createLine();
-        this.currentSection = Factory.createSection();
+        this.currentLine = null;
+        this.currentSection = null;
         this.currentDocument = Factory.createDocument();
         setCurrentPosition(0);
     }

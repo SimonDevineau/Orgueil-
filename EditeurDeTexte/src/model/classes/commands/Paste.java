@@ -33,6 +33,7 @@ class Paste implements ICommandVisitor {
                     Cursor.getCursorInstance().getCurrentLine(),
                     (ILine) Cursor.getCursorInstance().getCurrentDocument()
                             .getBufferMemory().pop());
+            
         }
     }
 

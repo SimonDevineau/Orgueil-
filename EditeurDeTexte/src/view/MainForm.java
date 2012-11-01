@@ -30,7 +30,6 @@ public class MainForm extends JFrame {
 
     public MainForm() {
         this.setSize(DEFAULT_DIMENSION);
-        this.setVisible(true);
         this.setLayout(new GridLayout(2, 1));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel up = new JPanel(new FlowLayout());
@@ -42,6 +41,7 @@ public class MainForm extends JFrame {
         down.setBorder(BorderFactory.createTitledBorder("Management"));
         this.add(up);
         this.add(down);
+        this.setVisible(true);
     }
 
     public JTextField getCommand() {

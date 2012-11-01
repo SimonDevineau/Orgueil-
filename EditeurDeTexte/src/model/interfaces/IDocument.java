@@ -1,5 +1,8 @@
 package model.interfaces;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * 10 oct. 2012 - EditeurDeTexte.
  * @author Simon Devineau & Pierre Reliquet
@@ -95,8 +98,21 @@ public interface IDocument extends IStorable {
     public void setText(IText text);
 
     /**
+     * The method used to add a new observer on the line. This observer is used
+     * in order to be able to notify when the line get the cursor.
+     * @param o
+     *            , the new Observer
+     */
+    void addObserver(Observer o);
+
+    /**
      * @return the string representation of the document.
      */
     @Override
     public String toString();
+
+    /**
+     * @return a description in HTML of the document
+     */
+    public String toHTML();
 }

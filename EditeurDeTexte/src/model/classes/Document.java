@@ -6,6 +6,9 @@ package model.classes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
+
+import controllers.DisplayText;
 
 import model.interfaces.IBufferMemory;
 import model.interfaces.ICommandVisitor;
@@ -23,7 +26,7 @@ import model.interfaces.IText;
  *         sections which can have
  *         subsections...
  */
-class Document implements IDocument {
+class Document extends Observable implements IDocument {
     /**
      * The introduction text of the document
      */
@@ -50,7 +53,7 @@ class Document implements IDocument {
         ;
         this.sectionsList = new ArrayList<ISection>();
         this.path = " ";
-        Cursor.getCursorInstance().setCurrentDocument(this);
+        //Cursor.getCursorInstance().setCurrentDocument(this);
     }
 
     public Document(String path) {
@@ -64,6 +67,8 @@ class Document implements IDocument {
     @Override
     public boolean addSection(ISection aSection) {
         this.sectionsList.add(this.getIndexCurrentSection(), aSection);
+        this.setChanged();
+        this.notifyObservers();
         return this.sectionsList.contains(aSection);
     }
 
@@ -207,5 +212,31 @@ class Document implements IDocument {
     @Override
     public void accept(ICommandVisitor aVisitor) {
         aVisitor.visit(this);
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        String toReturn = this.getText().toString() + "\n";
+        int size = sectionsList.size();
+        for (int i = 0; i < size; i++) {
+            toReturn += sectionsList.get(i).toString() + "\n";
+        }
+        return toReturn;
+    }
+
+    /**
+     * @see model.interfaces.IDocument#toHTML()
+     */
+    @Override
+    public String toHTML() {
+        String toReturn = this.getText().toString() + "\n";
+        int size = sectionsList.size();
+        for (int i = 0; i < size; i++) {
+            toReturn += sectionsList.get(i).toString() + "\n";
+        }
+        return toReturn;
     }
 }

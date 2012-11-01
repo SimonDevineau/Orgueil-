@@ -14,6 +14,7 @@ class Line implements ILine {
      * string each time that a char is added.
      */
     private StringBuilder _Line;
+    
 
     /**
      * Default constructor which creates an empty line
