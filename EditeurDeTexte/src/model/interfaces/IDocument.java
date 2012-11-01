@@ -88,6 +88,12 @@ public interface IDocument extends IStorable{
      *            , the text to set.
      */
     public void setText(IText text);
+    
+    /**
+     * @param index, the index of the section to get
+     * @return the section indexed by the index parameter.
+     */
+    ISection getSection(int index);
 
     /**
      * @return the string representation of the document.

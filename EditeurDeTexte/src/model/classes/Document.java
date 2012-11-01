@@ -206,4 +206,12 @@ class Document implements IDocument {
     public void accept(ICommandVisitor aVisitor) {
         aVisitor.visit(this);
     }
+
+    /**
+     * @see model.interfaces.IDocument#getSection(int)
+     */
+	@Override
+	public ISection getSection(int index) {
+		return sectionsList.get(index);
+	}
 }
