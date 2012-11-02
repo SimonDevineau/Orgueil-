@@ -22,7 +22,7 @@ class Deployed implements IState {
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		result.append(linkedSection.getTitle().toString());
-		result.append(linkedSection.getIntroduction().toString());
+		result.append(linkedSection.getText().toString());
 		for(ISection subSection : linkedSection.getSubSections())
 			result.append(subSection.toString());
 		return result.toString();

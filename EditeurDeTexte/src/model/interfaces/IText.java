@@ -52,4 +52,11 @@ public interface IText extends IStorable {
      * @param aLine
      */
     void removeLine(ILine aLine);
+    
+    /**
+     * Insert the lineToInsert inside the text after the current line or at the 
+     * end.
+     * @param lineToInsert
+     */
+    void insertLine(ILine lineToInsert);
 }

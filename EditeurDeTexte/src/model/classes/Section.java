@@ -30,7 +30,7 @@ class Section extends Observable implements ISection {
     /**
      * The current section text;
      */
-    private IText          introduction     = Factory.createText();
+    private IText          text     = Factory.createText();
     /**
      * The parent section.
      */
@@ -71,7 +71,10 @@ class Section extends Observable implements ISection {
     @Override
     public boolean addSubSection(ISection aSection) {
         aSection.setParent(this);
-        return this.subSections.add(aSection);
+        boolean result = this.subSections.add(aSection);
+        setChanged();
+        notifyObservers();
+        return result;
     }
 
 
@@ -100,11 +103,11 @@ class Section extends Observable implements ISection {
 	}
 
 	/**
-	 * @see model.interfaces.ISection#getIntroduction()
+	 * @see model.interfaces.ISection#getText()
 	 */
 	@Override
-	public IText getIntroduction() {
-		return introduction;
+	public IText getText() {
+		return text;
 	}
 
 	/**
@@ -138,9 +141,8 @@ class Section extends Observable implements ISection {
     @Override
     public void setIsCurrentSection(boolean aIsCurrentSection) {
         this.isCurrentSection = aIsCurrentSection;
-        if (this.parent != null) {
+        if (this.parent != null)
             this.parent.setIsCurrentSection(aIsCurrentSection);
-        }
     }
 
     /**
@@ -148,17 +150,11 @@ class Section extends Observable implements ISection {
      */
     @Override
     public ISection getCurrentSection() {
-        int subSectionsSize = getSubSections().size();
-        if (getSubSections() == null || subSectionsSize == 0)
-            return this;
-        int currentIndex = 0;
-        while (currentIndex < subSectionsSize
-                && !getSubSections().get(currentIndex).isCurrentSection())
-            currentIndex++;
-        if (currentIndex == subSectionsSize)
-            return this;
-        else
-            return getSubSections().get(currentIndex).getCurrentSection();
+    	int index = indexOfCurrentSection();
+    	if(index == -1) 
+    		return this;
+    	else
+    		return getSubSections().get(index).getCurrentSection();
     }
 
 	/**

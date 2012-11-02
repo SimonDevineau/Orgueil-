@@ -24,7 +24,7 @@ class DeleteAndSave implements ICommandVisitor {
             //TODO FAUT IL PASSER PAR UN CONSTRUCTEUR PAR DEFAULT
             Cursor.getCursorInstance().getCurrentDocument().getBufferMemory()
                     .push(aLine);
-            Cursor.getCursorInstance().getCurrentSection().getIntroduction()
+            Cursor.getCursorInstance().getCurrentSection().getText()
                     .removeLine(aLine);
         }
     }

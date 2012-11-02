@@ -51,7 +51,7 @@ public interface ISection extends IStorable {
 	/**
 	 * @return the introduction of the current section
 	 */
-	IText getIntroduction();
+	IText getText();
 
 	/**
 	 * @return the parent of the current section.

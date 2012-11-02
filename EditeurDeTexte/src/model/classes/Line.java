@@ -18,13 +18,17 @@ class Line extends Observable implements ILine {
 	 * string each time that a char is added.
 	 */
 	private StringBuilder _Line;
+	
+	/**
+	 * The variable to store the variable location inside the line.
+	 */
 	private int _CursorLocation = NO_CURSOR;
 
     /**
      * Default constructor which creates an empty line
      */
     Line() {
-        this._Line = new StringBuilder();
+        _Line = new StringBuilder();
         Cursor.getCursorInstance().setCurrentLine(this);
     }
 
@@ -35,33 +39,34 @@ class Line extends Observable implements ILine {
 	 *            , the CharSequence which contains the basis.
 	 */
 	Line(CharSequence sequence) {
-		this._Line = new StringBuilder(sequence);
+		_Line = new StringBuilder(sequence);
+		Cursor.getCursorInstance().setCurrentLine(this);
 	}
 
 	@Override
 	public void addUnderCursor(CharSequence insertion) {
 		// TODO vérifier si c'est _CursorLocation ou _CursorLocation+1
-		if (this.hasCursor()) {
-			this._Line.insert(this._CursorLocation, insertion);
-		}
+		if (hasCursor()) 
+			_Line.insert(_CursorLocation, insertion);
+		setCursorLocation(_CursorLocation + insertion.length());
 	}
 
 
 	@Override
 	public void append(CharSequence content) {
-		this._Line.append(content);
+		_Line.append(content);
 	}
 
 	@Override
 	public void deleteUnderCursor() {
-		if (this.hasCursor()) {
-			this._Line.deleteCharAt(this._CursorLocation);
+		if (hasCursor()) {
+			_Line.deleteCharAt(_CursorLocation);
 		}
 	}
 
 	@Override
 	public int getCursorLocation() {
-		return this._CursorLocation;
+		return _CursorLocation;
 	}
 
 	@Override
@@ -74,21 +79,22 @@ class Line extends Observable implements ILine {
 		if (this.hasCursor()) {
 			// TODO vérifier les index
 			// Copying the start of the line (before the cursor)
-			StringBuilder tmp = new StringBuilder(this._Line.substring(0,
-					this._CursorLocation));
+			StringBuilder tmp = new StringBuilder(_Line.substring(0,
+					_CursorLocation));
 			// Adding the replacement
 			tmp.append(replacement);
 			// TODO vérifier les index
 			// Calculating the new cursor location
-			int newCursorLocation = this._CursorLocation + replacement.length();
+			int newCursorLocation = _CursorLocation + replacement.length();
 			// If the line is longer than the new cursor location we need
 			// to append the rest of the line
-			if (this._Line.length() > newCursorLocation) {
-				tmp.append(this._Line.substring(newCursorLocation));
+			if (_Line.length() > newCursorLocation) {
+				tmp.append(_Line.substring(newCursorLocation));
 			}
 			// We store the new variables.
-			this._Line = tmp;
-			this._CursorLocation = newCursorLocation;
+			_Line = tmp;
+			_CursorLocation = newCursorLocation;
+			setCursorLocation(newCursorLocation);
 		}
 	}
 
@@ -130,7 +136,7 @@ class Line extends Observable implements ILine {
      *//*
     @Override
     public boolean hasCursor() {
-        //TODO equals or ==, plutot == car on veut que ca soit la meme case m�moire
+        //TODO equals or ==, plutot == car on veut que ca soit la meme case m�moire
         return Cursor.getCursorInstance().getCurrentLine().equals(this);
     }*/
 }

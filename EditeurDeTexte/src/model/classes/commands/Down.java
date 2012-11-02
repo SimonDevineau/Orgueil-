@@ -31,8 +31,8 @@ public class Down implements ICommandVisitor {
 		// If the title has the cursor
 		if (aSection.getTitle().hasCursor()) {
 			// If the text is not empty
-			if (aSection.getIntroduction().size() != 0) {
-				aSection.getIntroduction()
+			if (aSection.getText().size() != 0) {
+				aSection.getText()
 						.getLine(0)
 						.setCursorLocation(
 								aSection.getTitle().getCursorLocation());
@@ -42,23 +42,23 @@ public class Down implements ICommandVisitor {
 				changeSection(aSection, aSection.getTitle());
 		} else { // else it means that the text has the cursor
 			int index = 0;
-			int linesNumber = aSection.getIntroduction().size();
+			int linesNumber = aSection.getText().size();
 			while (index < linesNumber
-					&& !aSection.getIntroduction().getLine(index).hasCursor())
+					&& !aSection.getText().getLine(index).hasCursor())
 				index++;
 			if (index == linesNumber)
 				throw new RuntimeException(
 						"An error occured in the Down command line 52, an error exists in the model because no line has the cursor");
 			if (index == linesNumber - 1)
 				changeSection(aSection,
-						aSection.getIntroduction().getLine(index));
+						aSection.getText().getLine(index));
 			else {
-				aSection.getIntroduction()
+				aSection.getText()
 						.getLine(index + 1)
 						.setCursorLocation(
-								aSection.getIntroduction().getLine(index)
+								aSection.getText().getLine(index)
 										.getCursorLocation());
-				aSection.getIntroduction().getLine(index).removeCursor();
+				aSection.getText().getLine(index).removeCursor();
 			}
 		}
 	}
