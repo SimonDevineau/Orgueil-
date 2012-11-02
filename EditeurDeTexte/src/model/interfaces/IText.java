@@ -18,23 +18,34 @@ public interface IText extends IStorable {
      * @param aLine
      *            , the line to add
      */
-    public void addLine(ILine aLine);
+    void addLine(ILine aLine);
     /**
      * add a Line after the current line
      * @param currentLine, the current line
      * @param lineToPaste, the line to paste
      */
-    public void addLine(ILine currentLine, ILine lineToPaste);
+    void addLine(ILine currentLine, ILine lineToPaste);
 
     /**
      * @return the lines list of the text
      */
-    public ArrayList<ILine> getLines();
+    ArrayList<ILine> getLines();
+    
+    /**
+     * @param index the index of the line to get
+     * @return the line numbered index (starting with 0 and ending with size-1)
+     */
+    ILine getLine(int index);
+    
+    /**
+     * @return the size (number of lines) of the text
+     */
+    int size();
 
     /**
      * @return true if the cursor is inside the current text
      */
-    public boolean hasCursor();
+    boolean hasCursor();
 
     /**
      * Remove the line situated at the cursor position

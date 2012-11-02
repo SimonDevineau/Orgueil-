@@ -1,6 +1,7 @@
 package model.classes.commands;
 
 import model.classes.Editor;
+import model.classes.Factory;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
 import model.interfaces.ILine;
@@ -30,37 +31,34 @@ public class Down implements ICommandVisitor {
 		// If the title has the cursor
 		if (aSection.getTitle().hasCursor()) {
 			// If the text is not empty
-			if (aSection.getIntroduction().getLines().size() != 0) {
+			if (aSection.getIntroduction().size() != 0) {
 				aSection.getIntroduction()
-						.getLines()
-						.get(0)
+						.getLine(0)
 						.setCursorLocation(
 								aSection.getTitle().getCursorLocation());
 				aSection.getTitle().removeCursor();
 			} else
-				// else it means that the section is empty
+				// else it means that the text is empty
 				changeSection(aSection, aSection.getTitle());
 		} else { // else it means that the text has the cursor
 			int index = 0;
-			int linesNumber = aSection.getIntroduction().getLines().size();
+			int linesNumber = aSection.getIntroduction().size();
 			while (index < linesNumber
-					&& !aSection.getIntroduction().getLines().get(index)
-							.hasCursor())
+					&& !aSection.getIntroduction().getLine(index).hasCursor())
 				index++;
 			if (index == linesNumber)
 				throw new RuntimeException(
-						"An error occured in the Down command line 52");
+						"An error occured in the Down command line 52, an error exists in the model because no line has the cursor");
 			if (index == linesNumber - 1)
-				changeSection(aSection, aSection.getIntroduction().getLines()
-						.get(index));
+				changeSection(aSection,
+						aSection.getIntroduction().getLine(index));
 			else {
 				aSection.getIntroduction()
-						.getLines()
-						.get(index + 1)
+						.getLine(index + 1)
 						.setCursorLocation(
-								aSection.getIntroduction().getLines()
-										.get(index).getCursorLocation());
-				aSection.getIntroduction().getLines().get(index).removeCursor();
+								aSection.getIntroduction().getLine(index)
+										.getCursorLocation());
+				aSection.getIntroduction().getLine(index).removeCursor();
 			}
 		}
 	}
@@ -81,19 +79,37 @@ public class Down implements ICommandVisitor {
 
 	/**
 	 * This method is used to go to the next section
-	 * @param aSection the current section
-	 * @param line the current line
+	 * 
+	 * @param aSection
+	 *            the current section
+	 * @param line
+	 *            the current line
 	 */
 	private void changeSection(ISection aSection, ILine line) {
-		//TODO établir le comportement lorsque l'on est sur la dernière section!
-		ISection follower;
-		// if the parent is null, we need to use the editor to access
-		// the document because we are at the root level.
+		// Get the next section
+		ISection next = getNextSection(aSection);
+
+		if (next != null) {
+			// Putting the cursor on the title
+			next.getTitle().setCursorLocation(line.getCursorLocation());
+			// Removing the cursor from the previous line
+			line.removeCursor();
+		}
+	}
+
+	/**
+	 * 
+	 * @param aSection
+	 *            the section from which we have to get the predecessor
+	 * @return the predecessor
+	 */
+	private ISection getNextSection(ISection aSection) {
+		// if the parent is null it means that we are at the root level
 		if (aSection.getParent() == null) {
-			// TODO changer cela parce que le try catch pour faire un test n'est
-			// pas terrible
 			try {
-				follower = Editor
+				// Trying to get the element after the current section at the
+				// root level
+				return Editor
 						.getEditor()
 						.getCurrentDocument()
 						.getSection(
@@ -101,21 +117,22 @@ public class Down implements ICommandVisitor {
 										.getIndexCurrentSection() + 1);
 			} catch (Exception e) {
 				// if the exception is thrown it means that the section was the
-				// last section.
-				return;
+				// last section on the root element and that there is no
+				// section after. So we need to create a new one
+				ISection lastSection = Factory.createSection();
+				Editor.getEditor().getCurrentDocument().addSection(lastSection);
+				return lastSection;
 			}
 		} else {
+			// if the section is the first child so we need to go back to the
+			// parent section
 			if (aSection.getParent().indexOfCurrentSection() == aSection
 					.getParent().getSubSections().size() - 1)
-				return;
+				return getNextSection(aSection.getParent());
 			// if the parent is not null, so we need to get the
 			// following section by using the getParent
-			follower = aSection.getParent().getSubSections()
+			return aSection.getParent().getSubSections()
 					.get(aSection.getParent().indexOfCurrentSection() + 1);
 		}
-		// affecting the cursor to the next section
-		follower.getTitle().setCursorLocation(line.getCursorLocation());
-		// and removing the cursor from the previous line.
-		line.removeCursor();
 	}
 }

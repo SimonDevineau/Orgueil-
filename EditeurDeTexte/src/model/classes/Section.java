@@ -59,14 +59,19 @@ class Section extends Observable implements ISection {
         currentState = deployedState;
         Cursor.getCursorInstance().setCurrentSection(this);
     }
+    
+    public Section(ISection parent) {
+    	this();
+    	setParent(parent);
+    }
 
     /**
      * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
      */
     @Override
-    public void addSubSection(ISection aSection) {
+    public boolean addSubSection(ISection aSection) {
         aSection.setParent(this);
-        this.subSections.add(aSection);
+        return this.subSections.add(aSection);
     }
 
 
@@ -107,9 +112,7 @@ class Section extends Observable implements ISection {
 	 */
 	@Override
 	public void setParent(ISection aSection) {
-		// Check when we ahve to add the children to the parent list
-		// TODO aSection.addSubSection(this);
-		this.parent = aSection;
+		aSection.addSubSection(this);
 	}
 
 	/**

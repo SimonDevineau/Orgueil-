@@ -60,11 +60,6 @@ public final class CommandExecutor {
 		this.commandsList = commandsList;
 	}
 
-	// TODO definir comment est le fichier
-	public void init(File aFile) {
-
-	}
-
 	/**
 	 * This method is used to load all the commands inside the Map. In order to do that we are using reflection 
 	 * so the program is extensible and respect the Open-Close principle.
@@ -80,8 +75,6 @@ public final class CommandExecutor {
 		while (key.hasNext()) {
 			String current = key.next();
 			String fullName = tmp.get(current);
-			// TODO Remove this print
-			System.out.println(fullName);
 			try {
 				// The variable to store the class
 				Class tmpClass;

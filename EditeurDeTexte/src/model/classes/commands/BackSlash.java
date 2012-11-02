@@ -19,6 +19,7 @@ class BackSlash implements ICommandVisitor {
      */
     @Override
     public void visit(ILine aLine) {
+    	aLine.replaceUnderCursor("\\");
     }
 
     /**

@@ -89,4 +89,20 @@ class Text implements IText {
             linesList.add(linesList.lastIndexOf(aCurrentLine), aLineToPaste);
         }
     }
+
+    /**
+     * @see model.interfaces.IText#getLine(int)
+     */
+	@Override
+	public ILine getLine(int index) {
+		return linesList.get(index);
+	}
+
+	/**
+	 * @see model.interfaces.IText#size()
+	 */
+	@Override
+	public int size() {
+		return linesList.size();
+	}
 }

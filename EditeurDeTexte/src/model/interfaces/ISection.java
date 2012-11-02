@@ -20,8 +20,9 @@ public interface ISection extends IStorable {
      * Add a section to the current section (as a child)
      * @param aSection
      *            , the section to add
+     * @return true if the subsection has been added successfully
      */
-    void addSubSection(ISection aSection);
+    boolean addSubSection(ISection aSection);
 
     /**
      * @return true if anObject is equal to the current section.

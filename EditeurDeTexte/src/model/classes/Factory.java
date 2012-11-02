@@ -39,6 +39,15 @@ public class Factory {
 	public static ISection createSection() {
 		return new Section();
 	}
+	
+	/**
+	 * 
+	 * @param parent, the parent of the created section
+	 * @return a new section
+	 */
+	public static ISection createSection(ISection parent) {
+		return new Section(parent);
+	}
 
 	/**
 	 * @return a new text

@@ -27,7 +27,7 @@ class DeployOrHide implements ICommandVisitor {
     @Override
     public void visit(ISection aSection) {
         if(aSection!=null)
-        aSection.setIsCurrentSection(!aSection.isCurrentSection());
+        	aSection.setIsCurrentSection(!aSection.isCurrentSection());
     }
 
     /**

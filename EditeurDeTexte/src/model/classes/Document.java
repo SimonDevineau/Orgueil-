@@ -247,4 +247,14 @@ class Document extends Observable implements IDocument {
         }
         return toReturn;
     }
+
+	@Override
+	public void addSection(ISection section, int index) {
+		sectionsList.add(index, section);
+	}
+	
+	@Override
+	public ISection removeSection(int index) {
+		return sectionsList.remove(index);
+	}
 }

@@ -12,7 +12,7 @@ import model.interfaces.IText;
  * @author Simon Devineau & Pierre Reliquet
  *         Ecole des Mines de Nantes
  *         Major in Computer and Information System Engineering
- *         Peep.java
+ *         Pop.java
  */
 class Pop implements ICommandVisitor{
 

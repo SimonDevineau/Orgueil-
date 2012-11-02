@@ -17,28 +17,43 @@ public interface IDocument extends IStorable {
      *            with the cursor
      * @return true if the section has been added successfully.
      */
-    public boolean addSection(ISection section);
+    boolean addSection(ISection section);
+    
+    /**
+     * @param section
+     *            , the section to insert after the current section, the one
+     *            with the cursor
+     * @param index, the index where the new section should be added?
+     * @return true if the section has been added successfully.
+     */
+    void addSection(ISection section, int index);
+    
+    /**
+     * @param index the index of the method to remove
+     * @return the removed section
+     */
+    ISection removeSection(int index);
 
     /**
      * @param section
      *            , the section to append at the end of the sections
      * @return true if the section has been added successfully.
      */
-    public boolean appendSection(ISection section);
+    boolean appendSection(ISection section);
 
     /**
      * @return true if the current section, the one which has the cursor, has
      *         been
      *         deleted successfully.
      */
-    public boolean deleteSection();
+    boolean deleteSection();
 
     /**
      * @param section
      *            the section to delete
      * @return true if the section has been deleted successfully
      */
-    public boolean deleteSection(ISection section);
+    boolean deleteSection(ISection section);
 
     /**
      * @param obj
@@ -46,56 +61,56 @@ public interface IDocument extends IStorable {
      * @return true if obj is equal with this
      */
     @Override
-    public boolean equals(Object obj);
+    boolean equals(Object obj);
 
     /**
      * @return the current section, the only one which has the cursor
      */
-    public ISection getCurrentSection();
+    ISection getCurrentSection();
 
     /**
      * @return the current section index , the only one which has the cursor
      */
-    public int getIndexCurrentSection();
+    int getIndexCurrentSection();
 
     /**
      * @return the document path
      */
-    public String getPath();
+    String getPath();
 
     /**
      * @return the current introduction text of the document.
      */
-    public IText getText();
+    IText getText();
 
     /**
      * @return the buffer memory of the document
      */
-    public IBufferMemory getBufferMemory();
+    IBufferMemory getBufferMemory();
 
     /**
      * @return true if it is the current document
      */
-    public boolean isCurrentDocument();
+    boolean isCurrentDocument();
 
     /**
      * @param isCurrentDocument
      *            , true if it the current document
      */
-    public void setIsCurrentDocument(boolean isCurrentDocument);
+    void setIsCurrentDocument(boolean isCurrentDocument);
 
     /**
      * @param url
      *            , the new path
      */
-    public void setPath(String uString);
+    void setPath(String uString);
 
     /**
      * Sets the new introduction text
      * @param text
      *            , the text to set.
      */
-    public void setText(IText text);
+    void setText(IText text);
     
     /**
      * @param index, the index of the section to get
@@ -115,10 +130,10 @@ public interface IDocument extends IStorable {
      * @return the string representation of the document.
      */
     @Override
-    public String toString();
+    String toString();
 
     /**
      * @return a description in HTML of the document
      */
-    public String toHTML();
+    String toHTML();
 }
