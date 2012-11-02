@@ -203,4 +203,23 @@ class Section extends Observable implements ISection {
         return isCurrentSection;
     }
 
+	@Override
+	public void addSubSection(ISection aSection, int index) {
+		subSections.add(index, aSection);
+	}
+
+	@Override
+	public ISection removeSection(int index) {
+		return subSections.remove(index);
+	}
+
+	@Override
+	public void deploy() {
+		currentState = deployedState;
+	}
+
+	@Override
+	public void hide() {
+		currentState = hiddenState;
+	}
 }

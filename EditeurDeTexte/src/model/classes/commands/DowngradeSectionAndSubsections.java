@@ -39,7 +39,8 @@ class DowngradeSectionAndSubsections implements ICommandVisitor {
 						.getIndexCurrentSection() - 1);
 				// Getting the index of the section
 				int indexOfDowngraded = currentDoc.getIndexCurrentSection();
-				// Removing the section and adding it to the sons of the previous section
+				// Removing the section and adding it to the sons of the
+				// previous section
 				previous.addSubSection(currentDoc
 						.removeSection(indexOfDowngraded));
 			} catch (Exception e) {
@@ -51,14 +52,20 @@ class DowngradeSectionAndSubsections implements ICommandVisitor {
 				previous.addSubSection(currentDoc.removeSection(0));
 			}
 		} else {
-//			// if the section is the first child so we need to go back to the
-//			// parent section
-//			if (aSection.getParent().indexOfCurrentSection() == 0)
-//				aSection.getParent();
-//			// if the parent is not null, so we need to get the
-//			// following section by using the getParent
-//			return aSection.getParent().getSubSections()
-//					.get(aSection.getParent().indexOfCurrentSection() - 1);
+			// if the section is the first child so we need to go back to the
+			// parent section
+			if (aSection.getParent().indexOfCurrentSection() == 0) {
+				ISection previous = Factory.createSection();
+				aSection.getParent().addSubSection(previous, 1);
+				previous.addSubSection(aSection.getParent().removeSection(0));
+			} else {
+				// if the parent is not null, so we need to get the
+				// following section by using the getParent
+				ISection previous = aSection.getParent().getSubSections()
+						.get(aSection.getParent().indexOfCurrentSection() - 1);
+				previous.addSubSection(aSection.getParent().removeSection(
+						aSection.getParent().indexOfCurrentSection()));
+			}
 		}
 	}
 

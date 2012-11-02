@@ -4,11 +4,8 @@
 package model.classes;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
-
-import controllers.DisplayText;
 
 import model.interfaces.IBufferMemory;
 import model.interfaces.ICommandVisitor;
@@ -50,7 +47,6 @@ class Document extends Observable implements IDocument {
 
     public Document() {
         this.introductionText = Factory.createText();
-        ;
         this.sectionsList = new ArrayList<ISection>();
         this.path = " ";
         //Cursor.getCursorInstance().setCurrentDocument(this);
