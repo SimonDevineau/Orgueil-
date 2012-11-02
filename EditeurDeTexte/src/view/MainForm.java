@@ -38,8 +38,10 @@ public class MainForm extends JFrame {
                                                                 "Validate");
 
     public MainForm() {
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(
-                Editor.class.getResource("images/notes.png")));
+        if (!System.getProperty("os.name").toLowerCase().contains("mac os")) {
+            this.setIconImage(Toolkit.getDefaultToolkit().getImage(
+                    Editor.class.getResource("images/notes.png")));
+        }
         this.setTitle(DEFAULT_TITLE);
         this.setSize(DEFAULT_DIMENSION);
         this.setLayout(new GridLayout(2, 1));
