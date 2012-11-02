@@ -34,7 +34,8 @@ class Section extends Observable implements ISection {
     /**
      * The parent section.
      */
-    private ISection       parent           = Factory.createSection();
+    //The  value is null because a section hasn't got necessarily a parent 
+    private ISection       parent           = null;
    
 	/**
 	 * The current state which is used to print the section. This is used to

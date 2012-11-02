@@ -38,7 +38,7 @@ public class InputText implements KeyListener {
      */
     @Override
     public void keyReleased(KeyEvent aE) {
-        if (aE.equals(KeyEvent.VK_ENTER)) {
+        if (aE.getKeyCode()==KeyEvent.VK_ENTER) {
             String textInput = input.getText();
             manageInputText(textInput);
         }

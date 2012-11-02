@@ -3,7 +3,7 @@ package utilities;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import com.apple.eawt.Application;
+import com.apple.eawt.*;
 
 import tests.LaunchEditor;
 import view.MainForm;
@@ -17,20 +17,22 @@ import view.MainForm;
  */
 public class Utilities {
     public static void changeMenuBar() {
-        if (System.getProperty("os.name").toLowerCase().contains("mac os")) {
-            System.setProperty(
-                    "com.apple.mrj.application.apple.menu.about.name",
-                    MainForm.DEFAULT_TITLE);
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-            Application application = Application.getApplication();
-            Image imageDock = null;
-            try {
-                imageDock = Toolkit.getDefaultToolkit().getImage(
-                        LaunchEditor.class.getResource("images/notes.png"));
-            }
-            catch (Exception e) {
-            }
-            application.setDockIconImage(imageDock);
-        }
+        /*
+         * if (System.getProperty("os.name").toLowerCase().contains("mac os")) {
+         * System.setProperty(
+         * "com.apple.mrj.application.apple.menu.about.name",
+         * MainForm.DEFAULT_TITLE);
+         * System.setProperty("apple.laf.useScreenMenuBar", "true");
+         * Application application = Application.getMouseLocationOnScreen()
+         * Image imageDock = null;
+         * try {
+         * imageDock = Toolkit.getDefaultToolkit().getImage(
+         * LaunchEditor.class.getResource("images/notes.png"));
+         * }
+         * catch (Exception e) {
+         * }
+         * application.setDockIconImage(imageDock);
+         * }
+         */
     }
 }

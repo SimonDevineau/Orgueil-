@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -29,6 +30,8 @@ public class MainForm extends JFrame {
     private static final int       DEFAULT_COLUMN_WIDTH = 40;
     private static final Dimension DEFAULT_DIMENSION    = new Dimension(640,
                                                                 480);
+    private static final Dimension MINIMUM_DIMENSION    = new Dimension(500,
+                                                                480);
     private JLabel                 m_Text               = new JLabel(
                                                                 DEFAULT_COMMAND_LINE);
     private JTextField             m_Command            = new JTextField(
@@ -38,22 +41,26 @@ public class MainForm extends JFrame {
                                                                 "Validate");
 
     public MainForm() {
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(
-                Editor.class.getResource("images/notes.png")));
+        if (!System.getProperty("os.name").toLowerCase().contains("mac os")) {
+            this.setIconImage(Toolkit.getDefaultToolkit().getImage(
+                    Editor.class.getResource("images/notes.png")));
+        }
         this.setTitle(DEFAULT_TITLE);
         this.setSize(DEFAULT_DIMENSION);
-        this.setLayout(new GridLayout(2, 1));
+        // this.setLayout(new GridLayout(2, 1));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel up = new JPanel(new FlowLayout());
+        up.setMinimumSize(MINIMUM_DIMENSION);
         up.add(this.m_Text);
         up.setBorder(BorderFactory.createTitledBorder("Text"));
         JPanel down = new JPanel(new FlowLayout());
         down.add(this.m_Command);
         down.add(this.m_Validate);
         down.setBorder(BorderFactory.createTitledBorder("Management"));
-        this.add(up);
-        this.add(down);
+        this.getContentPane().add(up, BorderLayout.NORTH);
+        this.getContentPane().add(down, BorderLayout.SOUTH);
         this.setVisible(true);
+   
     }
 
     public JTextField getCommand() {
