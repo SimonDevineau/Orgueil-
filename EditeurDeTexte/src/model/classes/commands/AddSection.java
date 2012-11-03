@@ -1,5 +1,6 @@
 package model.classes.commands;
 
+import utilities.Logger;
 import model.classes.Cursor;
 import model.classes.Factory;
 import model.interfaces.ICommandVisitor;
@@ -13,11 +14,18 @@ import model.interfaces.ICommandVisitor;
  */
 public class AddSection implements ICommandVisitor {
     @Override
-    public void visit() {
-        if (Cursor.getCursorInstance().getCurrentDocument() != null
-                || Cursor.getCursorInstance() != null) {
+    public void visit(String textInput) {
+        try {
             Cursor.getCursorInstance().getCurrentDocument()
-                    .addSection(Factory.createSection());
+                    .addSection(Factory.createSection(textInput));
+            System.out.println("title cursor location "
+                    + Cursor.getCursorInstance().getCurrentSection().getTitle()
+                            .hasCursor());
+        }
+        catch (Exception aE) {
+            Logger.error(
+                    "An error of initialisation occured in the class AddSection",
+                    aE);
         }
     }
 }

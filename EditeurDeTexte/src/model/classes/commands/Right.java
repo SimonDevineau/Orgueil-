@@ -13,7 +13,7 @@ import model.interfaces.ILine;
 public class Right implements ICommandVisitor {
 
 	@Override
-	public void visit() {
+	public void visit(String textInput) {
 		ILine current = Cursor.getCursorInstance().getCurrentLine();
 
 		current.setCursorLocation((current.getCursorLocation() == current

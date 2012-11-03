@@ -130,4 +130,9 @@ public interface ISection extends IStorable {
 	 * Change the state of the section to be hidden
 	 */
 	void hide();
+
+    /**
+     * @return parents' section number
+     */
+    int getNbParents();
 }

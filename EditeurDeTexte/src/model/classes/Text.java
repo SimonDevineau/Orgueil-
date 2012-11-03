@@ -13,7 +13,6 @@ import model.interfaces.IText;
  * @author Simon Devineau & Pierre Reliquet Ecole des Mines de Nantes Major in
  *         Computer and Information System Engineering Text.java
  */
-
 class Text extends Observable implements IText {
     /**
      * The list of lines
@@ -26,21 +25,18 @@ class Text extends Observable implements IText {
     }
 
     /**
-     * @see model.interfaces.IStorable#accept(model.interfaces.ICommandVisitor)
-     */
-    @Override
-    public void accept(ICommandVisitor aVisitor) {
-        //aVisitor.visit(this);
-    }
-
-    /**
      * @see model.interfaces.IText#addLine(model.interfaces.ILine)
      */
     @Override
     public void addLine(ILine aLine) {
+        if (aLine != null) {
+            linesList.add(aLine);
+        }
+        else {
+            linesList.add(Factory.createLine());
+        }
         this.setChanged();
         this.notifyObservers();
-        linesList.add(aLine);
     }
 
     /**
@@ -149,7 +145,7 @@ class Text extends Observable implements IText {
     public String toString() {
         String toReturn = "";
         for (ILine line : linesList) {
-            toReturn += "<br/>"+line.toString() + "<br/>";
+            toReturn += "<br/>" + line.toString() + "<br/>";
         }
         return toReturn;
     }

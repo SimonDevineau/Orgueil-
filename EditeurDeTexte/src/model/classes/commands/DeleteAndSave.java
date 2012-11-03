@@ -14,7 +14,7 @@ import model.interfaces.ILine;
 public class DeleteAndSave implements ICommandVisitor {
 
 	@Override
-	public void visit() {
+	public void visit(String textInput) {
 		ILine current = Cursor.getCursorInstance().getCurrentLine();
 		if (current != null) {
             //TODO FAUT IL PASSER PAR UN CONSTRUCTEUR PAR DEFAULT

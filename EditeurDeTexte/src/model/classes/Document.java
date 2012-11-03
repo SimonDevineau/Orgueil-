@@ -61,6 +61,13 @@ class Document extends Observable implements IDocument {
     @Override
     public boolean addSection(ISection aSection) {
         this.sectionsList.add(this.getIndexCurrentSection(), aSection);
+        // J'ai rajouté
+        for (ISection section : sectionsList) {
+            section.setIsCurrentSection(false);
+        }
+        aSection.setIsCurrentSection(true);
+        Cursor.getCursorInstance().setCurrentLine(
+                Cursor.getCursorInstance().getCurrentSection().getTitle());
         this.setChanged();
         this.notifyObservers();
         return this.sectionsList.contains(aSection);
@@ -104,6 +111,7 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public void addLine(ILine aLine) {
+        System.out.println("ligne document " + aLine);
         if (Cursor.getCursorInstance().getCurrentDocument().equals(this)) {
             // Si la section est null, c'est que nous sommes dans le texte
 // introductif du document
@@ -111,6 +119,7 @@ class Document extends Observable implements IDocument {
                 this.introductionText.addLine(aLine);
             }
             else {
+                System.out.println("dans section, je rajoute une ligne");
                 Cursor.getCursorInstance().getCurrentSection().getText()
                         .addLine(aLine);
             }
@@ -236,14 +245,6 @@ class Document extends Observable implements IDocument {
         this.introductionText = aText;
     }
 
-	/**
-	 * @see model.interfaces.IStorable#accept(model.interfaces.ICommandVisitor)
-	 */
-	@Override
-	public void accept(ICommandVisitor aVisitor) {
-		//aVisitor.visit(this);
-	}
-
     /**
      * @see model.interfaces.IDocument#getSection(int)
      */
@@ -270,12 +271,12 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public String toHTML() {
-        String toReturn = "<html>"+this.getText().toString() + "\n";
+        String toReturn = "<html>" + this.getText().toString() + "\n";
         int size = sectionsList.size();
         for (int i = 0; i < size; i++) {
             toReturn += sectionsList.get(i).toString() + "\n";
         }
-        toReturn+="</html>";
+        toReturn += "</html>";
         return toReturn;
     }
 

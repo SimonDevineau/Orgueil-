@@ -13,7 +13,7 @@ import model.interfaces.ICommandVisitor;
 public class UpgradeSection implements ICommandVisitor {
 
 	@Override
-	public void visit() {
+	public void visit(String textInput) {
 		// TODO Auto-generated method stub
 		
 	}

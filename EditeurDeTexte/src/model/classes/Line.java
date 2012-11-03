@@ -105,14 +105,6 @@ class Line extends Observable implements ILine {
         this.notifyObservers();
     }
 
-    /**
-     * @see model.interfaces.IStorable#accept(model.interfaces.ICommandVisitor)
-     */
-    @Override
-    public void accept(ICommandVisitor aVisitor) {
-        //aVisitor.visit(this);
-    }
-
     @Override
     public void setCursorLocation(int position) {
         if (position != _CursorLocation) {
@@ -144,19 +136,22 @@ class Line extends Observable implements ILine {
     public String toString() {
         StringBuilder toReturn = new StringBuilder();
         int index = 0;
-        //If the line has the cursor, this one has to be added to the line
+        // If the line has the cursor, this one has to be added to the line
         if (this.hasCursor()) {
-            //FBefore adding the cursor, we get all the char placed before this one
-            while (index < _CursorLocation-1 && index < _Line.length()) {
+            // FBefore adding the cursor, we get all the char placed before this
+// one
+            while (index < _CursorLocation - 1 && index < _Line.length()) {
                 toReturn.append(_Line.charAt(index));
                 index++;
             }
-            //If there is no char before the cursor, the line is empty, we add an "_" to display a fake cursor
+            // If there is no char before the cursor, the line is empty, we add
+// an "_" to display a fake cursor
             if (_Line.length() == 0) {
                 toReturn.append("<span style=\"background-color:red;text-decoration:blink;\">"
                         + "_" + "</span>");
             }
-            //If there are chars before we place the cursor on the corresponding char and complete the line
+            // If there are chars before we place the cursor on the
+// corresponding char and complete the line
             else {
                 toReturn.append("<span style=\"text-decoration:underline;background-color:red;text-decoration:blink;\">"
                         + _Line.charAt(index) + "</span>");

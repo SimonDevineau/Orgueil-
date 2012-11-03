@@ -9,11 +9,5 @@ import java.util.Observer;
  *         Major in Computer and Information System Engineering
  *         IStorable.java
  */
-public interface IStorable{
-    
-    /**
-     * 
-     * @param visitor
-     */
-    void accept(ICommandVisitor visitor);
+public interface IStorable {
 }

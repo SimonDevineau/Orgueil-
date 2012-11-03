@@ -17,7 +17,7 @@ import model.interfaces.ISection;
 public class DowngradeSectionAndSubsections implements ICommandVisitor {
 
 	@Override
-	public void visit() {
+	public void visit(String textInput) {
 		ISection current = Cursor.getCursorInstance().getCurrentSection();
 		// if the parent is null it means that we are at the root level
 		if (current.getParent() == null) {
