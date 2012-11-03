@@ -15,12 +15,12 @@ public class Paste implements ICommandVisitor {
 
 	@Override
 	public void visit(String textInput) {
-		ISection current = Cursor.getCursorInstance().getCurrentSection();
+		ISection current = Cursor.instance().getCurrentSection();
 		if (current != null
-				&& Cursor.getCursorInstance().getCurrentDocument()
+				&& Cursor.instance().getCurrentDocument()
 						.getBufferMemory().peek() instanceof ILine) {
 			current.getText().insertLine(
-					(ILine) Cursor.getCursorInstance().getCurrentDocument()
+					(ILine) Cursor.instance().getCurrentDocument()
 							.getBufferMemory().pop());
 
 		}

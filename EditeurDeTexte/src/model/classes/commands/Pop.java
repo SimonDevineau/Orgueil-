@@ -15,7 +15,7 @@ public class Pop implements ICommandVisitor{
 
 	@Override
 	public void visit(String textInput) {
-		IDocument current = Cursor.getCursorInstance().getCurrentDocument();
+		IDocument current = Cursor.instance().getCurrentDocument();
 		current.getBufferMemory().pop();
 	}
 }

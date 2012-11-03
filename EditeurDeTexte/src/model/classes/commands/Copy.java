@@ -15,8 +15,8 @@ public class Copy implements ICommandVisitor {
 
 	@Override
 	public void visit(String textInput) {
-		ILine current = Cursor.getCursorInstance().getCurrentLine();
+		ILine current = Cursor.instance().getCurrentLine();
 		if(current != null)
-	        Cursor.getCursorInstance().getCurrentDocument().getBufferMemory().push(current);
+	        Cursor.instance().getCurrentDocument().getBufferMemory().push(current);
 	}
 }

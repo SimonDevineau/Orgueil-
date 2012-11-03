@@ -16,10 +16,10 @@ public class AddSection implements ICommandVisitor {
     @Override
     public void visit(String textInput) {
         try {
-            Cursor.getCursorInstance().getCurrentDocument()
+            Cursor.instance().getCurrentDocument()
                     .addSection(Factory.createSection(textInput));
             System.out.println("title cursor location "
-                    + Cursor.getCursorInstance().getCurrentSection().getTitle()
+                    + Cursor.instance().getCurrentSection().getTitle()
                             .hasCursor());
         }
         catch (Exception aE) {

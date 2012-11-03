@@ -33,8 +33,8 @@ public class Controller implements Observer {
         validateButton = FactoryController.createValidateButton(view
                 .getCommand());
         view.getValidate().setAction(validateButton);
-        Cursor.getCursorInstance().addObserver(this);
-        Cursor.getCursorInstance().setCurrentDocument(Factory.createDocument());
+        Cursor.instance().addObserver(this);
+        Cursor.instance().setCurrentDocument(Factory.createDocument());
     }
 
     /**
@@ -45,7 +45,7 @@ public class Controller implements Observer {
     @Override
     public void update(Observable aO, Object aArg) {
         view.getText().setText(
-                Cursor.getCursorInstance().getCurrentDocument().toHTML());
+                Cursor.instance().getCurrentDocument().toHTML());
         view.repaint();
     }
 }

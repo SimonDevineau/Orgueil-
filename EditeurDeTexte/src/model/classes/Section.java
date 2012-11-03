@@ -52,7 +52,7 @@ class Section extends Observable implements ISection {
         hiddenState = StateFactory.createHiddenState(this);
         deployedState = StateFactory.createDeployedState(this);
         currentState = deployedState;
-        Cursor.getCursorInstance().setCurrentSection(this);
+        Cursor.instance().setCurrentSection(this);
     }
 
     public Section(ISection parent) {

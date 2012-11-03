@@ -21,7 +21,7 @@ class Text extends Observable implements IText {
 
     public Text() {
         linesList = new ArrayList<ILine>();
-        this.addObserver(Cursor.getCursorInstance());
+        this.addObserver(Cursor.instance());
     }
 
     /**

@@ -17,7 +17,7 @@ public class BackSlash implements ICommandVisitor {
     @Override
     public void visit(String textInput) {
         try {
-            Cursor.getCursorInstance().getCurrentLine()
+            Cursor.instance().getCurrentLine()
                     .replaceUnderCursor("\\");
         }
         catch (Exception aE) {

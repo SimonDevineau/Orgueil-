@@ -18,7 +18,7 @@ public class DowngradeSectionAndSubsections implements ICommandVisitor {
 
 	@Override
 	public void visit(String textInput) {
-		ISection current = Cursor.getCursorInstance().getCurrentSection();
+		ISection current = Cursor.instance().getCurrentSection();
 		// if the parent is null it means that we are at the root level
 		if (current.getParent() == null) {
 			IDocument currentDoc = Editor.getEditor().getCurrentDocument();

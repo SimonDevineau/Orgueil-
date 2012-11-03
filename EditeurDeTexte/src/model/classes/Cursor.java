@@ -48,7 +48,7 @@ public final class Cursor extends Observable implements Observer {
     /**
      * @return the cursorInstance
      */
-    public static Cursor getCursorInstance() {
+    public static Cursor instance() {
         initialize();
         return cursorInstance;
     }
@@ -68,7 +68,7 @@ public final class Cursor extends Observable implements Observer {
     public ILine getCurrentLine() {
         initialize();
         if (currentLine == null) {
-            Cursor.getCursorInstance().getCurrentDocument()
+            Cursor.instance().getCurrentDocument()
                     .addLine(Factory.createLine());
         }
         return currentLine;
@@ -80,27 +80,19 @@ public final class Cursor extends Observable implements Observer {
      */
     public void setCurrentLine(ILine _currentLine) {
         initialize();
-        int formeLocation = -1;
         System.out.println("param null ? " + _currentLine);
-        if (this.currentLine != null && this.currentLine.hasCursor()) {
-            this.currentLine.removeCursor();
-            formeLocation = getCurrentLine().getCursorLocation();
-        }
-        if (_currentLine != null) {
+        if (this.currentLine != null)
+        	this.currentLine.setCurrent(false);
+        
+        if (_currentLine != null)
             this.currentLine = _currentLine;
-        }
-        else {
+        else 
             this.currentLine = Factory.createLine();
-        }
-        if (this.currentLine.hasCursor()) {
-            System.out.println("donne moi location +"
-                    + getCurrentLine().getCursorLocation());
-            setCurrentPosition(formeLocation);
-        }
+        this.currentLine.setCurrent(true);
     }
 
     public IStorable getCurrentStorable() {
-        if (Cursor.getCursorInstance().getCurrentSection() == null) {
+        if (Cursor.instance().getCurrentSection() == null) {
             return currentSection;
         }
         else {
@@ -190,14 +182,16 @@ public final class Cursor extends Observable implements Observer {
     public void setCurrentPosition(int currentPosition) {
         if (currentPosition == -1)
             currentPosition = 0;
-        if (currentPosition > Cursor.getCursorInstance().getCurrentLine()
+        if (currentPosition > Cursor.instance().getCurrentLine()
                 .length()) {
-            this.currentPosition = Cursor.getCursorInstance().getCurrentLine()
+            this.currentPosition = Cursor.instance().getCurrentLine()
                     .length();
         }
         else {
             this.currentPosition = currentPosition;
         }
+        setChanged();
+        notifyObservers();
     }
 
     private static void initialize() {

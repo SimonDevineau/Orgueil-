@@ -42,9 +42,7 @@ public class Up implements ICommandVisitor {
 				previousLine = previous.getTitle();
 
 			// Affecting the cursor
-			previousLine.setCursorLocation(line.getCursorLocation());
-			// Removing the previous cursor
-			Cursor.getCursorInstance().setCurrentLine(previousLine);
+			Cursor.instance().setCurrentLine(previousLine);
 		}
 	}
 
@@ -86,7 +84,7 @@ public class Up implements ICommandVisitor {
 
 	@Override
 	public void visit(String textInput) {
-		ISection current = Cursor.getCursorInstance().getCurrentSection();
+		ISection current = Cursor.instance().getCurrentSection();
 		// If the title has the cursor
 		if (current.getTitle().hasCursor())
 			changeSection(current, current.getTitle());
@@ -100,16 +98,11 @@ public class Up implements ICommandVisitor {
 										// bug in the model
 				throw new RuntimeException(
 						"An error occured in the Up command");
-			if (index == 0) { // in that case the title has to receive the
+			if (index == 0) // in that case the title has to receive the
 								// cursor
-				current.getTitle().setCursorLocation(
-						current.getText().getLine(index).getCursorLocation());
-				Cursor.getCursorInstance().setCurrentLine(current.getTitle());
-			} else { // or just the previous line
-				ILine predecessor = current.getText().getLine(index - 1);
-				predecessor.setCursorLocation(current.getText().getLine(index).getCursorLocation());
-				Cursor.getCursorInstance().setCurrentLine(predecessor);
-			}
+				Cursor.instance().setCurrentLine(current.getTitle());
+			else // or just the previous line
+				Cursor.instance().setCurrentLine(current.getText().getLine(index - 1));
 		}
 	}
 

@@ -28,7 +28,7 @@ public final class Editor extends Observable {
 	/**
 	 * The cursor of the Editor
 	 */
-	private Cursor cursor = Cursor.getCursorInstance();
+	private Cursor cursor = Cursor.instance();
 
 	/**
 	 * @return the single instance of Editor.
@@ -56,7 +56,7 @@ public final class Editor extends Observable {
 
 	private Editor() {
 		this.documents = new HashSet<IDocument>();
-		cursor = Cursor.getCursorInstance();
+		cursor = Cursor.instance();
 	}
 
 	/**

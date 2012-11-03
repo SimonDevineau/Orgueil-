@@ -15,12 +15,12 @@ public class DeleteAndSave implements ICommandVisitor {
 
 	@Override
 	public void visit(String textInput) {
-		ILine current = Cursor.getCursorInstance().getCurrentLine();
+		ILine current = Cursor.instance().getCurrentLine();
 		if (current != null) {
             //TODO FAUT IL PASSER PAR UN CONSTRUCTEUR PAR DEFAULT
-            Cursor.getCursorInstance().getCurrentDocument().getBufferMemory()
+            Cursor.instance().getCurrentDocument().getBufferMemory()
                     .push(current);
-            Cursor.getCursorInstance().getCurrentSection().getText()
+            Cursor.instance().getCurrentSection().getText()
                     .removeLine(current);
         }
 	}

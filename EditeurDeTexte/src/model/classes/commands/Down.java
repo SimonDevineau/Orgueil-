@@ -27,12 +27,8 @@ public class Down implements ICommandVisitor {
 		// Get the next section
 		ISection next = getNextSection(aSection);
 
-		if (next != null) {
-			// Putting the cursor on the title
-			next.getTitle().setCursorLocation(line.getCursorLocation());
-			// Removing the cursor from the previous line
-			line.removeCursor();
-		}
+		if (next != null)
+			Cursor.instance().setCurrentLine(next.getTitle());
 	}
 
 	/**
@@ -76,17 +72,13 @@ public class Down implements ICommandVisitor {
 
 	@Override
 	public void visit(String textInput) {
-		ISection current = Cursor.getCursorInstance().getCurrentSection();
+		ISection current = Cursor.instance().getCurrentSection();
 		// If the title has the cursor
 		if (current.getTitle().hasCursor()) {
 			// If the text is not empty
-			if (current.getText().size() != 0) {
-				current.getText()
-						.getLine(0)
-						.setCursorLocation(
-								current.getTitle().getCursorLocation());
-				current.getTitle().removeCursor();
-			} else
+			if (current.getText().size() != 0)
+				Cursor.instance().setCurrentLine(current.getText().getLine(0));
+			else
 				// else it means that the text is empty
 				changeSection(current, current.getTitle());
 		} else { // else it means that the text has the cursor
@@ -100,14 +92,10 @@ public class Down implements ICommandVisitor {
 						"An error occured in the Down command line 52, an error exists in the model because no line has the cursor");
 			if (index == linesNumber - 1)
 				changeSection(current, current.getText().getLine(index));
-			else {
-				current.getText()
-						.getLine(index + 1)
-						.setCursorLocation(
-								current.getText().getLine(index)
-										.getCursorLocation());
-				current.getText().getLine(index).removeCursor();
-			}
+			else
+				Cursor.instance().setCurrentLine(
+						current.getText().getLine(index + 1));
+
 		}
 	}
 }

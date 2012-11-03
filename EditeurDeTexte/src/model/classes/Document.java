@@ -47,7 +47,7 @@ class Document extends Observable implements IDocument {
         this.introductionText = Factory.createText();
         this.sectionsList = new ArrayList<ISection>();
         this.path = " ";
-        this.addObserver(Cursor.getCursorInstance());
+        this.addObserver(Cursor.instance());
     }
 
     public Document(String path) {
@@ -66,8 +66,8 @@ class Document extends Observable implements IDocument {
             section.setIsCurrentSection(false);
         }
         aSection.setIsCurrentSection(true);
-        Cursor.getCursorInstance().setCurrentLine(
-                Cursor.getCursorInstance().getCurrentSection().getTitle());
+        Cursor.instance().setCurrentLine(
+                Cursor.instance().getCurrentSection().getTitle());
         this.setChanged();
         this.notifyObservers();
         return this.sectionsList.contains(aSection);
@@ -112,15 +112,15 @@ class Document extends Observable implements IDocument {
     @Override
     public void addLine(ILine aLine) {
         System.out.println("ligne document " + aLine);
-        if (Cursor.getCursorInstance().getCurrentDocument().equals(this)) {
+        if (Cursor.instance().getCurrentDocument().equals(this)) {
             // Si la section est null, c'est que nous sommes dans le texte
 // introductif du document
-            if (Cursor.getCursorInstance().getCurrentSection() == null) {
+            if (Cursor.instance().getCurrentSection() == null) {
                 this.introductionText.addLine(aLine);
             }
             else {
                 System.out.println("dans section, je rajoute une ligne");
-                Cursor.getCursorInstance().getCurrentSection().getText()
+                Cursor.instance().getCurrentSection().getText()
                         .addLine(aLine);
             }
         }

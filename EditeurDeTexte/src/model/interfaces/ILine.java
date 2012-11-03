@@ -42,29 +42,17 @@ public interface ILine extends IStorable {
 	boolean equals(Object obj);
 
 	/**
-	 * @return the location of the cursor if the line has the cursor
-	 */
-	int getCursorLocation();
-
-	/**
-	 * Set the cursor on a new position on the line.
-	 * 
-	 * @param position
-	 *            , the new position of the cursor.
-	 */
-	void setCursorLocation(int position);
-
-	/**
-	 * This method is used to remove the cursor from the current line.
-	 */
-	void removeCursor();
-
-	/**
 	 * Return true if the current ILine has the cursor and false otherwise
 	 * 
 	 * @return a boolean which indicates if the line has the cursor.
 	 */
 	boolean hasCursor();
+	
+	/**
+	 * Set the line to indicate that it is the current line.
+	 * @param isCurrent true if the line is the current one
+	 */
+	void setCurrent(boolean isCurrent);
 
 	/**
 	 * Replace the following characters by the replacement
