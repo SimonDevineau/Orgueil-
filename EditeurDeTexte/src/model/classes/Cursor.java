@@ -73,15 +73,15 @@ public final class Cursor extends Observable implements Observer {
     }
 
     /**
-     * @param currentLine
+     * @param _currentLine
      *            the currentLine to set
      */
-    public void setCurrentLine(ILine currentLine) {
+    public void setCurrentLine(ILine _currentLine) {
         initialize();
-        if(currentLine != null && currentLine.hasCursor())
+        if(this.currentLine != null && this.currentLine.hasCursor())
         	this.currentLine.removeCursor();
-        this.currentLine = currentLine;
-        if(currentLine.hasCursor())
+        this.currentLine = _currentLine;
+        if(this.currentLine.hasCursor())
         	setCurrentPosition(getCurrentLine().getCursorLocation());
     }
     
