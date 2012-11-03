@@ -25,11 +25,6 @@ public interface ISection extends IDocument {
     ISection getParent();
 
     /**
-     * @return the subsections list of the current section
-     */
-    ArrayList<ISection> getSubSections();
-
-    /**
      * @return the section title
      */
     ILine getTitle();
@@ -61,13 +56,6 @@ public interface ISection extends IDocument {
      *            , the new parent
      */
     void setParent(ISection aSection);
-
-    /**
-     * Set the list of subsections,
-     * @param aSubSectionsList
-     *            , the new subsections
-     */
-    void setSubSection(ArrayList<ISection> aSubSectionsList);
 
     /**
      * Set the title of the section

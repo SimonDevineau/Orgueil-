@@ -1,10 +1,6 @@
 package model.interfaces;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observer;
-
-import model.classes.Factory;
 
 /**
  * 10 oct. 2012 - EditeurDeTexte.

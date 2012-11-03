@@ -18,44 +18,37 @@ import model.interfaces.IText;
  *         Information System Engineering Section.java
  */
 class Section extends Document implements ISection {
-    /**
-     * The subsections' list of the current section.
-     */
-    private List<ISection> subSections      = new ArrayList<ISection>();
-    /**
-     * The current section title.
-     */
-    private ILine          title            = Factory.createLine();
-    /**
-     * The current section text;
-     */
-    private IText          text             = Factory.createText();
+
+    protected ILine          title;
+
     /**
      * The parent section.
      */
     // The value is null because a section hasn't got necessarily a parent
-    private ISection       parent           = null;
+    protected ISection       parent           = null;
     /**
      * The current state which is used to print the section. This is used to
      * implement the state pattern. It enables to delegate instead of doing some
      * switch case with ifs.
      */
-    private IState         currentState;
-    private IState         deployedState;
-    private IState         hiddenState;
+    protected IState         currentState;
+    protected IState         deployedState;
+    protected IState         hiddenState;
     /**
      * True if this section is the current section
      */
-    private boolean        isCurrentSection = false;
+    protected boolean        isCurrentSection = false;
     /**
      * The number of parents of the section
      */
-    private int            nbParents        = 0;
+    protected int            nbParents        = 0;
 
     public Section() {
+    	super();
         hiddenState = StateFactory.createHiddenState(this);
         deployedState = StateFactory.createDeployedState(this);
         currentState = deployedState;
+        title = Factory.createLine();
         Cursor.instance().setCurrentSection(this);
     }
 
@@ -71,6 +64,11 @@ class Section extends Document implements ISection {
         this();
         title.append(aTitle);
     }
+    
+    public Section(ISection parent, String aTitle) {
+    	this(parent);
+    	title.append(aTitle);
+    }
 
     /**
      * @see model.interfaces.ISection#getParent()
@@ -81,27 +79,11 @@ class Section extends Document implements ISection {
     }
 
     /**
-     * @see model.interfaces.ISection#getSubSections()
-     */
-    @Override
-    public ArrayList<ISection> getSubSections() {
-        return (ArrayList<ISection>) subSections;
-    }
-
-    /**
      * @see model.interfaces.ISection#getTitle()
      */
     @Override
     public ILine getTitle() {
         return title;
-    }
-
-    /**
-     * @see model.interfaces.ISection#getText()
-     */
-    @Override
-    public IText getText() {
-        return text;
     }
 
     /**
@@ -126,14 +108,6 @@ class Section extends Document implements ISection {
     @Override
     public void setTitle(ILine aLine) {
         this.title = aLine;
-    }
-
-    /**
-     * @see model.interfaces.ISection#setSubSection(java.util.ArrayList)
-     */
-    @Override
-    public void setSubSection(ArrayList<ISection> aSubSectionsList) {
-        this.subSections = aSubSectionsList;
     }
 
     /**
@@ -192,14 +166,7 @@ class Section extends Document implements ISection {
     @Override
     public boolean isCurrentSection() {
         return isCurrentSection;
-    }
-
-    @Override
-    public void addSection(ISection aSection, int index) {
-        subSections.add(index, aSection);
-    }
-
- 
+    } 
 
     @Override
     public void deploy() {
