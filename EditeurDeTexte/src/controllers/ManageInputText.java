@@ -54,6 +54,10 @@ public class ManageInputText implements KeyListener {
     }
 
     public static void manageInputText(String textInput) {
+       System.out.println(CommandExecutor.getCommandExecutorInstance().getCommandsList().keySet());
+       System.out.println("text input +" + textInput);
+        System.out.println("map contient "+ CommandExecutor.getCommandExecutorInstance().getCommandsList()
+                .containsKey(textInput));
         if (!CommandExecutor.getCommandExecutorInstance().getCommandsList()
                 .containsKey(textInput)) {
             Cursor.getCursorInstance().getCurrentLine()

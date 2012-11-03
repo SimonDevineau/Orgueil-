@@ -12,11 +12,12 @@ import model.interfaces.ICommandVisitor;
  *         AddSection.java
  */
 public class AddSection implements ICommandVisitor {
-	
-	@Override
-	public void visit() {
-		Cursor.getCursorInstance().getCurrentDocument()
-        .addSection(Factory.createSection());
-	}
-	
+    @Override
+    public void visit() {
+        if (Cursor.getCursorInstance().getCurrentDocument() != null
+                || Cursor.getCursorInstance() != null) {
+            Cursor.getCursorInstance().getCurrentDocument()
+                    .addSection(Factory.createSection());
+        }
+    }
 }
