@@ -61,7 +61,7 @@ public class ManageInputText implements KeyListener {
                 .containsKey(command)) {
             System.out.println("test " + textInput);
             CommandExecutor.getCommandExecutorInstance().getCommandsList()
-                    .get(textInput).visit(textInput);
+                    .get(command).visit(textInput);
         }
         else {
             Cursor.instance().getCurrentLine().addUnderCursor(textInput);
