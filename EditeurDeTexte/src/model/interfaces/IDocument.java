@@ -1,5 +1,6 @@
 package model.interfaces;
 
+import java.util.ArrayList;
 import java.util.Observer;
 
 /**
