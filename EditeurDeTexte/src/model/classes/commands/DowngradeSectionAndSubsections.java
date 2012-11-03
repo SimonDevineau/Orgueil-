@@ -14,7 +14,7 @@ import model.interfaces.ISection;
  *         Computer and Information System Engineering
  *         DowngradeSectionsAndSubsections.java
  */
-class DowngradeSectionAndSubsections implements ICommandVisitor {
+public class DowngradeSectionAndSubsections implements ICommandVisitor {
 
 	@Override
 	public void visit() {

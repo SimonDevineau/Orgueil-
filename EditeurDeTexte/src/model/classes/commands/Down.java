@@ -30,8 +30,8 @@ public class Down implements ICommandVisitor {
 		if (next != null) {
 			// Putting the cursor on the title
 			next.getTitle().setCursorLocation(line.getCursorLocation());
-			// Setting the new line under the cursor
-			Cursor.getCursorInstance().setCurrentLine(next.getTitle());
+			// Removing the cursor from the previous line
+			line.removeCursor();
 		}
 	}
 
@@ -81,9 +81,11 @@ public class Down implements ICommandVisitor {
 		if (current.getTitle().hasCursor()) {
 			// If the text is not empty
 			if (current.getText().size() != 0) {
-				ILine next = current.getText().getLine(0);
-				next.setCursorLocation(current.getTitle().getCursorLocation());
-				Cursor.getCursorInstance().setCurrentLine(next);
+				current.getText()
+						.getLine(0)
+						.setCursorLocation(
+								current.getTitle().getCursorLocation());
+				current.getTitle().removeCursor();
 			} else
 				// else it means that the text is empty
 				changeSection(current, current.getTitle());
@@ -99,10 +101,12 @@ public class Down implements ICommandVisitor {
 			if (index == linesNumber - 1)
 				changeSection(current, current.getText().getLine(index));
 			else {
-				ILine next = current.getText().getLine(index + 1);
-				next.setCursorLocation(current.getText().getLine(index)
-						.getCursorLocation());
-				Cursor.getCursorInstance().setCurrentLine(next);
+				current.getText()
+						.getLine(index + 1)
+						.setCursorLocation(
+								current.getText().getLine(index)
+										.getCursorLocation());
+				current.getText().getLine(index).removeCursor();
 			}
 		}
 	}

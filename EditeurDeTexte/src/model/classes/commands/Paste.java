@@ -11,7 +11,7 @@ import model.interfaces.ISection;
  * @author Simon Devineau Ecole des Mines de Nantes Major in Computer and
  *         Information System Engineering Paste.java
  */
-class Paste implements ICommandVisitor {
+public class Paste implements ICommandVisitor {
 
 	@Override
 	public void visit() {

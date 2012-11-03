@@ -1,5 +1,6 @@
 package model.classes.commands;
 
+import utilities.Logger;
 import model.classes.Cursor;
 import model.classes.Factory;
 import model.interfaces.ICommandVisitor;
@@ -12,28 +13,15 @@ import model.interfaces.IText;
  *         Major in Computer and Information System Engineering
  *         BackSlash.java
  */
-class BackSlash implements ICommandVisitor {
+public class BackSlash implements ICommandVisitor {
     @Override
     public void visit() {
-        if (Cursor.getCursorInstance() != null
-                && Cursor.getCursorInstance().getCurrentLine() != null) {
+        try {
             Cursor.getCursorInstance().getCurrentLine()
                     .replaceUnderCursor("\\");
         }
-        else if (Cursor.getCursorInstance() != null
-                && Cursor.getCursorInstance().getCurrentStorable() != null) {
-            if (Cursor.getCursorInstance().getCurrentStorable() instanceof IText) {
-                Cursor.getCursorInstance().getCurrentText()
-                        .addLine(Factory.createLine());
-                Cursor.getCursorInstance().getCurrentLine()
-                        .replaceUnderCursor("\\");
-            }
-            else {
-                Cursor.getCursorInstance().getCurrentSection().getText()
-                        .addLine(Factory.createLine());
-                Cursor.getCursorInstance().getCurrentLine()
-                        .replaceUnderCursor("\\");
-            }
+        catch (Exception aE) {
+            Logger.error("An error of line initialization occured.", aE);
         }
     }
 }

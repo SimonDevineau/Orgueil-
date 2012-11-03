@@ -10,7 +10,7 @@ import model.interfaces.ILine;
  * @author Simon Devineau & Pierre Reliquet Ecole des Mines de Nantes Major in
  *         Computer and Information System Engineering Right.java
  */
-class Right implements ICommandVisitor {
+public class Right implements ICommandVisitor {
 
 	@Override
 	public void visit() {
