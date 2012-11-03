@@ -44,7 +44,7 @@ class Up implements ICommandVisitor {
 			// Affecting the cursor
 			previousLine.setCursorLocation(line.getCursorLocation());
 			// Removing the previous cursor
-			line.removeCursor();
+			Cursor.getCursorInstance().setCurrentLine(previousLine);
 		}
 	}
 
@@ -99,19 +99,16 @@ class Up implements ICommandVisitor {
 			if (index == linesNumber) // in that case it means that we have a
 										// bug in the model
 				throw new RuntimeException(
-						"An error occured in the Down command line 52, because no line has the cursor");
+						"An error occured in the Up command");
 			if (index == 0) { // in that case the title has to receive the
 								// cursor
 				current.getTitle().setCursorLocation(
 						current.getText().getLine(index).getCursorLocation());
-				current.getText().getLine(index).removeCursor();
+				Cursor.getCursorInstance().setCurrentLine(current.getTitle());
 			} else { // or just the previous line
-				current.getText()
-						.getLine(index - 1)
-						.setCursorLocation(
-								current.getText().getLine(index)
-										.getCursorLocation());
-				current.getText().getLine(index).removeCursor();
+				ILine predecessor = current.getText().getLine(index - 1);
+				predecessor.setCursorLocation(current.getText().getLine(index).getCursorLocation());
+				Cursor.getCursorInstance().setCurrentLine(predecessor);
 			}
 		}
 	}
