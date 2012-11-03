@@ -45,29 +45,35 @@ class Line extends Observable implements ILine {
 	@Override
 	public void addUnderCursor(CharSequence insertion) {
 		// TODO vérifier si c'est _CursorLocation ou _CursorLocation+1
-		if (this.hasCursor()) {
-			_Line.insert(Cursor.instance().getCurrentPosition(),
-					insertion);
+		if (hasCursor()) {
+			_Line.insert(Cursor.instance().getCurrentPosition(), insertion);
+			Cursor.instance()
+					.setCurrentPosition(
+							Cursor.instance().getCurrentPosition()
+									+ insertion.length());
+			setChanged();
+			notifyObservers();
 		}
-		Cursor.instance().setCurrentPosition(
-				Cursor.instance().getCurrentPosition()
-						+ insertion.length());
 	}
 
 	@Override
 	public void append(CharSequence content) {
-		_Line.append(content);
-		this.setChanged();
-		this.notifyObservers();
+		if (hasCursor()) {
+			_Line.append(content);
+			Cursor.instance().setCurrentPosition(
+					Cursor.instance().getCurrentPosition() + content.length());
+			this.setChanged();
+			this.notifyObservers();
+		}
 	}
 
 	@Override
 	public void deleteUnderCursor() {
 		if (hasCursor()) {
 			_Line.deleteCharAt(Cursor.instance().getCurrentPosition());
+			this.setChanged();
+			this.notifyObservers();
 		}
-		this.setChanged();
-		this.notifyObservers();
 	}
 
 	@Override
@@ -77,7 +83,7 @@ class Line extends Observable implements ILine {
 
 	@Override
 	public void replaceUnderCursor(CharSequence replacement) {
-		if (this.hasCursor()) {
+		if (hasCursor()) {
 			// TODO vérifier les index
 			// Copying the start of the line (before the cursor)
 			StringBuilder tmp = new StringBuilder(_Line.substring(0, Cursor
@@ -86,8 +92,8 @@ class Line extends Observable implements ILine {
 			tmp.append(replacement);
 			// TODO vérifier les index
 			// Calculating the new cursor location
-			int newCursorLocation = Cursor.instance()
-					.getCurrentPosition() + replacement.length();
+			int newCursorLocation = Cursor.instance().getCurrentPosition()
+					+ replacement.length();
 			// If the line is longer than the new cursor location we need
 			// to append the rest of the line
 			if (_Line.length() > newCursorLocation) {
@@ -96,9 +102,9 @@ class Line extends Observable implements ILine {
 			// We store the new variables.
 			_Line = tmp;
 			Cursor.instance().setCurrentPosition(newCursorLocation);
+			this.setChanged();
+			this.notifyObservers();
 		}
-		this.setChanged();
-		this.notifyObservers();
 	}
 
 	@Override
