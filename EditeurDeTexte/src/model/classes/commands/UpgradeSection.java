@@ -10,7 +10,7 @@ import model.interfaces.ICommandVisitor;
  *         Major in Computer and Information System Engineering
  *         UpgradeSection.java
  */
-class UpgradeSection implements ICommandVisitor {
+public class UpgradeSection implements ICommandVisitor {
 
 	@Override
 	public void visit() {

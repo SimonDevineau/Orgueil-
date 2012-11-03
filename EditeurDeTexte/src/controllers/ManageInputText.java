@@ -54,34 +54,14 @@ public class ManageInputText implements KeyListener {
     }
 
     public static void manageInputText(String textInput) {
-       System.out.println(CommandExecutor.getCommandExecutorInstance().getCommandsList().keySet());
-       System.out.println("text input +" + textInput);
-        System.out.println("map contient "+ CommandExecutor.getCommandExecutorInstance().getCommandsList()
-                .containsKey(textInput));
         if (!CommandExecutor.getCommandExecutorInstance().getCommandsList()
                 .containsKey(textInput)) {
             Cursor.getCursorInstance().getCurrentLine()
                     .addUnderCursor(textInput);
         }
         else {
-            // Visit the current document in order to call the suitable commands
-// class
-            Cursor.getCursorInstance()
-                    .getCurrentDocument()
-                    .accept(CommandExecutor.getCommandExecutorInstance()
-                            .getCommandsList().get(textInput));
-            // Visit the current line in order to call the suitable commands
-// class
-            Cursor.getCursorInstance()
-                    .getCurrentLine()
-                    .accept(CommandExecutor.getCommandExecutorInstance()
-                            .getCommandsList().get(textInput));
-            // Visit the current section in order to call the suitable commands
-// class
-            Cursor.getCursorInstance()
-                    .getCurrentSection()
-                    .accept(CommandExecutor.getCommandExecutorInstance()
-                            .getCommandsList().get(textInput));
+            CommandExecutor.getCommandExecutorInstance().getCommandsList()
+                    .get(textInput).visit();
         }
     }
 }

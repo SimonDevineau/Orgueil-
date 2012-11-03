@@ -10,7 +10,7 @@ import model.interfaces.ICommandVisitor;
  *         Major in Computer and Information System Engineering
  *         DowngradeSection.java
  */
-class DowngradeSection implements ICommandVisitor {
+public class DowngradeSection implements ICommandVisitor {
 
 	@Override
 	public void visit() {

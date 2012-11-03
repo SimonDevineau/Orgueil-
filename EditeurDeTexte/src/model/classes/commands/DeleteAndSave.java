@@ -11,7 +11,7 @@ import model.interfaces.ILine;
  *         Major in Computer and Information System Engineering
  *         DeleteAndSave.java
  */
-class DeleteAndSave implements ICommandVisitor {
+public class DeleteAndSave implements ICommandVisitor {
 
 	@Override
 	public void visit() {

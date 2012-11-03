@@ -11,7 +11,7 @@ import model.interfaces.ILine;
  *         Major in Computer and Information System Engineering
  *         Copy.java
  */
-class Copy implements ICommandVisitor {
+public class Copy implements ICommandVisitor {
 
 	@Override
 	public void visit() {

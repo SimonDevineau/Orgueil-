@@ -12,7 +12,7 @@ import model.interfaces.ISection;
  *         Computer and Information System Engineering
  *         UpgradeSectionAndSubsections.java
  */
-class UpgradeSectionAndSubsections implements ICommandVisitor {
+public class UpgradeSectionAndSubsections implements ICommandVisitor {
 
 	@Override
 	public void visit() {

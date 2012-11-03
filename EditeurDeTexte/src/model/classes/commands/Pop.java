@@ -11,7 +11,7 @@ import model.interfaces.IDocument;
  *         Major in Computer and Information System Engineering
  *         Pop.java
  */
-class Pop implements ICommandVisitor{
+public class Pop implements ICommandVisitor{
 
 	@Override
 	public void visit() {

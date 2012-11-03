@@ -11,7 +11,7 @@ import model.interfaces.ISection;
  *         Major in Computer and Information System Engineering
  *         DeployOrHide.java
  */
-class DeployOrHide implements ICommandVisitor {
+public class DeployOrHide implements ICommandVisitor {
 
 	@Override
 	public void visit() {

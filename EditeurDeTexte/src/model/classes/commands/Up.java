@@ -12,7 +12,7 @@ import model.interfaces.ISection;
  * @author Simon Devineau & Pierre Reliquet Ecole des Mines de Nantes Major in
  *         Computer and Information System Engineering Up.java
  */
-class Up implements ICommandVisitor {
+public class Up implements ICommandVisitor {
 
 	/**
 	 * This method is used to go to the previous section
