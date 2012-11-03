@@ -101,6 +101,7 @@ class Document extends Observable implements IDocument {
             section.setIsCurrentSection(false);
         }
         subSections.get(index).setIsCurrentSection(true);
+        Cursor.instance().setCurrentSection(subSections.get(index));
         Cursor.instance().setCurrentLine(
                 Cursor.instance().getCurrentSection().getTitle());
         this.setChanged();

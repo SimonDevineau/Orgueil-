@@ -44,7 +44,6 @@ class Section extends Document implements ISection {
         currentState = deployedState;
         title = Factory.createLine();
         this.isCurrentSection = true;
-        //Cursor.instance().setCurrentSection(this);
     }
 
     public Section(IDocument parent) {
