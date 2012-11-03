@@ -70,7 +70,7 @@ public final class CommandExecutor {
                 utilities.ConfigurationLoader.DEFAULT_CONFIG_TAG,
                 utilities.ConfigurationLoader.DEFAULT_CONFIG_KEY,
                 utilities.ConfigurationLoader.DEFAULT_CONFIG_VALUE);
-        System.out.println("le set dans command EX" +tmp);
+        System.out.println("le set dans command EX" + tmp);
         Set<String> keys = tmp.keySet();
         Iterator<String> key = keys.iterator();
         while (key.hasNext()) {
@@ -89,10 +89,8 @@ public final class CommandExecutor {
                 }
                 // if the interface ICommand is implemented we can add it.
                 if (iCommandImplemented) {
-                    System.out.println("jajoute la classe " + tmpClass);
                     commandsList.put(current,
                             (ICommandVisitor) tmpClass.newInstance());
-                    System.out.println("command list " +commandsList);
                     // ((ICommandVisitor) tmpClass.newInstance()).execute();
                 }
                 else { // we write in the logger that it the interface is not
