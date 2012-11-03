@@ -1,9 +1,9 @@
 package model.classes.commands;
 
 import model.classes.Cursor;
-import model.classes.Editor;
 import model.classes.Factory;
 import model.interfaces.ICommandVisitor;
+import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
 
@@ -39,22 +39,18 @@ public class Down implements ICommandVisitor {
 	 */
 	private ISection getNextSection(ISection aSection) {
 		// if the parent is null it means that we are at the root level
-		if (aSection.getParent() == null) {
+		if (aSection.getParent() instanceof IDocument) {
 			try {
 				// Trying to get the element after the current section at the
 				// root level
-				return Editor
-						.getEditor()
-						.getCurrentDocument()
-						.getSection(
-								Editor.getEditor().getCurrentDocument()
-										.getIndexCurrentSection() + 1);
+				int currentIndex = Cursor.instance().getCurrentDocument().indexOfCurrentSection();
+				return Cursor.instance().getCurrentDocument().getSection(currentIndex + 1);
 			} catch (Exception e) {
 				// if the exception is thrown it means that the section was the
 				// last section on the root element and that there is no
 				// section after. So we need to create a new one
 				ISection lastSection = Factory.createSection();
-				Editor.getEditor().getCurrentDocument().addSection(lastSection);
+				Cursor.instance().getCurrentDocument().addSection(lastSection);
 				return lastSection;
 			}
 		} else {
@@ -62,7 +58,7 @@ public class Down implements ICommandVisitor {
 			// parent section
 			if (aSection.getParent().indexOfCurrentSection() == aSection
 					.getParent().getSubSections().size() - 1)
-				return getNextSection(aSection.getParent());
+				return getNextSection((ISection) aSection.getParent());
 			// if the parent is not null, so we need to get the
 			// following section by using the getParent
 			return aSection.getParent().getSubSections()

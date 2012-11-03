@@ -3,6 +3,7 @@ package model.classes.commands;
 import model.classes.Cursor;
 import model.classes.Editor;
 import model.interfaces.ICommandVisitor;
+import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
 
@@ -54,21 +55,17 @@ public class Up implements ICommandVisitor {
 	 */
 	private ISection getPreviousSection(ISection aSection) {
 		// if the parent is null it means that we are at the root level
-		if (aSection.getParent() == null) {
+		if (aSection.getParent() instanceof IDocument) {
 			try {
 				// Trying to get the elment before the current section at the
 				// root level
-				return Editor
-						.getEditor()
-						.getCurrentDocument()
-						.getSection(
-								Editor.getEditor().getCurrentDocument()
-										.getIndexCurrentSection() - 1);
+				int currentIndex = Cursor.instance().getCurrentDocument().indexOfCurrentSection();
+				return Cursor.instance().getCurrentDocument().getSection(currentIndex);
 			} catch (Exception e) {
 				// if the exception is thrown it means that the section was the
 				// first section on the root element and that there is no
 				// section before.
-				return null;
+				return Cursor.instance().getCurrentDocument().getSection(0);
 			}
 		} else {
 			// if the section is the first child so we need to go back to the
