@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CommandsConfiguration>
 	<config key="\n" value="model.classes.commands.Up" />
-	<config key="\z" value="model.classes.BufferMemory" />
 	<config key="\s" value="model.classes.commands.Down" />
     <config key="\o" value="model.classes.commands.Left" />
     <config key="\e" value="model.classes.commands.Right" />
