@@ -17,7 +17,7 @@ import model.interfaces.IText;
  * @author Simon Devineau Ecole des Mines de Nantes Major in Computer and
  *         Information System Engineering Section.java
  */
-class Section extends Observable implements ISection {
+class Section extends Document implements ISection {
     /**
      * The subsections' list of the current section.
      */
@@ -47,6 +47,10 @@ class Section extends Observable implements ISection {
      * True if this section is the current section
      */
     private boolean        isCurrentSection = false;
+    /**
+     * The number of parents of the section
+     */
+    private int            nbParents        = 0;
 
     public Section() {
         hiddenState = StateFactory.createHiddenState(this);
@@ -66,18 +70,6 @@ class Section extends Observable implements ISection {
     public Section(String aTitle) {
         this();
         title.append(aTitle);
-    }
-
-    /**
-     * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
-     */
-    @Override
-    public boolean addSubSection(ISection aSection) {
-        aSection.setParent(this);
-        boolean result = this.subSections.add(aSection);
-        setChanged();
-        notifyObservers();
-        return result;
     }
 
     /**
@@ -117,7 +109,7 @@ class Section extends Observable implements ISection {
      */
     @Override
     public void setParent(ISection aSection) {
-        aSection.addSubSection(this);
+        aSection.addSection(this);
     }
 
     /**
@@ -125,12 +117,6 @@ class Section extends Observable implements ISection {
      */
     @Override
     public int getNbParents() {
-        int nbParents = 0;
-        ISection section = this;
-        while (section.getParent() != null) {
-            section = section.getParent();
-            nbParents++;
-        }
         return nbParents;
     }
 
@@ -209,14 +195,11 @@ class Section extends Observable implements ISection {
     }
 
     @Override
-    public void addSubSection(ISection aSection, int index) {
+    public void addSection(ISection aSection, int index) {
         subSections.add(index, aSection);
     }
 
-    @Override
-    public ISection removeSection(int index) {
-        return subSections.remove(index);
-    }
+ 
 
     @Override
     public void deploy() {
@@ -226,5 +209,19 @@ class Section extends Observable implements ISection {
     @Override
     public void hide() {
         currentState = hiddenState;
+    }
+
+    /**
+     * @see model.interfaces.ISection#setNbParents()
+     */
+    @Override
+    public void setNbParents() {
+        int nbParents = 0;
+        ISection section = this;
+        while (section.getParent() != null) {
+            section = section.getParent();
+            nbParents++;
+        }
+        this.nbParents = nbParents;
     }
 }

@@ -1,6 +1,10 @@
 package model.interfaces;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
+
+import model.classes.Factory;
 
 /**
  * 10 oct. 2012 - EditeurDeTexte.
@@ -10,6 +14,21 @@ import java.util.Observer;
  *         IDocument.java
  */
 public interface IDocument extends IStorable {
+    /**
+     * Add a line to the document at the suitable position.
+     * @param line
+     *            , the line to add
+     */
+    void addLine(ILine line);
+
+    /**
+     * The method used to add a new observer on the line. This observer is used
+     * in order to be able to notify when the line get the cursor.
+     * @param o
+     *            , the new Observer
+     */
+    void addObserver(Observer o);
+
     /**
      * @param section
      *            , the section to insert after the current section, the one
@@ -29,13 +48,6 @@ public interface IDocument extends IStorable {
     void addSection(ISection section, int index);
 
     /**
-     * @param index
-     *            the index of the method to remove
-     * @return the removed section
-     */
-    ISection removeSection(int index);
-
-    /**
      * @param section
      *            , the section to append at the end of the sections
      * @return true if the section has been added successfully.
@@ -47,21 +59,14 @@ public interface IDocument extends IStorable {
      *         been
      *         deleted successfully.
      */
-    boolean deleteSection();
+    boolean removeSection();
 
     /**
      * @param section
      *            the section to delete
      * @return true if the section has been deleted successfully
      */
-    boolean deleteSection(ISection section);
-
-    /**
-     * Add a line to the document at the suitable position.
-     * @param line
-     *            , the line to add
-     */
-    void addLine(ILine line);
+    boolean removeSection(ISection section);
 
     /**
      * @param obj
@@ -82,19 +87,16 @@ public interface IDocument extends IStorable {
     int getIndexCurrentSection();
 
     /**
-     * @return the document path
+     * @param index
+     *            , the index of the section to get
+     * @return the section indexed by the index parameter.
      */
-    String getPath();
+    ISection getSection(int index);
 
     /**
      * @return the current introduction text of the document.
      */
     IText getText();
-
-    /**
-     * @return the buffer memory of the document
-     */
-    IBufferMemory getBufferMemory();
 
     /**
      * @return true if it is the current document
@@ -108,12 +110,6 @@ public interface IDocument extends IStorable {
     void setIsCurrentDocument(boolean isCurrentDocument);
 
     /**
-     * @param url
-     *            , the new path
-     */
-    void setPath(String uString);
-
-    /**
      * Sets the new introduction text
      * @param text
      *            , the text to set.
@@ -121,28 +117,8 @@ public interface IDocument extends IStorable {
     void setText(IText text);
 
     /**
-     * @param index
-     *            , the index of the section to get
-     * @return the section indexed by the index parameter.
-     */
-    ISection getSection(int index);
-
-    /**
-     * The method used to add a new observer on the line. This observer is used
-     * in order to be able to notify when the line get the cursor.
-     * @param o
-     *            , the new Observer
-     */
-    void addObserver(Observer o);
-
-    /**
      * @return the string representation of the document.
      */
     @Override
     String toString();
-
-    /**
-     * @return a description in HTML of the document
-     */
-    String toHTML();
 }
