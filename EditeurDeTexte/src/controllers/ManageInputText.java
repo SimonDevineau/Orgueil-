@@ -56,6 +56,11 @@ public class ManageInputText implements KeyListener {
     public static void manageInputText(String textInput) {
         if (!CommandExecutor.getCommandExecutorInstance().getCommandsList()
                 .containsKey(textInput)) {
+            System.out.println("Line courante "
+                    + Cursor.getCursorInstance().getCurrentLine()
+                    + " curseur "
+                    + Cursor.getCursorInstance().getCurrentLine()
+                            .getCursorLocation() + " dans mnagaeinput");
             Cursor.getCursorInstance().getCurrentLine()
                     .addUnderCursor(textInput);
         }
