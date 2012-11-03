@@ -107,7 +107,7 @@ public final class Cursor extends Observable implements Observer {
      */
     public void setCurrentSection(ISection currentSection) {
         initialize();
-        if(currentSection != null && currentSection.isCurrentSection())
+        if(this.currentSection != null && this.currentSection.isCurrentSection())
         	this.currentSection.setIsCurrentSection(false);
         this.currentSection = currentSection;
         this.currentSection.setIsCurrentSection(true);
