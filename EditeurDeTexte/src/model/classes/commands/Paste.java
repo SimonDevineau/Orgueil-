@@ -1,5 +1,6 @@
 package model.classes.commands;
 
+import model.classes.BufferMemory;
 import model.classes.Cursor;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.ILine;
@@ -17,11 +18,9 @@ public class Paste implements ICommandVisitor {
 	public void visit(String textInput) {
 		ISection current = Cursor.instance().getCurrentSection();
 		if (current != null
-				&& Cursor.instance().getCurrentDocument()
-						.getBufferMemory().peek() instanceof ILine) {
+				&& BufferMemory.getBufferMemoryInstance().peek() instanceof ILine) {
 			current.getText().insertLine(
-					(ILine) Cursor.instance().getCurrentDocument()
-							.getBufferMemory().pop());
+					(ILine) BufferMemory.getBufferMemoryInstance().pop());
 
 		}
 	}

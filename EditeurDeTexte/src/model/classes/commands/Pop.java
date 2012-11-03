@@ -1,8 +1,7 @@
 package model.classes.commands;
 
-import model.classes.Cursor;
+import model.classes.BufferMemory;
 import model.interfaces.ICommandVisitor;
-import model.interfaces.IDocument;
 
 /**
  * 22 oct. 2012 - EditeurDeTexte.
@@ -15,7 +14,6 @@ public class Pop implements ICommandVisitor{
 
 	@Override
 	public void visit(String textInput) {
-		IDocument current = Cursor.instance().getCurrentDocument();
-		current.getBufferMemory().pop();
+		BufferMemory.getBufferMemoryInstance().pop();
 	}
 }

@@ -2,9 +2,7 @@ package model.classes.commands;
 
 import utilities.Logger;
 import model.classes.Cursor;
-import model.classes.Factory;
 import model.interfaces.ICommandVisitor;
-import model.interfaces.IText;
 
 /**
  * 22 oct. 2012 - EditeurDeTexte.
