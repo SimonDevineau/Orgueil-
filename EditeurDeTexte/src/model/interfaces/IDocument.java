@@ -18,18 +18,20 @@ public interface IDocument extends IStorable {
      * @return true if the section has been added successfully.
      */
     boolean addSection(ISection section);
-    
+
     /**
      * @param section
      *            , the section to insert after the current section, the one
      *            with the cursor
-     * @param index, the index where the new section should be added?
+     * @param index
+     *            , the index where the new section should be added?
      * @return true if the section has been added successfully.
      */
     void addSection(ISection section, int index);
-    
+
     /**
-     * @param index the index of the method to remove
+     * @param index
+     *            the index of the method to remove
      * @return the removed section
      */
     ISection removeSection(int index);
@@ -54,6 +56,13 @@ public interface IDocument extends IStorable {
      * @return true if the section has been deleted successfully
      */
     boolean deleteSection(ISection section);
+
+    /**
+     * Add a line to the document at the suitable position.
+     * @param line
+     *            , the line to add
+     */
+    void addLine(ILine line);
 
     /**
      * @param obj
@@ -111,9 +120,10 @@ public interface IDocument extends IStorable {
      *            , the text to set.
      */
     void setText(IText text);
-    
+
     /**
-     * @param index, the index of the section to get
+     * @param index
+     *            , the index of the section to get
      * @return the section indexed by the index parameter.
      */
     ISection getSection(int index);

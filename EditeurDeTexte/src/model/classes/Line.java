@@ -8,7 +8,6 @@ import model.interfaces.ILine;
 
 /**
  * 10 oct. 2012 - EditeurDeTexte.
- * 
  * @author Simon Devineau & Pierre Reliquet Ecole des Mines de Nantes Major in
  *         Computer and Information System Engineering Line.java
  */
@@ -18,23 +17,23 @@ class Line extends Observable implements ILine {
      * string each time that a char is added.
      */
     private StringBuilder _Line;
-    
     /**
      * The variable to store the variable location inside the line.
      */
-    private int _CursorLocation = NO_CURSOR;
+    private int           _CursorLocation = NO_CURSOR;
 
     /**
      * Default constructor which creates an empty line
      */
     Line() {
         _Line = new StringBuilder();
+        _CursorLocation = 0;
         Cursor.getCursorInstance().setCurrentLine(this);
+        this.addObserver(Cursor.getCursorInstance());
     }
 
     /**
      * The constructor to create a line using the CharSequence as starting text.
-     * 
      * @param sequence
      *            , the CharSequence which contains the basis.
      */
@@ -45,16 +44,22 @@ class Line extends Observable implements ILine {
 
     @Override
     public void addUnderCursor(CharSequence insertion) {
+        System.out.println(this.countObservers());
         // TODO vérifier si c'est _CursorLocation ou _CursorLocation+1
-        if (hasCursor()) 
+        if (hasCursor()) {
+            System.out.println("text " + insertion);
             _Line.insert(_CursorLocation, insertion);
+        }
         setCursorLocation(_CursorLocation + insertion.length());
+        this.setChanged();
+        this.notifyObservers();
     }
-
 
     @Override
     public void append(CharSequence content) {
         _Line.append(content);
+        this.setChanged();
+        this.notifyObservers();
     }
 
     @Override
@@ -62,6 +67,8 @@ class Line extends Observable implements ILine {
         if (hasCursor()) {
             _Line.deleteCharAt(_CursorLocation);
         }
+        this.setChanged();
+        this.notifyObservers();
     }
 
     @Override
@@ -73,7 +80,7 @@ class Line extends Observable implements ILine {
     public boolean hasCursor() {
         return this._CursorLocation != NO_CURSOR;
     }
- 
+
     @Override
     public void replaceUnderCursor(CharSequence replacement) {
         if (this.hasCursor()) {
@@ -96,6 +103,8 @@ class Line extends Observable implements ILine {
             _CursorLocation = newCursorLocation;
             setCursorLocation(newCursorLocation);
         }
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /**
@@ -129,14 +138,49 @@ class Line extends Observable implements ILine {
     public int length() {
         return _Line.length();
     }
-  
-/*
-    *//**
-     * @see model.interfaces.ILine#hasCursor()
-     *//*
+
+    /**
+     * @see java.lang.Object#toString()
+     */
     @Override
-    public boolean hasCursor() {
-        //TODO equals or ==, plutot == car on veut que ca soit la meme case m�moire
-        return Cursor.getCursorInstance().getCurrentLine().equals(this);
-    }*/
+    public String toString() {
+        StringBuilder toReturn = new StringBuilder();
+        int index = 0;
+        System.out.println("index cursor " + _CursorLocation);
+        System.out.println("text " + _Line.toString());
+        if (this.hasCursor()) {
+            while (index <= _CursorLocation && index < _Line.length()) {
+                toReturn.append(_Line.charAt(index));
+                index++;
+            }
+            if (_Line.length() == 0) {
+                toReturn.append("<span style=\"background-color:red;text-decoration:blink;\">"
+                        + "_" + "</span>");
+            }
+            else {
+                toReturn.append("<span style=\"text-decoration:underline;background-color:red;text-decoration:blink;\">"
+                        + _Line.charAt(index) + "</span>");
+                while (index < _Line.length()) {
+                    index++;
+                    toReturn.append(_Line.charAt(index));
+                }
+            }
+        }
+        else {
+            toReturn = _Line;
+        }
+        return toReturn.toString();
+    }
+/*
+    */ /**
+     * @see model.interfaces.ILine#hasCursor()
+     */
+    /*
+     * @Override
+     * public boolean hasCursor() {
+     * //TODO equals or ==, plutot == car on veut que ca soit la meme case
+     * m�moire
+     * return Cursor.getCursorInstance().getCurrentLine().equals(this);
+     * }
+     */
 }
