@@ -3,6 +3,7 @@ package controllers;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.print.DocFlavor.INPUT_STREAM;
 import javax.swing.JTextField;
 
 import model.classes.CommandExecutor;
@@ -41,6 +42,7 @@ public class ManageInputText implements KeyListener {
         if (aE.getKeyCode() == KeyEvent.VK_ENTER) {
             String textInput = input.getText();
             manageInputText(textInput);
+            input.setText("");
         }
     }
 
