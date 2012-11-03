@@ -86,7 +86,7 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public boolean addSection(ISection aSection) {
-        this.addSection(aSection, this.indexCurrentSection());
+        this.addSection(aSection, this.indexOfCurrentSection());
         return this.sousSections.contains(aSection);
     }
 
