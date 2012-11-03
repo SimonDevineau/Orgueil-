@@ -56,14 +56,13 @@ public class ManageInputText implements KeyListener {
         if (textInput.length() >= 2) {
             command = command.substring(0, 2);
         }
-        System.out.println("command " + command+"////");
         if (CommandExecutor.getCommandExecutorInstance().getCommandsList()
                 .containsKey(command)) {
-            System.out.println("test " + textInput);
             CommandExecutor.getCommandExecutorInstance().getCommandsList()
                     .get(command).visit(textInput);
         }
         else {
+            System.out.println("add under curseur "+ textInput);
             Cursor.instance().getCurrentLine().addUnderCursor(textInput);
         }
     }

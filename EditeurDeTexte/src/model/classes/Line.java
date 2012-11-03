@@ -43,7 +43,8 @@ class Line extends Observable implements ILine {
     @Override
     public void addUnderCursor(CharSequence insertion) {
         // TODO vérifier si c'est _CursorLocation ou _CursorLocation+1
-        if (hasCursor() && Cursor.instance().getCurrentPosition()<_Line.length()) {
+        if (hasCursor()
+                && Cursor.instance().getCurrentPosition() < _Line.length()) {
             _Line.insert(Cursor.instance().getCurrentPosition(), insertion);
             Cursor.instance()
                     .setCurrentPosition(
@@ -51,6 +52,12 @@ class Line extends Observable implements ILine {
                                     + insertion.length());
             setChanged();
             notifyObservers();
+        }
+        else if (hasCursor()
+                && Cursor.instance().getCurrentPosition() >= _Line.length()) {
+            _Line.insert(_Line.length(), insertion);
+            Cursor.instance().setCurrentPosition(
+                    _Line.length() + insertion.length());
         }
     }
 
@@ -140,9 +147,13 @@ class Line extends Observable implements ILine {
             // If there are chars before we place the cursor on the
             // corresponding char and complete the line
             else {
-                if (index < _Line.length()) {
+                if (index < _Line.length() || index == 0) {
                     toReturn.append("<span style=\"text-decoration:underline;background-color:red;text-decoration:blink;\">"
                             + _Line.charAt(index) + "</span>");
+                }
+                else {
+                    toReturn.append("<span style=\"text-decoration:underline;background-color:red;text-decoration:blink;\">"
+                            + _Line.charAt(_Line.length()) + "</span>");
                 }
                 index++;
                 while (index < _Line.length()) {

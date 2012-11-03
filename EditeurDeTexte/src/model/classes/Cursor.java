@@ -146,8 +146,12 @@ public final class Cursor extends Observable implements Observer {
         while (index < textSize && !getCurrentText().getLine(index).hasCursor())
             index++;
         if (index == textSize && textSize <= 0) {
-            if (currentSection.getTitle() != null)
-                setCurrentLine(currentSection.getTitle());
+            /*if (currentSection instanceof IDocument) {
+                currentTextIntro.addLine(Factory.createLine());
+                setCurrentLine(currentTextIntro.getLine(0));
+            }
+            else if (currentSection.getTitle() != null)
+                setCurrentLine(currentSection.getTitle());*/
         }
         else if (index == textSize && textSize > 0) {
             setCurrentLine(currentTextIntro.getLine(0));
