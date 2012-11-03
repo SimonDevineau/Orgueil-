@@ -37,6 +37,7 @@ public class Up implements ICommandVisitor {
             else
                 previousLine = previous.getTitle();
             // Affecting the cursor
+            Cursor.instance().setCurrentSection(previous);
             Cursor.instance().setCurrentLine(previousLine);
         }
         else {
@@ -89,6 +90,7 @@ public class Up implements ICommandVisitor {
     @Override
     public void visit(String textInput) {
         ISection current = Cursor.instance().getCurrentSection();
+        System.out.println("current " + current);
         // If the title has the cursor
         if (current.getTitle().hasCursor()) {
             changeSection(current, current.getTitle());

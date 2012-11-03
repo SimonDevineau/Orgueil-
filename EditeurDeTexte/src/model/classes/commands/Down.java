@@ -23,8 +23,10 @@ public class Down implements ICommandVisitor {
     private void changeSection(ISection aSection, ILine line) {
         // Get the next section
         ISection next = getNextSection(aSection);
-        if (next != null)
+        if (next != null) {
             Cursor.instance().setCurrentLine(next.getTitle());
+            Cursor.instance().setCurrentSection(next);
+        }
     }
 
     /**
