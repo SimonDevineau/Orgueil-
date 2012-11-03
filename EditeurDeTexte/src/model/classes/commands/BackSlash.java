@@ -15,7 +15,7 @@ import model.interfaces.IText;
  */
 public class BackSlash implements ICommandVisitor {
     @Override
-    public void visit() {
+    public void visit(String textInput) {
         try {
             Cursor.getCursorInstance().getCurrentLine()
                     .replaceUnderCursor("\\");

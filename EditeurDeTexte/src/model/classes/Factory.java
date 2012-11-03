@@ -69,4 +69,12 @@ public class Factory {
     public static IDocument createDocument(String path) {
         return new Document(path);
     }
+
+    /**
+     * @param aTextInput
+     * @return
+     */
+    public static ISection createSection(String aTitle) {
+        return new Section(aTitle);
+    }
 }

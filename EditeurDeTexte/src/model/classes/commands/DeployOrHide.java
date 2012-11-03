@@ -14,7 +14,7 @@ import model.interfaces.ISection;
 public class DeployOrHide implements ICommandVisitor {
 
 	@Override
-	public void visit() {
+	public void visit(String textInput) {
 		//TODO properly
 		ISection current = Cursor.getCursorInstance().getCurrentSection();
 		if(current!=null)

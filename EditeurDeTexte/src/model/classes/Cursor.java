@@ -67,8 +67,10 @@ public final class Cursor extends Observable implements Observer {
      */
     public ILine getCurrentLine() {
         initialize();
-        if (currentLine == null)
-            Cursor.getCursorInstance().getCurrentDocument().addLine(new Line());
+        if (currentLine == null) {
+            Cursor.getCursorInstance().getCurrentDocument()
+                    .addLine(Factory.createLine());
+        }
         return currentLine;
     }
 
@@ -78,17 +80,26 @@ public final class Cursor extends Observable implements Observer {
      */
     public void setCurrentLine(ILine _currentLine) {
         initialize();
-        if(this.currentLine != null && this.currentLine.hasCursor())
-        	this.currentLine.removeCursor();
-        this.currentLine = _currentLine;
-        if(this.currentLine.hasCursor())
-        	setCurrentPosition(getCurrentLine().getCursorLocation());
+        System.out.println("param null ? " + _currentLine);
+        if (this.currentLine != null && this.currentLine.hasCursor())
+            this.currentLine.removeCursor();
+        if (_currentLine != null) {
+            this.currentLine = _currentLine;
+        }
+        else {
+            this.currentLine = Factory.createLine();
+        }
+        if (this.currentLine.hasCursor()) {
+         System.out.println("donne moi location +" + getCurrentLine().getCursorLocation());
+            setCurrentPosition(getCurrentLine().getCursorLocation());
+        }
     }
-    
-    public IStorable getCurrentStorable(){
-        if(Cursor.getCursorInstance().getCurrentSection()==null){
+
+    public IStorable getCurrentStorable() {
+        if (Cursor.getCursorInstance().getCurrentSection() == null) {
             return currentSection;
-        }else{
+        }
+        else {
             return currentTextIntro;
         }
     }
@@ -107,15 +118,17 @@ public final class Cursor extends Observable implements Observer {
      */
     public void setCurrentSection(ISection currentSection) {
         initialize();
-        if(this.currentSection != null && this.currentSection.isCurrentSection())
-        	this.currentSection.setIsCurrentSection(false);
+        if (this.currentSection != null
+                && this.currentSection.isCurrentSection())
+            this.currentSection.setIsCurrentSection(false);
         this.currentSection = currentSection;
         this.currentSection.setIsCurrentSection(true);
-        if(getCurrentSection().getTitle().hasCursor()) {
-        	currentTextIntro = null;
-        	setCurrentLine(getCurrentSection().getTitle());
-        } else 
-        	setCurrentText(getCurrentSection().getText());
+        if (getCurrentSection().getTitle().hasCursor()) {
+            currentTextIntro = null;
+            setCurrentLine(getCurrentSection().getTitle());
+        }
+        else
+            setCurrentText(getCurrentSection().getText());
     }
 
     /**
@@ -126,18 +139,20 @@ public final class Cursor extends Observable implements Observer {
     }
 
     /**
-     * @param currentTextIintro the currentTextIintro to set
+     * @param currentTextIintro
+     *            the currentTextIintro to set
      */
     public void setCurrentText(IText currentTextIintro) {
         this.currentTextIntro = currentTextIintro;
         int textSize = currentTextIintro.size();
         int index = 0;
-        while(index < textSize && !getCurrentText().getLine(index).hasCursor())
-        	index++;
-        if(index == textSize)
-        	throw new RuntimeException("An error occured in Cursor.setCurrentText");
+        while (index < textSize && !getCurrentText().getLine(index).hasCursor())
+            index++;
+        if (index == textSize)
+            throw new RuntimeException(
+                    "An error occured in Cursor.setCurrentText");
         else
-        	setCurrentLine(getCurrentText().getLine(index));
+            setCurrentLine(getCurrentText().getLine(index));
     }
 
     /**

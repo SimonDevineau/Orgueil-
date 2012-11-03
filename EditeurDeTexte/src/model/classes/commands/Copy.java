@@ -14,7 +14,7 @@ import model.interfaces.ILine;
 public class Copy implements ICommandVisitor {
 
 	@Override
-	public void visit() {
+	public void visit(String textInput) {
 		ILine current = Cursor.getCursorInstance().getCurrentLine();
 		if(current != null)
 	        Cursor.getCursorInstance().getCurrentDocument().getBufferMemory().push(current);

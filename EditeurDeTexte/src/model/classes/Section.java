@@ -61,6 +61,14 @@ class Section extends Observable implements ISection {
     }
 
     /**
+     * @param aTitle
+     */
+    public Section(String aTitle) {
+        this();
+        title.append(aTitle);
+    }
+
+    /**
      * @see model.interfaces.ISection#addSubSection(model.interfaces.ISection)
      */
     @Override
@@ -110,6 +118,20 @@ class Section extends Observable implements ISection {
     @Override
     public void setParent(ISection aSection) {
         aSection.addSubSection(this);
+    }
+
+    /**
+     * @see model.interfaces.ISection#getNbParents()
+     */
+    @Override
+    public int getNbParents() {
+        int nbParents = 0;
+        ISection section = this;
+        while (section.getParent() != null) {
+            section = section.getParent();
+            nbParents++;
+        }
+        return nbParents;
     }
 
     /**

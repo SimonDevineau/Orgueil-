@@ -112,6 +112,7 @@ class Document extends Observable implements IDocument {
                 this.introductionText.addLine(aLine);
             }
             else {
+                System.out.println("dans section, je rajoute une ligne");
                 Cursor.getCursorInstance().getCurrentSection().getText()
                         .addLine(aLine);
             }

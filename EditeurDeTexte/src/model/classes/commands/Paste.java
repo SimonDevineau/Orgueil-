@@ -14,7 +14,7 @@ import model.interfaces.ISection;
 public class Paste implements ICommandVisitor {
 
 	@Override
-	public void visit() {
+	public void visit(String textInput) {
 		ISection current = Cursor.getCursorInstance().getCurrentSection();
 		if (current != null
 				&& Cursor.getCursorInstance().getCurrentDocument()

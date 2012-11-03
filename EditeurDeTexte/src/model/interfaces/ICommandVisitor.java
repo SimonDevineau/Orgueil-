@@ -11,7 +11,8 @@ public interface ICommandVisitor {
 	
 	/**
 	 * This method uses the cursor to update the content of the text, section and subsections...
+	 * @param aTextInput 
 	 */
-	void visit();
+	void visit(String textInput);
 
 }

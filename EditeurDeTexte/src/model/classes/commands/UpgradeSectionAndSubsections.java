@@ -15,7 +15,7 @@ import model.interfaces.ISection;
 public class UpgradeSectionAndSubsections implements ICommandVisitor {
 
 	@Override
-	public void visit() {
+	public void visit(String textInput) {
 		ISection current = Cursor.getCursorInstance().getCurrentSection();
 		// if the parent is null it means that we are at the root level
 		// and we do not have to do anything.

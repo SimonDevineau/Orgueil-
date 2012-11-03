@@ -13,11 +13,18 @@ import model.interfaces.ICommandVisitor;
  */
 public class AddSection implements ICommandVisitor {
     @Override
-    public void visit() {
+    public void visit(String textInput) {
         if (Cursor.getCursorInstance().getCurrentDocument() != null
                 || Cursor.getCursorInstance() != null) {
             Cursor.getCursorInstance().getCurrentDocument()
-                    .addSection(Factory.createSection());
+                    .addSection(Factory.createSection(textInput));
+            Cursor.getCursorInstance().setCurrentLine(
+                    Cursor.getCursorInstance().getCurrentSection().getTitle());
+            Cursor.getCursorInstance().getCurrentSection().getTitle()
+                    .setCursorLocation(0);
+            System.out.println("title cursor location "
+                    + Cursor.getCursorInstance().getCurrentSection().getTitle()
+                            .hasCursor());
         }
     }
 }
