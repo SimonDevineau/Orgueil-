@@ -24,20 +24,19 @@ class Document extends Observable implements IDocument {
     /**
      * The introduction text of the document
      */
-    protected IText          text  = Factory.createText();
+    protected IText          text              = Factory.createText();
     /**
      * The sections list of the document
      */
-    protected List<ISection> sousSections= new ArrayList<ISection>();
+    protected List<ISection> sousSections      = new ArrayList<ISection>();
     /**
      * True if it is the current document
      */
-    private boolean        isCurrentDocument = false;
+    private boolean          isCurrentDocument = false;
 
     public Document() {
         this.text = Factory.createText();
         this.sousSections = new ArrayList<ISection>();
-
         this.addObserver(Cursor.instance());
     }
 
@@ -46,17 +45,28 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public void addLine(ILine aLine) {
-        System.out.println("ligne document " + aLine);
-        if (Cursor.instance().getCurrentDocument().equals(this)) {
-            // Si la section est null, c'est que nous sommes dans le texte
-// introductif du document
+        if (Cursor.instance().getCurrentDocument().equals(this)
+                && aLine != null) {
+            // If the current section is null, we are in the text of the
+// document
             if (Cursor.instance().getCurrentSection() == null) {
                 this.text.addLine(aLine);
             }
             else {
-                System.out.println("dans section, je rajoute une ligne");
-                Cursor.instance().getCurrentSection().getText()
-                        .addLine(aLine);
+                if (Cursor
+                        .instance()
+                        .getCurrentLine()
+                        .equals(Cursor.instance().getCurrentSection()
+                                .getTitle())) {
+                    Cursor.instance()
+                            .getCurrentSection()
+                            .getText()
+                            .addBeforeLine(
+                                    Cursor.instance().getCurrentSection()
+                                            .getText().getLine(0), aLine);
+                }
+                else {
+                }
             }
         }
         this.setChanged();

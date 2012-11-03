@@ -117,4 +117,15 @@ public interface IDocument extends IStorable {
      */
     @Override
     String toString();
+
+    /**
+     * @return the subsections list of the current section
+     */
+    ArrayList<ISection> getSubSections();
+
+    /**
+     * Set the list of sub-sections
+     * @param subSections
+     */
+    void setSubSections(ArrayList<ISection> subSections);
 }
