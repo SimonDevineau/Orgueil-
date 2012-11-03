@@ -24,19 +24,19 @@ class Document extends Observable implements IDocument {
     /**
      * The introduction text of the document
      */
-    private IText          introductionText  = Factory.createText();
+    protected IText          text  = Factory.createText();
     /**
      * The sections list of the document
      */
-    private List<ISection> sectionsList      = new ArrayList<ISection>();
+    protected List<ISection> sousSections= new ArrayList<ISection>();
     /**
      * True if it is the current document
      */
     private boolean        isCurrentDocument = false;
 
     public Document() {
-        this.introductionText = Factory.createText();
-        this.sectionsList = new ArrayList<ISection>();
+        this.text = Factory.createText();
+        this.sousSections = new ArrayList<ISection>();
 
         this.addObserver(Cursor.instance());
     }
@@ -51,7 +51,7 @@ class Document extends Observable implements IDocument {
             // Si la section est null, c'est que nous sommes dans le texte
 // introductif du document
             if (Cursor.instance().getCurrentSection() == null) {
-                this.introductionText.addLine(aLine);
+                this.text.addLine(aLine);
             }
             else {
                 System.out.println("dans section, je rajoute une ligne");
@@ -68,9 +68,9 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public boolean addSection(ISection aSection) {
-        this.sectionsList.add(this.getIndexCurrentSection(), aSection);
+        this.sousSections.add(this.indexCurrentSection(), aSection);
         // J'ai rajouté
-        for (ISection section : sectionsList) {
+        for (ISection section : sousSections) {
             section.setIsCurrentSection(false);
         }
         aSection.setIsCurrentSection(true);
@@ -78,14 +78,14 @@ class Document extends Observable implements IDocument {
                 Cursor.instance().getCurrentSection().getTitle());
         this.setChanged();
         this.notifyObservers();
-        return this.sectionsList.contains(aSection);
+        return this.sousSections.contains(aSection);
     }
 
     @Override
     public void addSection(ISection section, int index) {
         this.setChanged();
         this.notifyObservers();
-        sectionsList.add(index, section);
+        sousSections.add(index, section);
     }
 
     /**
@@ -93,7 +93,7 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public boolean appendSection(ISection aSection) {
-        return this.sectionsList.add(aSection);
+        return this.sousSections.add(aSection);
     }
 
     /**
@@ -103,12 +103,12 @@ class Document extends Observable implements IDocument {
     public boolean removeSection() {
         // TODO vérifier
         int index = 0;
-        while (this.getCurrentSection().equals(this.sectionsList.get(index))) {
+        while (this.getCurrentSection().equals(this.sousSections.get(index))) {
             index++;
         }
         this.setChanged();
         this.notifyObservers();
-        return this.sectionsList.remove(this.sectionsList.get(index));
+        return this.sousSections.remove(this.sousSections.get(index));
     }
 
     /**
@@ -118,7 +118,7 @@ class Document extends Observable implements IDocument {
     public boolean removeSection(ISection aSection) {
         this.setChanged();
         this.notifyObservers();
-        return this.sectionsList.remove(aSection);
+        return this.sousSections.remove(aSection);
     }
 
     /**
@@ -126,7 +126,7 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public ISection getCurrentSection() {
-        int sectionsSize = sectionsList.size();
+        int sectionsSize = sousSections.size();
         int currentIndex = 0;
         while (currentIndex < sectionsSize
                 && !getSectionsList().get(currentIndex).isCurrentSection())
@@ -140,11 +140,11 @@ class Document extends Observable implements IDocument {
      * @see model.interfaces.IDocument#getIindexCurrentSection()
      */
     @Override
-    public int getIndexCurrentSection() {
-        int sectionsSize = sectionsList.size();
+    public int indexCurrentSection() {
+        int sectionsSize = sousSections.size();
         int index = 0;
         while (index < sectionsSize
-                && !this.sectionsList.get(index).isCurrentSection())
+                && !this.sousSections.get(index).isCurrentSection())
             index++;
         return index;
     }
@@ -154,14 +154,14 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public ISection getSection(int index) {
-        return sectionsList.get(index);
+        return sousSections.get(index);
     }
 
     /**
      * @return the sectionsList
      */
     public List<ISection> getSectionsList() {
-        return this.sectionsList;
+        return this.sousSections;
     }
 
     /**
@@ -169,7 +169,7 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public IText getText() {
-        return this.introductionText;
+        return this.text;
     }
 
     /**
@@ -199,7 +199,7 @@ class Document extends Observable implements IDocument {
     public void setSectionsList(List<ISection> sectionsList) {
         this.setChanged();
         this.notifyObservers();
-        this.sectionsList = sectionsList;
+        this.sousSections = sectionsList;
     }
 
     /**
@@ -209,7 +209,7 @@ class Document extends Observable implements IDocument {
     public void setText(IText aText) {
         this.setChanged();
         this.notifyObservers();
-        this.introductionText = aText;
+        this.text = aText;
     }
 
     /**
@@ -218,9 +218,9 @@ class Document extends Observable implements IDocument {
     @Override
     public String toString() {
         String toReturn = this.getText().toString() + "<br/>";
-        int size = sectionsList.size();
+        int size = sousSections.size();
         for (int i = 0; i < size; i++) {
-            toReturn += sectionsList.get(i).toString() + "<br/>";
+            toReturn += sousSections.get(i).toString() + "<br/>";
         }
         return toReturn;
     }
