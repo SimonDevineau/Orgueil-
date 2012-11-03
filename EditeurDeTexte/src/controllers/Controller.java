@@ -19,7 +19,7 @@ import view.MainForm;
 public class Controller implements Observer {
     private MainForm       view = new MainForm();
     private DisplayText    display;
-    private InputText      inputText;
+    private ManageInputText      inputText;
     private ValidateButton validateButton;
 
     /**

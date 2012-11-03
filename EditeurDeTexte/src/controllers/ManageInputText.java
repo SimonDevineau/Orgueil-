@@ -15,13 +15,13 @@ import model.classes.Cursor;
  *         Major in Computer and Information System Engineering
  *         InputText.java
  */
-public class InputText implements KeyListener {
+public class ManageInputText implements KeyListener {
     private JTextField input;
 
     /**
      * 
      */
-    public InputText(JTextField input) {
+    public ManageInputText(JTextField input) {
         this.input = input;
         input.addKeyListener(this);
     }
