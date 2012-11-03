@@ -20,7 +20,6 @@ import view.MainForm;
  */
 public class Controller implements Observer {
     private MainForm        view = new MainForm();
-    private DisplayText     display;
     private ManageInputText inputText;
     private ValidateButton  validateButton;
 
@@ -29,7 +28,6 @@ public class Controller implements Observer {
      */
     public Controller() {
         this.view = new MainForm();
-        display = FactoryController.createDisplayText(view.getText());
         inputText = FactoryController.createInputText(view.getCommand());
         view.getCommand().addKeyListener(inputText);
         validateButton = FactoryController.createValidateButton(view
@@ -46,6 +44,8 @@ public class Controller implements Observer {
      */
     @Override
     public void update(Observable aO, Object aArg) {
+        view.getText().setText(
+                Cursor.getCursorInstance().getCurrentDocument().toHTML());
         view.repaint();
     }
 }

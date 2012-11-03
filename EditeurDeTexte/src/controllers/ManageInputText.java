@@ -3,6 +3,7 @@ package controllers;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.print.DocFlavor.INPUT_STREAM;
 import javax.swing.JTextField;
 
 import model.classes.CommandExecutor;
@@ -41,6 +42,7 @@ public class ManageInputText implements KeyListener {
         if (aE.getKeyCode() == KeyEvent.VK_ENTER) {
             String textInput = input.getText();
             manageInputText(textInput);
+            input.setText("");
         }
     }
 
@@ -52,14 +54,8 @@ public class ManageInputText implements KeyListener {
     }
 
     public static void manageInputText(String textInput) {
-        // if (!textInput.startsWith("\\")
-        // || (textInput.length() == 2 && textInput.startsWith("\\") &&
-// textInput
-        // .endsWith("\\"))) {// meands begin by \
         if (!CommandExecutor.getCommandExecutorInstance().getCommandsList()
                 .containsKey(textInput)) {
-            System.out.println("line " +Cursor.getCursorInstance().getCurrentLine());
-            System.out.println("cursor " + Cursor.getCursorInstance().getCurrentLine().getCursorLocation());
             Cursor.getCursorInstance().getCurrentLine()
                     .addUnderCursor(textInput);
         }

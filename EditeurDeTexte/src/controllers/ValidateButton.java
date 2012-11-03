@@ -24,7 +24,6 @@ public class ValidateButton extends AbstractAction {
         this.putValue(NAME, "Validate");
         this.putValue(SHORT_DESCRIPTION,
                 "Press this button to validate your input");
-        this.putValue(ACCELERATOR_KEY, KeyEvent.VK_ENTER);
         this.input = input;
     }
 
@@ -34,5 +33,6 @@ public class ValidateButton extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent aArg0) {
         ManageInputText.manageInputText(input.getText());
+        input.setText("");
     }
 }
