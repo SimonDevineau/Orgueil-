@@ -33,6 +33,6 @@ public class ValidateButton extends AbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent aArg0) {
-        InputText.manageInputText(input.getText());
+        ManageInputText.manageInputText(input.getText());
     }
 }

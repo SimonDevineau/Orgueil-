@@ -14,7 +14,8 @@ import model.interfaces.IDocument;
  *         Ecole des Mines de Nantes
  *         Major in Computer and Information System Engineering
  *         DisplayText.java
- *         This class updates the contents of the view when a modification is done on a document
+ *         This class updates the contents of the view when a modification is
+ *         done on a document
  */
 public class DisplayText implements Observer {
     /**
@@ -30,6 +31,7 @@ public class DisplayText implements Observer {
      */
     public DisplayText(JLabel inputText) {
         this.inputText = inputText;
+        Cursor.getCursorInstance().addObserver(this);
     }
 
     /**
@@ -37,7 +39,7 @@ public class DisplayText implements Observer {
      */
     @Override
     public void update(Observable aArg0, Object aArg1) {
-        if (aArg0 instanceof IDocument)
+        if (aArg0 instanceof Cursor)
             inputText.setText(Cursor.getCursorInstance().getCurrentDocument()
                     .toHTML());
     }

@@ -1,8 +1,13 @@
 package model.classes;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
+import model.interfaces.IStorable;
+import model.interfaces.IText;
 
 /**
  * 31 oct. 2012 - EditeurDeTexte.
@@ -11,7 +16,7 @@ import model.interfaces.ISection;
  *         Major in Computer and Information System Engineering
  *         Cursor.java
  */
-public final class Cursor {
+public final class Cursor extends Observable implements Observer {
     /**
      * the single instance of the cursor
      */
@@ -25,6 +30,10 @@ public final class Cursor {
      */
     private ISection               currentSection;
     /**
+     * The introductive text of the current document
+     */
+    private IText                  currentTextIntro;
+    /**
      * The current document of the editor
      */
     private IDocument              currentDocument;
@@ -34,10 +43,6 @@ public final class Cursor {
     private int                    currentPosition = 0;
 
     private Cursor() {
-        this.currentLine = null;
-        this.currentSection = null;
-        this.currentDocument = Factory.createDocument();
-        setCurrentPosition(0);
     }
 
     /**
@@ -62,6 +67,9 @@ public final class Cursor {
      */
     public ILine getCurrentLine() {
         initialize();
+        if (currentLine == null) {
+            Cursor.getCursorInstance().getCurrentDocument().addLine(new Line());
+        }
         return currentLine;
     }
 
@@ -72,6 +80,14 @@ public final class Cursor {
     public void setCurrentLine(ILine currentLine) {
         initialize();
         this.currentLine = currentLine;
+    }
+    
+    public IStorable getCurrentStorable(){
+        if(Cursor.getCursorInstance().getCurrentSection()==null){
+            return currentSection;
+        }else{
+            return currentTextIntro;
+        }
     }
 
     /**
@@ -89,6 +105,20 @@ public final class Cursor {
     public void setCurrentSection(ISection currentSection) {
         initialize();
         this.currentSection = currentSection;
+    }
+
+    /**
+     * @return the currentTextIintro
+     */
+    public IText getCurrentText() {
+        return currentTextIntro;
+    }
+
+    /**
+     * @param currentTextIintro the currentTextIintro to set
+     */
+    public void setCurrentText(IText currentTextIintro) {
+        this.currentTextIntro = currentTextIintro;
     }
 
     /**
@@ -131,5 +161,14 @@ public final class Cursor {
                 }
             }
         }
+    }
+
+    /**
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    @Override
+    public void update(Observable aO, Object aArg) {
+        this.setChanged();
+        this.notifyObservers();
     }
 }

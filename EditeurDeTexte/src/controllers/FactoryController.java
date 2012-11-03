@@ -20,8 +20,8 @@ public class FactoryController {
         return new DisplayText(inputText);
     }
 
-    public static InputText createInputText(JTextField input) {
-        return new InputText(input);
+    public static ManageInputText createInputText(JTextField input) {
+        return new ManageInputText(input);
     }
 
     public static ValidateButton createValidateButton(JTextField input) {

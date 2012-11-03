@@ -15,13 +15,13 @@ import model.classes.Cursor;
  *         Major in Computer and Information System Engineering
  *         InputText.java
  */
-public class InputText implements KeyListener {
+public class ManageInputText implements KeyListener {
     private JTextField input;
 
     /**
      * 
      */
-    public InputText(JTextField input) {
+    public ManageInputText(JTextField input) {
         this.input = input;
         input.addKeyListener(this);
     }
@@ -38,7 +38,7 @@ public class InputText implements KeyListener {
      */
     @Override
     public void keyReleased(KeyEvent aE) {
-        if (aE.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (aE.getKeyCode() == KeyEvent.VK_ENTER) {
             String textInput = input.getText();
             manageInputText(textInput);
         }
@@ -52,24 +52,32 @@ public class InputText implements KeyListener {
     }
 
     public static void manageInputText(String textInput) {
-        if (!textInput.startsWith("\\")
-                || (textInput.length() == 2 && textInput.startsWith("\\") && textInput
-                        .endsWith("\\"))) {// meands begin by \
+        // if (!textInput.startsWith("\\")
+        // || (textInput.length() == 2 && textInput.startsWith("\\") &&
+// textInput
+        // .endsWith("\\"))) {// meands begin by \
+        if (!CommandExecutor.getCommandExecutorInstance().getCommandsList()
+                .containsKey(textInput)) {
+            System.out.println("line " +Cursor.getCursorInstance().getCurrentLine());
+            System.out.println("cursor " + Cursor.getCursorInstance().getCurrentLine().getCursorLocation());
             Cursor.getCursorInstance().getCurrentLine()
                     .addUnderCursor(textInput);
         }
         else {
-            // Visit the current document in order to call the suitable commands class 
+            // Visit the current document in order to call the suitable commands
+// class
             Cursor.getCursorInstance()
                     .getCurrentDocument()
                     .accept(CommandExecutor.getCommandExecutorInstance()
                             .getCommandsList().get(textInput));
-            // Visit the current line in order to call the suitable commands class
+            // Visit the current line in order to call the suitable commands
+// class
             Cursor.getCursorInstance()
                     .getCurrentLine()
                     .accept(CommandExecutor.getCommandExecutorInstance()
                             .getCommandsList().get(textInput));
-            // Visit the current section in order to call the suitable commands class
+            // Visit the current section in order to call the suitable commands
+// class
             Cursor.getCursorInstance()
                     .getCurrentSection()
                     .accept(CommandExecutor.getCommandExecutorInstance()
