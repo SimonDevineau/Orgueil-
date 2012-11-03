@@ -236,14 +236,6 @@ class Document extends Observable implements IDocument {
         this.introductionText = aText;
     }
 
-	/**
-	 * @see model.interfaces.IStorable#accept(model.interfaces.ICommandVisitor)
-	 */
-	@Override
-	public void accept(ICommandVisitor aVisitor) {
-		//aVisitor.visit(this);
-	}
-
     /**
      * @see model.interfaces.IDocument#getSection(int)
      */
@@ -270,12 +262,12 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public String toHTML() {
-        String toReturn = "<html>"+this.getText().toString() + "\n";
+        String toReturn = "<html>" + this.getText().toString() + "\n";
         int size = sectionsList.size();
         for (int i = 0; i < size; i++) {
             toReturn += sectionsList.get(i).toString() + "\n";
         }
-        toReturn+="</html>";
+        toReturn += "</html>";
         return toReturn;
     }
 
