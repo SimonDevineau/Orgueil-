@@ -104,6 +104,7 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public void addLine(ILine aLine) {
+        System.out.println("ligne document " + aLine);
         if (Cursor.getCursorInstance().getCurrentDocument().equals(this)) {
             // Si la section est null, c'est que nous sommes dans le texte
 // introductif du document

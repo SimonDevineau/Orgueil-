@@ -29,9 +29,14 @@ class Text extends Observable implements IText {
      */
     @Override
     public void addLine(ILine aLine) {
+        if (aLine != null) {
+            linesList.add(aLine);
+        }
+        else {
+            linesList.add(Factory.createLine());
+        }
         this.setChanged();
         this.notifyObservers();
-        linesList.add(aLine);
     }
 
     /**
