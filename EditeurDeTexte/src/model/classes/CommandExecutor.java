@@ -70,7 +70,6 @@ public final class CommandExecutor {
                 utilities.ConfigurationLoader.DEFAULT_CONFIG_TAG,
                 utilities.ConfigurationLoader.DEFAULT_CONFIG_KEY,
                 utilities.ConfigurationLoader.DEFAULT_CONFIG_VALUE);
-        System.out.println("le set dans command EX" + tmp);
         Set<String> keys = tmp.keySet();
         Iterator<String> key = keys.iterator();
         while (key.hasNext()) {
