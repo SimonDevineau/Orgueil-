@@ -1,11 +1,10 @@
 package model.classes.commands;
 
+import model.classes.Cursor;
 import model.classes.Editor;
 import model.interfaces.ICommandVisitor;
-import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
-import model.interfaces.IText;
 
 /**
  * 22 oct. 2012 - EditeurDeTexte.
@@ -14,60 +13,6 @@ import model.interfaces.IText;
  *         Computer and Information System Engineering Up.java
  */
 class Up implements ICommandVisitor {
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
-	 */
-	@Override
-	public void visit(ILine aLine) {
-	}
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ISection)
-	 */
-	@Override
-	public void visit(ISection aSection) {
-		// If the title has the cursor
-		if (aSection.getTitle().hasCursor())
-			changeSection(aSection, aSection.getTitle());
-		else { // else it means that the text has the cursor
-			int index = 0;
-			int linesNumber = aSection.getText().size();
-			while (index < linesNumber
-					&& !aSection.getText().getLine(index).hasCursor())
-				index++;
-			if (index == linesNumber) // in that case it means that we have a bug in the model
-				throw new RuntimeException(
-						"An error occured in the Down command line 52, because no line has the cursor");
-			if (index == 0) { // in that case the title has to receive the cursor
-				aSection.getTitle().setCursorLocation(
-						aSection.getText().getLine(index)
-								.getCursorLocation());
-				aSection.getText().getLine(index).removeCursor();
-			} else { // or just the previous line
-				aSection.getText()
-						.getLine(index - 1)
-						.setCursorLocation(
-								aSection.getText().getLine(index)
-										.getCursorLocation());
-				aSection.getText().getLine(index).removeCursor();
-			}
-		}
-	}
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IText)
-	 */
-	@Override
-	public void visit(IText aText) {
-	}
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IDocument)
-	 */
-	@Override
-	public void visit(IDocument aDocument) {
-	}
 
 	/**
 	 * This method is used to go to the previous section
@@ -92,8 +37,7 @@ class Up implements ICommandVisitor {
 			 * line would have been to long
 			 */
 			if (textSize > 0)
-				previousLine = previous.getText().getLines()
-						.get(textSize - 1);
+				previousLine = previous.getText().getLines().get(textSize - 1);
 			else
 				previousLine = previous.getTitle();
 
@@ -106,7 +50,8 @@ class Up implements ICommandVisitor {
 
 	/**
 	 * 
-	 * @param aSection the section from which we have to get the predecessor 
+	 * @param aSection
+	 *            the section from which we have to get the predecessor
 	 * @return the predecessor
 	 */
 	private ISection getPreviousSection(ISection aSection) {
@@ -136,6 +81,38 @@ class Up implements ICommandVisitor {
 			// following section by using the getParent
 			return aSection.getParent().getSubSections()
 					.get(aSection.getParent().indexOfCurrentSection() - 1);
+		}
+	}
+
+	@Override
+	public void visit() {
+		ISection current = Cursor.getCursorInstance().getCurrentSection();
+		// If the title has the cursor
+		if (current.getTitle().hasCursor())
+			changeSection(current, current.getTitle());
+		else { // else it means that the text has the cursor
+			int index = 0;
+			int linesNumber = current.getText().size();
+			while (index < linesNumber
+					&& !current.getText().getLine(index).hasCursor())
+				index++;
+			if (index == linesNumber) // in that case it means that we have a
+										// bug in the model
+				throw new RuntimeException(
+						"An error occured in the Down command line 52, because no line has the cursor");
+			if (index == 0) { // in that case the title has to receive the
+								// cursor
+				current.getTitle().setCursorLocation(
+						current.getText().getLine(index).getCursorLocation());
+				current.getText().getLine(index).removeCursor();
+			} else { // or just the previous line
+				current.getText()
+						.getLine(index - 1)
+						.setCursorLocation(
+								current.getText().getLine(index)
+										.getCursorLocation());
+				current.getText().getLine(index).removeCursor();
+			}
 		}
 	}
 

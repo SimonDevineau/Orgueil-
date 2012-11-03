@@ -1,12 +1,11 @@
 package model.classes.commands;
 
+import model.classes.Cursor;
 import model.classes.Editor;
 import model.classes.Factory;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
-import model.interfaces.ILine;
 import model.interfaces.ISection;
-import model.interfaces.IText;
 
 /**
  * 22 oct. 2012 - EditeurDeTexte.
@@ -17,20 +16,11 @@ import model.interfaces.IText;
  */
 class DowngradeSectionAndSubsections implements ICommandVisitor {
 
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
-	 */
 	@Override
-	public void visit(ILine aLine) {
-	}
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ISection)
-	 */
-	@Override
-	public void visit(ISection aSection) {
+	public void visit() {
+		ISection current = Cursor.getCursorInstance().getCurrentSection();
 		// if the parent is null it means that we are at the root level
-		if (aSection.getParent() == null) {
+		if (current.getParent() == null) {
 			IDocument currentDoc = Editor.getEditor().getCurrentDocument();
 			try {
 				// Trying to get the element before the current section at the
@@ -54,32 +44,18 @@ class DowngradeSectionAndSubsections implements ICommandVisitor {
 		} else {
 			// if the section is the first child so we need to go back to the
 			// parent section
-			if (aSection.getParent().indexOfCurrentSection() == 0) {
+			if (current.getParent().indexOfCurrentSection() == 0) {
 				ISection previous = Factory.createSection();
-				aSection.getParent().addSubSection(previous, 1);
-				previous.addSubSection(aSection.getParent().removeSection(0));
+				current.getParent().addSubSection(previous, 1);
+				previous.addSubSection(current.getParent().removeSection(0));
 			} else {
 				// if the parent is not null, so we need to get the
 				// following section by using the getParent
-				ISection previous = aSection.getParent().getSubSections()
-						.get(aSection.getParent().indexOfCurrentSection() - 1);
-				previous.addSubSection(aSection.getParent().removeSection(
-						aSection.getParent().indexOfCurrentSection()));
+				ISection previous = current.getParent().getSubSections()
+						.get(current.getParent().indexOfCurrentSection() - 1);
+				previous.addSubSection(current.getParent().removeSection(
+						current.getParent().indexOfCurrentSection()));
 			}
 		}
-	}
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IText)
-	 */
-	@Override
-	public void visit(IText aText) {
-	}
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IDocument)
-	 */
-	@Override
-	public void visit(IDocument aDocument) {
 	}
 }

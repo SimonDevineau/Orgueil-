@@ -1,12 +1,11 @@
 package model.classes.commands;
 
+import model.classes.Cursor;
 import model.classes.Editor;
 import model.classes.Factory;
 import model.interfaces.ICommandVisitor;
-import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
-import model.interfaces.IText;
 
 /**
  * 22 oct. 2012 - EditeurDeTexte.
@@ -15,67 +14,6 @@ import model.interfaces.IText;
  *         Computer and Information System Engineering Down.java
  */
 public class Down implements ICommandVisitor {
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
-	 */
-	@Override
-	public void visit(ILine aLine) {
-	}
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ISection)
-	 */
-	@Override
-	public void visit(ISection aSection) {
-		// If the title has the cursor
-		if (aSection.getTitle().hasCursor()) {
-			// If the text is not empty
-			if (aSection.getText().size() != 0) {
-				aSection.getText()
-						.getLine(0)
-						.setCursorLocation(
-								aSection.getTitle().getCursorLocation());
-				aSection.getTitle().removeCursor();
-			} else
-				// else it means that the text is empty
-				changeSection(aSection, aSection.getTitle());
-		} else { // else it means that the text has the cursor
-			int index = 0;
-			int linesNumber = aSection.getText().size();
-			while (index < linesNumber
-					&& !aSection.getText().getLine(index).hasCursor())
-				index++;
-			if (index == linesNumber)
-				throw new RuntimeException(
-						"An error occured in the Down command line 52, an error exists in the model because no line has the cursor");
-			if (index == linesNumber - 1)
-				changeSection(aSection,
-						aSection.getText().getLine(index));
-			else {
-				aSection.getText()
-						.getLine(index + 1)
-						.setCursorLocation(
-								aSection.getText().getLine(index)
-										.getCursorLocation());
-				aSection.getText().getLine(index).removeCursor();
-			}
-		}
-	}
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IText)
-	 */
-	@Override
-	public void visit(IText aText) {
-	}
-
-	/**
-	 * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IDocument)
-	 */
-	@Override
-	public void visit(IDocument aDocument) {
-	}
 
 	/**
 	 * This method is used to go to the next section
@@ -133,6 +71,43 @@ public class Down implements ICommandVisitor {
 			// following section by using the getParent
 			return aSection.getParent().getSubSections()
 					.get(aSection.getParent().indexOfCurrentSection() + 1);
+		}
+	}
+
+	@Override
+	public void visit() {
+		ISection current = Cursor.getCursorInstance().getCurrentSection();
+		// If the title has the cursor
+		if (current.getTitle().hasCursor()) {
+			// If the text is not empty
+			if (current.getText().size() != 0) {
+				current.getText()
+						.getLine(0)
+						.setCursorLocation(
+								current.getTitle().getCursorLocation());
+				current.getTitle().removeCursor();
+			} else
+				// else it means that the text is empty
+				changeSection(current, current.getTitle());
+		} else { // else it means that the text has the cursor
+			int index = 0;
+			int linesNumber = current.getText().size();
+			while (index < linesNumber
+					&& !current.getText().getLine(index).hasCursor())
+				index++;
+			if (index == linesNumber)
+				throw new RuntimeException(
+						"An error occured in the Down command line 52, an error exists in the model because no line has the cursor");
+			if (index == linesNumber - 1)
+				changeSection(current, current.getText().getLine(index));
+			else {
+				current.getText()
+						.getLine(index + 1)
+						.setCursorLocation(
+								current.getText().getLine(index)
+										.getCursorLocation());
+				current.getText().getLine(index).removeCursor();
+			}
 		}
 	}
 }

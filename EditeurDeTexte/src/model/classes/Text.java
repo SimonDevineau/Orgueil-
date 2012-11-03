@@ -28,7 +28,7 @@ class Text implements IText {
 	 */
 	@Override
 	public void accept(ICommandVisitor aVisitor) {
-		aVisitor.visit(this);
+		//aVisitor.visit(this);
 	}
 
 	/**

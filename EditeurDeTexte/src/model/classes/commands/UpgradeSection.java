@@ -1,10 +1,6 @@
 package model.classes.commands;
 
 import model.interfaces.ICommandVisitor;
-import model.interfaces.IDocument;
-import model.interfaces.ILine;
-import model.interfaces.ISection;
-import model.interfaces.IText;
 
 
 /**
@@ -16,32 +12,10 @@ import model.interfaces.IText;
  */
 class UpgradeSection implements ICommandVisitor {
 
-    /**
-     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
-     */
-    @Override
-    public void visit(ILine aLine) {
-    }
-
-    /**
-     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ISection)
-     */
-    @Override
-    public void visit(ISection aSection) {
-    }
-
-    /**
-     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IText)
-     */
-    @Override
-    public void visit(IText aText) {
-    }
-
-    /**
-     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IDocument)
-     */
-    @Override
-    public void visit(IDocument aDocument) {
-    }
+	@Override
+	public void visit() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

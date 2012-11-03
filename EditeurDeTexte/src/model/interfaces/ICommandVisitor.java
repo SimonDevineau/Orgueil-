@@ -9,26 +9,9 @@ package model.interfaces;
  */
 public interface ICommandVisitor {
 	
-    /**
-     * @param line
-     *            , the line where the commands will be executed.
-     */
-    void visit(ILine line);
+	/**
+	 * This method uses the cursor to update the content of the text, section and subsections...
+	 */
+	void visit();
 
-    /**
-     * @param section
-     *            , the section where the commands will be executed.
-     */
-    void visit(ISection section);
-
-    /**
-     * @param text
-     *            , the text where the commands will be executed.
-     */
-    void visit(IText text);
-    /**
-     * @param document
-     *            , the text where the commands will be executed.
-     */
-    void visit(IDocument document);
 }

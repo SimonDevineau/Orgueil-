@@ -2,10 +2,7 @@ package model.classes.commands;
 
 import model.classes.Cursor;
 import model.interfaces.ICommandVisitor;
-import model.interfaces.IDocument;
 import model.interfaces.ILine;
-import model.interfaces.ISection;
-import model.interfaces.IText;
 
 /**
  * 22 oct. 2012 - EditeurDeTexte.
@@ -15,38 +12,16 @@ import model.interfaces.IText;
  *         DeleteAndSave.java
  */
 class DeleteAndSave implements ICommandVisitor {
-    /**
-     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ILine)
-     */
-    @Override
-    public void visit(ILine aLine) {
-        if (aLine != null) {
+
+	@Override
+	public void visit() {
+		ILine current = Cursor.getCursorInstance().getCurrentLine();
+		if (current != null) {
             //TODO FAUT IL PASSER PAR UN CONSTRUCTEUR PAR DEFAULT
             Cursor.getCursorInstance().getCurrentDocument().getBufferMemory()
-                    .push(aLine);
+                    .push(current);
             Cursor.getCursorInstance().getCurrentSection().getText()
-                    .removeLine(aLine);
+                    .removeLine(current);
         }
-    }
-
-    /**
-     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.ISection)
-     */
-    @Override
-    public void visit(ISection aSection) {
-    }
-
-    /**
-     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IText)
-     */
-    @Override
-    public void visit(IText aText) {
-    }
-
-    /**
-     * @see model.interfaces.ICommandVisitor#visit(model.interfaces.IDocument)
-     */
-    @Override
-    public void visit(IDocument aDocument) {
-    }
+	}
 }

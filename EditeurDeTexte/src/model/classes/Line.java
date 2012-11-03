@@ -103,7 +103,7 @@ class Line extends Observable implements ILine {
      */
     @Override
     public void accept(ICommandVisitor aVisitor) {
-        aVisitor.visit(this);
+        //aVisitor.visit(this);
     }
 
     @Override
