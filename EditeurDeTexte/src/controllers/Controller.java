@@ -45,7 +45,7 @@ public class Controller implements Observer {
     @Override
     public void update(Observable aO, Object aArg) {
         view.getText().setText(
-                Cursor.getCursorInstance().getCurrentDocument().toHTML());
+                Cursor.getCursorInstance().getCurrentDocument().toString());
         view.repaint();
     }
 }
