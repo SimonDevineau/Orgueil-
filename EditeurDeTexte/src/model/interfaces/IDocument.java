@@ -64,6 +64,13 @@ public interface IDocument extends IStorable {
      * @return true if the section has been deleted successfully
      */
     boolean removeSection(ISection section);
+    
+    /**
+     * 
+     * @param index, the index to remove
+     * @return the section removed
+     */
+    ISection removeSection(int index);
 
     /**
      * @param obj

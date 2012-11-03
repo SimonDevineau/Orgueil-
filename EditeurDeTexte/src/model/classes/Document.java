@@ -262,4 +262,9 @@ class Document extends Observable implements IDocument {
     public void setSubSections(ArrayList<ISection> aSubSections) {
         this.subSections = aSubSections;
     }
+
+	@Override
+	public ISection removeSection(int index) {
+		return subSections.remove(index);
+	}
 }

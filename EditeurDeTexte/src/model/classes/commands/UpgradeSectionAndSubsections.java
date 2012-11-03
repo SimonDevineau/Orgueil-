@@ -1,8 +1,8 @@
 package model.classes.commands;
 
 import model.classes.Cursor;
-import model.classes.Editor;
 import model.interfaces.ICommandVisitor;
+import model.interfaces.IDocument;
 import model.interfaces.ISection;
 
 /**
@@ -19,21 +19,17 @@ public class UpgradeSectionAndSubsections implements ICommandVisitor {
 		ISection current = Cursor.instance().getCurrentSection();
 		// if the parent is null it means that we are at the root level
 		// and we do not have to do anything.
-		if (current.getParent() != null) {
-			ISection parent = current.getParent();
-			if (parent.getParent() == null) { // So the parent is at the root
-												// level
-				Editor.getEditor()
-						// we add the section at the root level.
-						.getCurrentDocument()
-						.addSection(
-								current.getParent().removeSection(
-										current.getParent()
-												.indexOfCurrentSection()));
+		if (!(current.getParent() instanceof IDocument)) {
+			ISection parent = (ISection) current.getParent();
+			if (parent.getParent() instanceof IDocument) { // So the parent is
+															// at the root
+				// level
+				IDocument currentDoc = Cursor.instance().getCurrentDocument();
+				currentDoc.addSection(parent.removeSection(parent
+						.indexOfCurrentSection()));
 			} else {
-				parent.getParent().addSubSection(
-						current.getParent().removeSection(
-								current.getParent().indexOfCurrentSection()));
+				parent.getParent().addSection(
+						parent.removeSection(parent.indexOfCurrentSection()));
 			}
 		}
 	}

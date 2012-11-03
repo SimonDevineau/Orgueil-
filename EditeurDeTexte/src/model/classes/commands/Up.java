@@ -1,7 +1,6 @@
 package model.classes.commands;
 
 import model.classes.Cursor;
-import model.classes.Editor;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
 import model.interfaces.ILine;
