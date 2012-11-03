@@ -7,6 +7,7 @@ import java.util.Observer;
 
 import model.classes.states.StateFactory;
 import model.interfaces.ICommandVisitor;
+import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
 import model.interfaces.IState;
@@ -25,7 +26,7 @@ class Section extends Document implements ISection {
      * The parent section.
      */
     // The value is null because a section hasn't got necessarily a parent
-    protected ISection       parent           = null;
+    protected IDocument      parent           = null;
     /**
      * The current state which is used to print the section. This is used to
      * implement the state pattern. It enables to delegate instead of doing some
@@ -52,7 +53,7 @@ class Section extends Document implements ISection {
         Cursor.instance().setCurrentSection(this);
     }
 
-    public Section(ISection parent) {
+    public Section(IDocument parent) {
         this();
         setParent(parent);
     }
@@ -74,7 +75,7 @@ class Section extends Document implements ISection {
      * @see model.interfaces.ISection#getParent()
      */
     @Override
-    public ISection getParent() {
+    public IDocument getParent() {
         return this.parent;
     }
 
@@ -90,7 +91,7 @@ class Section extends Document implements ISection {
      * @see model.interfaces.ISection#setParent(model.interfaces.ISection)
      */
     @Override
-    public void setParent(ISection aSection) {
+    public void setParent(IDocument aSection) {
         aSection.addSection(this);
     }
 
@@ -116,8 +117,8 @@ class Section extends Document implements ISection {
     @Override
     public void setIsCurrentSection(boolean aIsCurrentSection) {
         this.isCurrentSection = aIsCurrentSection;
-        if (this.parent != null)
-            this.parent.setIsCurrentSection(aIsCurrentSection);
+        if (this.parent instanceof ISection)
+            ((ISection) this.parent).setIsCurrentSection(aIsCurrentSection);
     }
 
     /**
@@ -185,8 +186,8 @@ class Section extends Document implements ISection {
     public void setNbParents() {
         int nbParents = 0;
         ISection section = this;
-        while (section.getParent() != null) {
-            section = section.getParent();
+        while (!(section.getParent() instanceof IDocument)) {
+            section = (ISection)section.getParent();
             nbParents++;
         }
         this.nbParents = nbParents;

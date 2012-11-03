@@ -22,7 +22,7 @@ public interface ISection extends IDocument {
     /**
      * @return the parent of the current section.
      */
-    ISection getParent();
+    IDocument getParent();
 
     /**
      * @return the section title
@@ -55,7 +55,7 @@ public interface ISection extends IDocument {
      * @param aSection
      *            , the new parent
      */
-    void setParent(ISection aSection);
+    void setParent(IDocument aSection);
 
     /**
      * Set the title of the section
