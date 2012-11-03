@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import tests.LaunchEditor;
+
 import model.classes.Editor;
 
 public class MainForm extends JFrame {
@@ -43,7 +45,7 @@ public class MainForm extends JFrame {
     public MainForm() {
         if (!System.getProperty("os.name").toLowerCase().contains("mac os")) {
             this.setIconImage(Toolkit.getDefaultToolkit().getImage(
-                    Editor.class.getResource("images/notes.png")));
+                    LaunchEditor.class.getResource("images/notes.png")));
         }
         this.setTitle(DEFAULT_TITLE);
         this.setSize(DEFAULT_DIMENSION);
