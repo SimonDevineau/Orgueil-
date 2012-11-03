@@ -52,14 +52,8 @@ public class ManageInputText implements KeyListener {
     }
 
     public static void manageInputText(String textInput) {
-        // if (!textInput.startsWith("\\")
-        // || (textInput.length() == 2 && textInput.startsWith("\\") &&
-// textInput
-        // .endsWith("\\"))) {// meands begin by \
         if (!CommandExecutor.getCommandExecutorInstance().getCommandsList()
                 .containsKey(textInput)) {
-            System.out.println("line " +Cursor.getCursorInstance().getCurrentLine());
-            System.out.println("cursor " + Cursor.getCursorInstance().getCurrentLine().getCursorLocation());
             Cursor.getCursorInstance().getCurrentLine()
                     .addUnderCursor(textInput);
         }

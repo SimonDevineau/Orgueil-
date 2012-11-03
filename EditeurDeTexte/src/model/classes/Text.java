@@ -147,9 +147,9 @@ class Text extends Observable implements IText {
      */
     @Override
     public String toString() {
-        String toReturn = "Class text text rentre pas boucle for car pas de ligne associé";
+        String toReturn = "";
         for (ILine line : linesList) {
-            toReturn += line.toString() + "<br/>";
+            toReturn += "<br/>"+line.toString() + "<br/>";
         }
         return toReturn;
     }

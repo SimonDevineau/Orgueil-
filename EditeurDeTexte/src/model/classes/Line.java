@@ -44,10 +44,8 @@ class Line extends Observable implements ILine {
 
     @Override
     public void addUnderCursor(CharSequence insertion) {
-        System.out.println(this.countObservers());
         // TODO vérifier si c'est _CursorLocation ou _CursorLocation+1
         if (hasCursor()) {
-            System.out.println("text " + insertion);
             _Line.insert(_CursorLocation, insertion);
         }
         setCursorLocation(_CursorLocation + insertion.length());
@@ -146,23 +144,26 @@ class Line extends Observable implements ILine {
     public String toString() {
         StringBuilder toReturn = new StringBuilder();
         int index = 0;
-        System.out.println("index cursor " + _CursorLocation);
-        System.out.println("text " + _Line.toString());
+        //If the line has the cursor, this one has to be added to the line
         if (this.hasCursor()) {
-            while (index <= _CursorLocation && index < _Line.length()) {
+            //FBefore adding the cursor, we get all the char placed before this one
+            while (index < _CursorLocation-1 && index < _Line.length()) {
                 toReturn.append(_Line.charAt(index));
                 index++;
             }
+            //If there is no char before the cursor, the line is empty, we add an "_" to display a fake cursor
             if (_Line.length() == 0) {
                 toReturn.append("<span style=\"background-color:red;text-decoration:blink;\">"
                         + "_" + "</span>");
             }
+            //If there are chars before we place the cursor on the corresponding char and complete the line
             else {
                 toReturn.append("<span style=\"text-decoration:underline;background-color:red;text-decoration:blink;\">"
                         + _Line.charAt(index) + "</span>");
+                index++;
                 while (index < _Line.length()) {
-                    index++;
                     toReturn.append(_Line.charAt(index));
+                    index++;
                 }
             }
         }

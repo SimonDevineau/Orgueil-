@@ -1,8 +1,6 @@
 package controllers;
 
-import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 
 /**
  * 1 nov. 2012 - EditeurDeTexte.
@@ -14,10 +12,6 @@ import javax.swing.JTextField;
 public class FactoryController {
     public static Controller createController() {
         return new Controller();
-    }
-
-    public static DisplayText createDisplayText(JLabel inputText) {
-        return new DisplayText(inputText);
     }
 
     public static ManageInputText createInputText(JTextField input) {
