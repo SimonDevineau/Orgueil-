@@ -53,6 +53,8 @@ class Document extends Observable implements IDocument {
                 this.text.addLine(aLine);
             }
             else {
+                // If the cursor is on the title, we add the line at the
+// begining of the text
                 if (Cursor
                         .instance()
                         .getCurrentLine()
@@ -66,6 +68,12 @@ class Document extends Observable implements IDocument {
                                             .getText().getLine(0), aLine);
                 }
                 else {
+                    Cursor.instance()
+                            .getCurrentSection()
+                            .getText()
+                            .addLine(
+                                    Cursor.instance().getCurrentSection()
+                                            .getText().getLine(0), aLine);
                 }
             }
         }
@@ -78,8 +86,13 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public boolean addSection(ISection aSection) {
-        this.sousSections.add(this.indexCurrentSection(), aSection);
-        // J'ai rajouté
+        this.addSection(aSection, this.indexCurrentSection());
+        return this.sousSections.contains(aSection);
+    }
+
+    @Override
+    public void addSection(ISection aSection, int index) {
+        sousSections.add(index, aSection);
         for (ISection section : sousSections) {
             section.setIsCurrentSection(false);
         }
@@ -88,14 +101,6 @@ class Document extends Observable implements IDocument {
                 Cursor.instance().getCurrentSection().getTitle());
         this.setChanged();
         this.notifyObservers();
-        return this.sousSections.contains(aSection);
-    }
-
-    @Override
-    public void addSection(ISection section, int index) {
-        this.setChanged();
-        this.notifyObservers();
-        sousSections.add(index, section);
     }
 
     /**
@@ -103,6 +108,8 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public boolean appendSection(ISection aSection) {
+        this.setChanged();
+        this.notifyObservers();
         return this.sousSections.add(aSection);
     }
 
@@ -151,12 +158,17 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public int indexCurrentSection() {
-        int sectionsSize = sousSections.size();
-        int index = 0;
-        while (index < sectionsSize
-                && !this.sousSections.get(index).isCurrentSection())
-            index++;
-        return index;
+        int subSectionsSize = getSubSections().size();
+        if (getSubSections() == null || subSectionsSize == 0)
+            return -1;
+        int currentIndex = 0;
+        while (currentIndex < subSectionsSize
+                && !getSubSections().get(currentIndex).isCurrentSection())
+            currentIndex++;
+        if (currentIndex == subSectionsSize)
+            return -1;
+        else
+            return currentIndex;
     }
 
     /**
@@ -197,9 +209,9 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public void setIsCurrentDocument(boolean aIsCurrentDocument) {
+        this.isCurrentDocument = aIsCurrentDocument;
         this.setChanged();
         this.notifyObservers();
-        this.isCurrentDocument = aIsCurrentDocument;
     }
 
     /**
@@ -207,9 +219,9 @@ class Document extends Observable implements IDocument {
      *            the sectionsList to set
      */
     public void setSectionsList(List<ISection> sectionsList) {
+        this.sousSections = sectionsList;
         this.setChanged();
         this.notifyObservers();
-        this.sousSections = sectionsList;
     }
 
     /**
@@ -217,9 +229,9 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public void setText(IText aText) {
+        this.text = aText;
         this.setChanged();
         this.notifyObservers();
-        this.text = aText;
     }
 
     /**
@@ -233,5 +245,21 @@ class Document extends Observable implements IDocument {
             toReturn += sousSections.get(i).toString() + "<br/>";
         }
         return toReturn;
+    }
+
+    /**
+     * @see model.interfaces.IDocument#getSubSections()
+     */
+    @Override
+    public ArrayList<ISection> getSubSections() {
+        return (ArrayList<ISection>) sousSections;
+    }
+
+    /**
+     * @see model.interfaces.IDocument#setSubSections(java.util.ArrayList)
+     */
+    @Override
+    public void setSubSections(ArrayList<ISection> aSubSections) {
+        this.sousSections = aSubSections;
     }
 }
