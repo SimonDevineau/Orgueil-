@@ -157,7 +157,7 @@ class Document extends Observable implements IDocument {
      * @see model.interfaces.IDocument#getIindexCurrentSection()
      */
     @Override
-    public int indexCurrentSection() {
+    public int indexOfCurrentSection() {
         int subSectionsSize = getSubSections().size();
         if (getSubSections() == null || subSectionsSize == 0)
             return -1;

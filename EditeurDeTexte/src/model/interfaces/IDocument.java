@@ -81,7 +81,7 @@ public interface IDocument extends IStorable {
     /**
      * @return the current section index , the only one which has the cursor
      */
-    int indexCurrentSection();
+    int indexOfCurrentSection();
 
     /**
      * @param index
