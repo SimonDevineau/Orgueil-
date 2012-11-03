@@ -27,7 +27,7 @@ class Document extends Observable implements IDocument {
     /**
      * The sections list of the document
      */
-    protected List<ISection> subSections      = new ArrayList<ISection>();
+    protected List<ISection> subSections       = new ArrayList<ISection>();
     /**
      * True if it is the current document
      */
@@ -238,11 +238,12 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public String toString() {
-        String toReturn = this.getText().toString() + "<br/>";
+        String toReturn = "<html>" + this.getText().toString() + "<br/>";
         int size = subSections.size();
         for (int i = 0; i < size; i++) {
             toReturn += subSections.get(i).toString() + "<br/>";
         }
+        toReturn += "</html>";
         return toReturn;
     }
 
