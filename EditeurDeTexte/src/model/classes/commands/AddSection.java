@@ -15,12 +15,10 @@ import model.interfaces.ICommandVisitor;
 public class AddSection implements ICommandVisitor {
     @Override
     public void visit(String textInput) {
+        String title = textInput.substring(2);
         try {
             Cursor.instance().getCurrentDocument()
-                    .addSection(Factory.createSection(textInput));
-            System.out.println("title cursor location "
-                    + Cursor.instance().getCurrentSection().getTitle()
-                            .hasCursor());
+                    .addSection(Factory.createSection(title));
         }
         catch (Exception aE) {
             Logger.error(

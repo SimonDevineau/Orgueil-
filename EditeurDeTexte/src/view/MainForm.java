@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import tests.LaunchEditor;
@@ -49,7 +51,7 @@ public class MainForm extends JFrame {
         }
         this.setTitle(DEFAULT_TITLE);
         this.setSize(DEFAULT_DIMENSION);
-        // this.setLayout(new GridLayout(2, 1));
+        this.setLayout(new GridLayout(2, 1));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel up = new JPanel(new FlowLayout());
         up.setMinimumSize(MINIMUM_DIMENSION);
@@ -59,10 +61,10 @@ public class MainForm extends JFrame {
         down.add(this.m_Command);
         down.add(this.m_Validate);
         down.setBorder(BorderFactory.createTitledBorder("Management"));
-        this.getContentPane().add(up, BorderLayout.NORTH);
+        JScrollPane pane = new JScrollPane(up);
+        this.getContentPane().add(pane, BorderLayout.NORTH);
         this.getContentPane().add(down, BorderLayout.SOUTH);
         this.setVisible(true);
-   
     }
 
     public JTextField getCommand() {

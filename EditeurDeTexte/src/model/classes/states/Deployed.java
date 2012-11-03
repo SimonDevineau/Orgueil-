@@ -18,6 +18,7 @@ class Deployed implements IState {
 
     @Override
     public String toString() {
+        System.out.println("coucou deployed");
         StringBuilder result = new StringBuilder();
         int nbParents = linkedSection.getNbParents();
         for (int i = 0; i <= nbParents; i++) {
@@ -25,6 +26,14 @@ class Deployed implements IState {
         }
         result.append(linkedSection.getTitle().toString());
         result.append(linkedSection.getText().toString());
+        // Work on the subsections
+        int nbchildren = linkedSection.getSubSections().size();
+        if (nbchildren > 0) {
+            for (int i = 0; i <= nbchildren; i++) {
+                result.append(linkedSection.getSubSections().get(nbchildren)
+                        .toString());
+            }
+        }
         result.append("</br>");
         for (ISection subSection : linkedSection.getSubSections())
             result.append(subSection.toString());

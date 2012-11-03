@@ -13,6 +13,7 @@ class Hidden implements IState {
 	
 	@Override
 	public String toString() {
+	    System.out.println("coucou hiedden");
 		return linkedSection.getTitle().toString() + "...";
 	}
 

@@ -19,37 +19,36 @@ import model.interfaces.IText;
  *         Information System Engineering Section.java
  */
 class Section extends Document implements ISection {
-
-    protected ILine          title;
-
+    protected ILine     title;
     /**
      * The parent section.
      */
     // The value is null because a section hasn't got necessarily a parent
-    protected IDocument      parent           = null;
+    protected IDocument parent           = null;
     /**
      * The current state which is used to print the section. This is used to
      * implement the state pattern. It enables to delegate instead of doing some
      * switch case with ifs.
      */
-    protected IState         currentState;
-    protected IState         deployedState;
-    protected IState         hiddenState;
+    protected IState    currentState;
+    protected IState    deployedState;
+    protected IState    hiddenState;
     /**
      * True if this section is the current section
      */
-    protected boolean        isCurrentSection = false;
+    protected boolean   isCurrentSection = false;
     /**
      * The number of parents of the section
      */
-    protected int            nbParents        = 0;
+    protected int       nbParents        = 0;
 
     public Section() {
-    	super();
+        super();
         hiddenState = StateFactory.createHiddenState(this);
         deployedState = StateFactory.createDeployedState(this);
         currentState = deployedState;
         title = Factory.createLine();
+        this.isCurrentSection = true;
         Cursor.instance().setCurrentSection(this);
     }
 
@@ -65,10 +64,10 @@ class Section extends Document implements ISection {
         this();
         title.append(aTitle);
     }
-    
+
     public Section(ISection parent, String aTitle) {
-    	this(parent);
-    	title.append(aTitle);
+        this(parent);
+        title.append(aTitle);
     }
 
     /**
@@ -167,7 +166,7 @@ class Section extends Document implements ISection {
     @Override
     public boolean isCurrentSection() {
         return isCurrentSection;
-    } 
+    }
 
     @Override
     public void deploy() {
@@ -187,7 +186,7 @@ class Section extends Document implements ISection {
         int nbParents = 0;
         ISection section = this;
         while (!(section.getParent() instanceof IDocument)) {
-            section = (ISection)section.getParent();
+            section = (ISection) section.getParent();
             nbParents++;
         }
         this.nbParents = nbParents;
