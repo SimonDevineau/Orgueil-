@@ -43,9 +43,8 @@ public class Controller implements Observer {
      *      document when a change is done
      */
     @Override
-    public void update(Observable aO, Object aArg) {
+    public void update(Observable aO, Object aArg       ) {
         view.getText().setText(
-
                 Cursor.instance().getCurrentDocument().toString());
         view.repaint();
     }

@@ -78,7 +78,6 @@ public final class Cursor extends Observable implements Observer {
      */
     public void setCurrentLine(ILine _currentLine) {
         initialize();
-        System.out.println("param null ? " + _currentLine);
         if (this.currentLine != null)
             this.currentLine.setCurrent(false);
         if (_currentLine != null)
@@ -121,8 +120,12 @@ public final class Cursor extends Observable implements Observer {
             currentTextIntro = null;
             setCurrentLine(getCurrentSection().getTitle());
         }
-        else
+        else if (getCurrentSection().getText() != null)
             setCurrentText(getCurrentSection().getText());
+        else {
+            getCurrentSection().getText().addLine(Factory.createLine());
+            setCurrentLine(getCurrentSection().getText().getLine(0));
+        }
     }
 
     /**
@@ -137,16 +140,21 @@ public final class Cursor extends Observable implements Observer {
      *            the currentTextIintro to set
      */
     public void setCurrentText(IText currentTextIintro) {
-		this.currentTextIntro = currentTextIintro;
-		int textSize = currentTextIintro.size();
-		int index = 0;
-		while (index < textSize && !getCurrentText().getLine(index).hasCursor())
-			index++;
-		if (index == textSize){
-		    setCurrentLine(currentTextIntro.getLine(0));
-		}else
-			setCurrentLine(getCurrentText().getLine(index));
-	}
+        this.currentTextIntro = currentTextIintro;
+        int textSize = currentTextIintro.size();
+        int index = 0;
+        while (index < textSize && !getCurrentText().getLine(index).hasCursor())
+            index++;
+        if (index == textSize && textSize <= 0) {
+            if (currentSection.getTitle() != null)
+                setCurrentLine(currentSection.getTitle());
+        }
+        else if (index == textSize && textSize > 0) {
+            setCurrentLine(currentTextIntro.getLine(0));
+        }
+        else
+            setCurrentLine(getCurrentText().getLine(index));
+    }
 
     /**
      * @return the currentDocument

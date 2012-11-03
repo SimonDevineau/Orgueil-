@@ -56,12 +56,11 @@ class Text extends Observable implements IText {
      *      model.interfaces.ILine)
      */
     @Override
-    //TODO CHECK IF IT IS TRUE 
+    // TODO CHECK IF IT IS TRUE
     public void addBeforeLine(ILine aCurrentLine, ILine aLineToPaste) {
         if (aCurrentLine != null && aLineToPaste != null
                 && linesList.lastIndexOf(aCurrentLine) >= 1)
-            linesList
-                    .add(linesList.lastIndexOf(aCurrentLine), aLineToPaste);
+            linesList.add(linesList.lastIndexOf(aCurrentLine), aLineToPaste);
         this.setChanged();
         this.notifyObservers();
     }

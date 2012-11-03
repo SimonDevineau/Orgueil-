@@ -151,8 +151,8 @@ class Document extends Observable implements IDocument {
         int sectionsSize = subSections.size();
         int currentIndex = 0;
         while (currentIndex < sectionsSize
-                && !getSectionsList().get(currentIndex).isCurrentSection()){
-            currentIndex++; 
+                && !getSectionsList().get(currentIndex).isCurrentSection()) {
+            currentIndex++;
         }
         if (currentIndex == sectionsSize) {
             throw new RuntimeException("No current section found!");
@@ -286,8 +286,8 @@ class Document extends Observable implements IDocument {
         this.subSections = aSubSections;
     }
 
-	@Override
-	public ISection removeSection(int index) {
-		return subSections.remove(index);
-	}
+    @Override
+    public ISection removeSection(int index) {
+        return subSections.remove(index);
+    }
 }
