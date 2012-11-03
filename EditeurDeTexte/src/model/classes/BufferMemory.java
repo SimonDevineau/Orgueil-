@@ -85,7 +85,7 @@ public final class BufferMemory {
     /**
      * @return the bufferMemoryInstance
      */
-    public static BufferMemory getBufferMemoryInstance() {
+    public static BufferMemory instance() {
         initialize();
         return bufferMemoryInstance;
     }

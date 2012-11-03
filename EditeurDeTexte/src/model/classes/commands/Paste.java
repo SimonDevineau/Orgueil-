@@ -18,9 +18,9 @@ public class Paste implements ICommandVisitor {
 	public void visit(String textInput) {
 		ISection current = Cursor.instance().getCurrentSection();
 		if (current != null
-				&& BufferMemory.getBufferMemoryInstance().peek() instanceof ILine) {
+				&& BufferMemory.instance().peek() instanceof ILine) {
 			current.getText().insertLine(
-					(ILine) BufferMemory.getBufferMemoryInstance().pop());
+					(ILine) BufferMemory.instance().pop());
 
 		}
 	}

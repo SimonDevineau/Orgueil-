@@ -18,6 +18,6 @@ public class Copy implements ICommandVisitor {
 	public void visit(String textInput) {
 		ILine current = Cursor.instance().getCurrentLine();
 		if(current != null)
-	        BufferMemory.getBufferMemoryInstance().push(current);
+	        BufferMemory.instance().push(current);
 	}
 }

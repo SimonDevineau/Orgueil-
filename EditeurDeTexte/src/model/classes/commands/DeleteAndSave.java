@@ -19,7 +19,7 @@ public class DeleteAndSave implements ICommandVisitor {
 		ILine current = Cursor.instance().getCurrentLine();
 		if (current != null) {
             //TODO FAUT IL PASSER PAR UN CONSTRUCTEUR PAR DEFAULT
-            BufferMemory.getBufferMemoryInstance().push(current);
+            BufferMemory.instance().push(current);
             Cursor.instance().getCurrentSection().getText()
                     .removeLine(current);
         }

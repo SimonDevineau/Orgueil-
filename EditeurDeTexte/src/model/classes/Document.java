@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
@@ -28,7 +27,7 @@ class Document extends Observable implements IDocument {
     /**
      * The sections list of the document
      */
-    protected List<ISection> sousSections      = new ArrayList<ISection>();
+    protected List<ISection> subSections      = new ArrayList<ISection>();
     /**
      * True if it is the current document
      */
@@ -36,7 +35,7 @@ class Document extends Observable implements IDocument {
 
     public Document() {
         this.text = Factory.createText();
-        this.sousSections = new ArrayList<ISection>();
+        this.subSections = new ArrayList<ISection>();
         this.addObserver(Cursor.instance());
     }
 
@@ -87,13 +86,13 @@ class Document extends Observable implements IDocument {
     @Override
     public boolean addSection(ISection aSection) {
         this.addSection(aSection, this.indexOfCurrentSection());
-        return this.sousSections.contains(aSection);
+        return this.subSections.contains(aSection);
     }
 
     @Override
     public void addSection(ISection aSection, int index) {
-        sousSections.add(index, aSection);
-        for (ISection section : sousSections) {
+        subSections.add(index, aSection);
+        for (ISection section : subSections) {
             section.setIsCurrentSection(false);
         }
         aSection.setIsCurrentSection(true);
@@ -110,7 +109,7 @@ class Document extends Observable implements IDocument {
     public boolean appendSection(ISection aSection) {
         this.setChanged();
         this.notifyObservers();
-        return this.sousSections.add(aSection);
+        return this.subSections.add(aSection);
     }
 
     /**
@@ -120,12 +119,12 @@ class Document extends Observable implements IDocument {
     public boolean removeSection() {
         // TODO vérifier
         int index = 0;
-        while (this.getCurrentSection().equals(this.sousSections.get(index))) {
+        while (this.getCurrentSection().equals(this.subSections.get(index))) {
             index++;
         }
         this.setChanged();
         this.notifyObservers();
-        return this.sousSections.remove(this.sousSections.get(index));
+        return this.subSections.remove(this.subSections.get(index));
     }
 
     /**
@@ -135,7 +134,7 @@ class Document extends Observable implements IDocument {
     public boolean removeSection(ISection aSection) {
         this.setChanged();
         this.notifyObservers();
-        return this.sousSections.remove(aSection);
+        return this.subSections.remove(aSection);
     }
 
     /**
@@ -143,7 +142,7 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public ISection getCurrentSection() {
-        int sectionsSize = sousSections.size();
+        int sectionsSize = subSections.size();
         int currentIndex = 0;
         while (currentIndex < sectionsSize
                 && !getSectionsList().get(currentIndex).isCurrentSection())
@@ -176,14 +175,14 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public ISection getSection(int index) {
-        return sousSections.get(index);
+        return subSections.get(index);
     }
 
     /**
      * @return the sectionsList
      */
     public List<ISection> getSectionsList() {
-        return this.sousSections;
+        return this.subSections;
     }
 
     /**
@@ -219,7 +218,7 @@ class Document extends Observable implements IDocument {
      *            the sectionsList to set
      */
     public void setSectionsList(List<ISection> sectionsList) {
-        this.sousSections = sectionsList;
+        this.subSections = sectionsList;
         this.setChanged();
         this.notifyObservers();
     }
@@ -240,9 +239,9 @@ class Document extends Observable implements IDocument {
     @Override
     public String toString() {
         String toReturn = this.getText().toString() + "<br/>";
-        int size = sousSections.size();
+        int size = subSections.size();
         for (int i = 0; i < size; i++) {
-            toReturn += sousSections.get(i).toString() + "<br/>";
+            toReturn += subSections.get(i).toString() + "<br/>";
         }
         return toReturn;
     }
@@ -252,7 +251,7 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public ArrayList<ISection> getSubSections() {
-        return (ArrayList<ISection>) sousSections;
+        return (ArrayList<ISection>) subSections;
     }
 
     /**
@@ -260,6 +259,6 @@ class Document extends Observable implements IDocument {
      */
     @Override
     public void setSubSections(ArrayList<ISection> aSubSections) {
-        this.sousSections = aSubSections;
+        this.subSections = aSubSections;
     }
 }
