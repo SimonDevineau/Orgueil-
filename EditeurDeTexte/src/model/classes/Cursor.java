@@ -80,9 +80,12 @@ public final class Cursor extends Observable implements Observer {
      */
     public void setCurrentLine(ILine _currentLine) {
         initialize();
+        int formeLocation = -1;
         System.out.println("param null ? " + _currentLine);
-        if (this.currentLine != null && this.currentLine.hasCursor())
+        if (this.currentLine != null && this.currentLine.hasCursor()) {
             this.currentLine.removeCursor();
+            formeLocation = getCurrentLine().getCursorLocation();
+        }
         if (_currentLine != null) {
             this.currentLine = _currentLine;
         }
@@ -90,8 +93,9 @@ public final class Cursor extends Observable implements Observer {
             this.currentLine = Factory.createLine();
         }
         if (this.currentLine.hasCursor()) {
-         System.out.println("donne moi location +" + getCurrentLine().getCursorLocation());
-            setCurrentPosition(getCurrentLine().getCursorLocation());
+            System.out.println("donne moi location +"
+                    + getCurrentLine().getCursorLocation());
+            setCurrentPosition(formeLocation);
         }
     }
 
@@ -184,7 +188,16 @@ public final class Cursor extends Observable implements Observer {
      *            the currentPosition to set
      */
     public void setCurrentPosition(int currentPosition) {
-        this.currentPosition = currentPosition;
+        if (currentPosition == -1)
+            currentPosition = 0;
+        if (currentPosition > Cursor.getCursorInstance().getCurrentLine()
+                .length()) {
+            this.currentPosition = Cursor.getCursorInstance().getCurrentLine()
+                    .length();
+        }
+        else {
+            this.currentPosition = currentPosition;
+        }
     }
 
     private static void initialize() {

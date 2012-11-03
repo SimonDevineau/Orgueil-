@@ -61,6 +61,13 @@ class Document extends Observable implements IDocument {
     @Override
     public boolean addSection(ISection aSection) {
         this.sectionsList.add(this.getIndexCurrentSection(), aSection);
+        // J'ai rajouté
+        for (ISection section : sectionsList) {
+            section.setIsCurrentSection(false);
+        }
+        aSection.setIsCurrentSection(true);
+        Cursor.getCursorInstance().setCurrentLine(
+                Cursor.getCursorInstance().getCurrentSection().getTitle());
         this.setChanged();
         this.notifyObservers();
         return this.sectionsList.contains(aSection);
