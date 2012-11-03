@@ -40,12 +40,6 @@ public interface ISection extends IDocument {
     void hide();
 
     /**
-     * @return the index of the current section or -1 if there is no current
-     *         section in the subsections.
-     */
-    int indexOfCurrentSection();
-
-    /**
      * @return true if the section is the current section.
      */
     boolean isCurrentSection();
