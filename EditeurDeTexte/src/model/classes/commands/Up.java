@@ -43,6 +43,13 @@ public class Up implements ICommandVisitor {
 
 			// Affecting the cursor
 			Cursor.instance().setCurrentLine(previousLine);
+		} else {
+			int textSize = Cursor.instance().getCurrentDocument().getText()
+					.size();
+			Cursor.instance().setCurrentText(Cursor.instance().getCurrentDocument().getText());
+			Cursor.instance().setCurrentLine(
+					Cursor.instance().getCurrentDocument().getText()
+							.getLine(textSize));
 		}
 	}
 
@@ -56,15 +63,17 @@ public class Up implements ICommandVisitor {
 		// if the parent is null it means that we are at the root level
 		if (aSection.getParent() instanceof IDocument) {
 			try {
-				// Trying to get the elment before the current section at the
+				// Trying to get the element before the current section at the
 				// root level
-				int currentIndex = Cursor.instance().getCurrentDocument().indexOfCurrentSection();
-				return Cursor.instance().getCurrentDocument().getSection(currentIndex);
+				int currentIndex = Cursor.instance().getCurrentDocument()
+						.indexOfCurrentSection();
+				return Cursor.instance().getCurrentDocument()
+						.getSection(currentIndex);
 			} catch (Exception e) {
 				// if the exception is thrown it means that the section was the
 				// first section on the root element and that there is no
 				// section before.
-				return Cursor.instance().getCurrentDocument().getSection(0);
+				return null;
 			}
 		} else {
 			// if the section is the first child so we need to go back to the
@@ -82,9 +91,9 @@ public class Up implements ICommandVisitor {
 	public void visit(String textInput) {
 		ISection current = Cursor.instance().getCurrentSection();
 		// If the title has the cursor
-		if (current.getTitle().hasCursor())
+		if (current.getTitle().hasCursor()) {
 			changeSection(current, current.getTitle());
-		else { // else it means that the text has the cursor
+		} else { // else it means that the text has the cursor
 			int index = 0;
 			int linesNumber = current.getText().size();
 			while (index < linesNumber
@@ -92,13 +101,14 @@ public class Up implements ICommandVisitor {
 				index++;
 			if (index == linesNumber) // in that case it means that we have a
 										// bug in the model
-				throw new RuntimeException(
-						"An error occured in the Up command");
+				throw new RuntimeException("An error occured in the Up command");
 			if (index == 0) // in that case the title has to receive the
-								// cursor
+							// cursor
 				Cursor.instance().setCurrentLine(current.getTitle());
-			else // or just the previous line
-				Cursor.instance().setCurrentLine(current.getText().getLine(index - 1));
+			else
+				// or just the previous line
+				Cursor.instance().setCurrentLine(
+						current.getText().getLine(index - 1));
 		}
 	}
 

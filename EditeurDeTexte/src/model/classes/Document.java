@@ -151,9 +151,7 @@ class Document extends Observable implements IDocument {
         int currentIndex = 0;
         while (currentIndex < sectionsSize
                 && !getSectionsList().get(currentIndex).isCurrentSection()){
-            currentIndex++;
-
-            
+            currentIndex++; 
         }
         if (currentIndex == sectionsSize) {
             throw new RuntimeException("No current section found!");

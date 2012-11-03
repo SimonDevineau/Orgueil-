@@ -1,17 +1,12 @@
 package model.classes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
 import java.util.Observer;
 
 import model.classes.states.StateFactory;
-import model.interfaces.ICommandVisitor;
 import model.interfaces.IDocument;
 import model.interfaces.ILine;
 import model.interfaces.ISection;
 import model.interfaces.IState;
-import model.interfaces.IText;
 
 /**
  * 9 oct. 2012 - EditeurDeTexte.
@@ -169,13 +164,11 @@ class Section extends Document implements ISection {
     }
 
     @Override
-    public void deploy() {
-        currentState = deployedState;
-    }
-
-    @Override
-    public void hide() {
-        currentState = hiddenState;
+    public void deployOrHide() {
+    	if(currentState == deployedState)
+    		currentState = hiddenState;
+    	else
+    		currentState = deployedState;
     }
 
     /**

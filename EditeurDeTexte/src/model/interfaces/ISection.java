@@ -1,8 +1,5 @@
 package model.interfaces;
 
-import java.util.ArrayList;
-import java.util.Observer;
-
 /**
  * 9 oct. 2012 - EditeurDeTexte.
  * @author Simon Devineau & Pierre Reliquet Ecole des Mines de Nantes Major in
@@ -10,9 +7,9 @@ import java.util.Observer;
  */
 public interface ISection extends IDocument {
     /**
-     * Change the state of the section to be deployed
+     * Change the state of the section to be deployed or hidden
      */
-    void deploy();
+    void deployOrHide();
 
     /**
      * @return parents' section number
@@ -28,11 +25,6 @@ public interface ISection extends IDocument {
      * @return the section title
      */
     ILine getTitle();
-
-    /**
-     * Change the state of the section to be hidden
-     */
-    void hide();
 
     /**
      * @return true if the section is the current section.
