@@ -67,9 +67,8 @@ public final class Cursor extends Observable implements Observer {
      */
     public ILine getCurrentLine() {
         initialize();
-        if (currentLine == null) {
+        if (currentLine == null)
             Cursor.getCursorInstance().getCurrentDocument().addLine(new Line());
-        }
         return currentLine;
     }
 
@@ -79,7 +78,10 @@ public final class Cursor extends Observable implements Observer {
      */
     public void setCurrentLine(ILine currentLine) {
         initialize();
+        this.currentLine.removeCursor();
         this.currentLine = currentLine;
+        if(currentLine.hasCursor())
+        	setCurrentPosition(getCurrentLine().getCursorLocation());
     }
     
     public IStorable getCurrentStorable(){
@@ -104,7 +106,14 @@ public final class Cursor extends Observable implements Observer {
      */
     public void setCurrentSection(ISection currentSection) {
         initialize();
+        this.currentSection.setIsCurrentSection(false);
         this.currentSection = currentSection;
+        this.currentSection.setIsCurrentSection(true);
+        if(getCurrentSection().getTitle().hasCursor()) {
+        	currentTextIntro = null;
+        	setCurrentLine(getCurrentSection().getTitle());
+        } else 
+        	setCurrentText(getCurrentSection().getText());
     }
 
     /**
@@ -119,6 +128,14 @@ public final class Cursor extends Observable implements Observer {
      */
     public void setCurrentText(IText currentTextIintro) {
         this.currentTextIntro = currentTextIintro;
+        int textSize = currentTextIintro.size();
+        int index = 0;
+        while(index < textSize && !getCurrentText().getLine(index).hasCursor())
+        	index++;
+        if(index == textSize)
+        	throw new RuntimeException("An error occured in Cursor.setCurrentText");
+        else
+        	setCurrentLine(getCurrentText().getLine(index));
     }
 
     /**
