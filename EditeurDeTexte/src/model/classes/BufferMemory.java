@@ -3,9 +3,6 @@ package model.classes;
 import java.util.Observable;
 import java.util.Stack;
 
-import javax.swing.ListModel;
-import javax.swing.event.ListDataListener;
-
 import model.interfaces.IStorable;
 
 /**
@@ -23,85 +20,18 @@ public final class BufferMemory extends Observable {
      * instantiated.
      */
     private static volatile BufferMemory bufferMemoryInstance;
-    /**
-     * The stack of a document
-     */
-    private Stack<IStorable>             documentStack = new Stack<IStorable>();
 
     /**
-     * Default constructor which initializes the stack
+     * Initializes the BufferMemory when another class tries to access it.
      */
-    public BufferMemory() {
-        documentStack = new Stack<IStorable>();
-    }
-
-    /**
-     * Add the element in the stack
-     * @param aStorable
-     *            the element to add at the end of the stack
-     */
-    public boolean add(IStorable aStorable) {
-        initialize();
-        update();
-        return this.documentStack.add(aStorable);
-    }
-
-    /**
-     * @return the documentStack
-     */
-    public Stack<IStorable> getDocumentStack() {
-        initialize();
-        return this.documentStack;
-    }
-
-    /**
-     * returns the last element of the BufferMemory without removing it
-     */
-    public IStorable peek() {
-        initialize();
-        update();
-        return this.documentStack.peek();
-    }
-
-    /**
-     * return the last element of the BufferMemory and removes it
-     */
-    public IStorable pop() {
-        initialize();
-        update();
-        return this.documentStack.pop();
-    }
-
-    /**
-     * Add the parameter on the top of the stack
-     * @param storable
-     *            , the IStorable to add on top of the stack
-     */
-    public IStorable push(IStorable storable) {
-        initialize();
-        update();
-        return this.documentStack.push(storable);
-    }
-
-    /**
-     * Removes the parameter from the BufferMemory
-     * @param aStorable
-     *            , the IStorable to remove
-     */
-    public boolean remove(IStorable aStorable) {
-        initialize();
-        update();
-        return this.documentStack.remove(aStorable);
-    }
-
-    /**
-     * @param documentStack
-     *            the documentStack to set
-     */
-    public void setDocumentStack(Stack<IStorable> documentStack) {
-        initialize();
-        update();
-        this.documentStack = documentStack;
+    private static void initialize() {
+        if (bufferMemoryInstance == null) {
+            synchronized (Cursor.class) {
+                if (bufferMemoryInstance == null) {
+                    bufferMemoryInstance = new BufferMemory();
+                }
+            }
+        }
     }
 
     /**
@@ -122,16 +52,84 @@ public final class BufferMemory extends Observable {
     }
 
     /**
-     * Initializes the BufferMemory when another class tries to access it.
+     * The stack of a document
      */
-    private static void initialize() {
-        if (bufferMemoryInstance == null) {
-            synchronized (Cursor.class) {
-                if (bufferMemoryInstance == null) {
-                    bufferMemoryInstance = new BufferMemory();
-                }
-            }
-        }
+    private Stack<IStorable> documentStack = new Stack<IStorable>();
+
+    /**
+     * Default constructor which initializes the stack
+     */
+    public BufferMemory() {
+        this.documentStack = new Stack<IStorable>();
+    }
+
+    /**
+     * Add the element in the stack
+     * @param aStorable
+     *            the element to add at the end of the stack
+     */
+    public boolean add(IStorable aStorable) {
+        initialize();
+        this.update();
+        return this.documentStack.add(aStorable);
+    }
+
+    /**
+     * @return the documentStack
+     */
+    public Stack<IStorable> getDocumentStack() {
+        initialize();
+        return this.documentStack;
+    }
+
+    /**
+     * returns the last element of the BufferMemory without removing it
+     */
+    public IStorable peek() {
+        initialize();
+        this.update();
+        return this.documentStack.peek();
+    }
+
+    /**
+     * return the last element of the BufferMemory and removes it
+     */
+    public IStorable pop() {
+        initialize();
+        this.update();
+        return this.documentStack.pop();
+    }
+
+    /**
+     * Add the parameter on the top of the stack
+     * @param storable
+     *            , the IStorable to add on top of the stack
+     */
+    public IStorable push(IStorable storable) {
+        initialize();
+        this.update();
+        return this.documentStack.push(storable);
+    }
+
+    /**
+     * Removes the parameter from the BufferMemory
+     * @param aStorable
+     *            , the IStorable to remove
+     */
+    public boolean remove(IStorable aStorable) {
+        initialize();
+        this.update();
+        return this.documentStack.remove(aStorable);
+    }
+
+    /**
+     * @param documentStack
+     *            the documentStack to set
+     */
+    public void setDocumentStack(Stack<IStorable> documentStack) {
+        initialize();
+        this.update();
+        this.documentStack = documentStack;
     }
 
     private void update() {

@@ -13,13 +13,12 @@ import model.interfaces.ILine;
  *         Copy.java
  */
 public class Copy implements ICommandVisitor {
-
-	@Override
-	public void visit(String textInput) {
-		ILine current = Cursor.instance().getCurrentLine();
-		if(current != null){
-	     System.out.println("copy " + current);
-		    BufferMemory.instance().push(current);
-		}
-	}
+    @Override
+    public void visit(String textInput) {
+        ILine current = Cursor.instance().getCurrentLine();
+        if (current != null) {
+            System.out.println("copy " + current);
+            BufferMemory.instance().push(current);
+        }
+    }
 }

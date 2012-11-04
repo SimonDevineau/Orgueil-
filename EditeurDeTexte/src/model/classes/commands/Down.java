@@ -22,7 +22,7 @@ public class Down implements ICommandVisitor {
      */
     private void changeSection(ISection aSection, ILine line) {
         // Get the next section
-        ISection next = getNextSection(aSection);
+        ISection next = this.getNextSection(aSection);
         if (next != null) {
             Cursor.instance().setCurrentLine(next.getTitle());
             Cursor.instance().setCurrentSection(next);
@@ -59,8 +59,9 @@ public class Down implements ICommandVisitor {
             // if the section is the first child so we need to go back to the
             // parent section
             if (aSection.getParent().indexOfCurrentSection() == aSection
-                    .getParent().getSubSections().size() - 1)
-                return getNextSection((ISection) aSection.getParent());
+                    .getParent().getSubSections().size() - 1) {
+                return this.getNextSection((ISection) aSection.getParent());
+            }
             // if the parent is not null, so we need to get the
             // following section by using the getParent
             return aSection.getParent().getSubSections()
@@ -74,26 +75,32 @@ public class Down implements ICommandVisitor {
         // If the title has the cursor
         if (current.getTitle().hasCursor()) {
             // If the text is not empty
-            if (current.getText().size() != 0)
+            if (current.getText().size() != 0) {
                 Cursor.instance().setCurrentLine(current.getText().getLine(0));
-            else
+            }
+            else {
                 // else it means that the text is empty
-                changeSection(current, current.getTitle());
+                this.changeSection(current, current.getTitle());
+            }
         }
         else { // else it means that the text has the cursor
             int index = 0;
             int linesNumber = current.getText().size();
             while (index < linesNumber
-                    && !current.getText().getLine(index).hasCursor())
+                    && !current.getText().getLine(index).hasCursor()) {
                 index++;
-            if (index == linesNumber)
-                        throw new RuntimeException(
+            }
+            if (index == linesNumber) {
+                throw new RuntimeException(
                         "An error occured in the Down command line 52, an error exists in the model because no line has the cursor");
-            if (index == linesNumber - 1)
-                changeSection(current, current.getText().getLine(index));
-            else
+            }
+            if (index == linesNumber - 1) {
+                this.changeSection(current, current.getText().getLine(index));
+            }
+            else {
                 Cursor.instance().setCurrentLine(
                         current.getText().getLine(index + 1));
+            }
         }
     }
 }

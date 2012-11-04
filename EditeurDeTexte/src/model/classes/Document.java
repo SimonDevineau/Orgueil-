@@ -89,19 +89,19 @@ class Document extends Observable implements IDocument {
             this.addSection(aSection, 0);
         }
         else {
-            this.addSection(aSection, indexOfCurrentSection() + 1);
+            this.addSection(aSection, this.indexOfCurrentSection() + 1);
         }
         return this.subSections.contains(aSection);
     }
 
     @Override
     public void addSection(ISection aSection, int index) {
-        subSections.add(index, aSection);
-        for (ISection section : subSections) {
+        this.subSections.add(index, aSection);
+        for (ISection section : this.subSections) {
             section.setIsCurrentSection(false);
         }
-        subSections.get(index).setIsCurrentSection(true);
-        Cursor.instance().setCurrentSection(subSections.get(index));
+        this.subSections.get(index).setIsCurrentSection(true);
+        Cursor.instance().setCurrentSection(this.subSections.get(index));
         Cursor.instance().setCurrentLine(
                 Cursor.instance().getCurrentSection().getTitle());
         this.setChanged();
@@ -119,6 +119,86 @@ class Document extends Observable implements IDocument {
     }
 
     /**
+     * @see model.interfaces.IDocument#getCurrentSection()
+     */
+    @Override
+    public ISection getCurrentSection() {
+        int sectionsSize = this.subSections.size();
+        int currentIndex = 0;
+        while (currentIndex < sectionsSize
+                && !this.getSectionsList().get(currentIndex).isCurrentSection()) {
+            currentIndex++;
+        }
+        if (currentIndex == sectionsSize) {
+            throw new RuntimeException("No current section found!");
+        }
+        return this.getSectionsList().get(currentIndex).getCurrentSection();
+    }
+
+    /**
+     * @see model.interfaces.IDocument#getSection(int)
+     */
+    @Override
+    public ISection getSection(int index) {
+        return this.subSections.get(index);
+    }
+
+    /**
+     * @return the sectionsList
+     */
+    public List<ISection> getSectionsList() {
+        return this.subSections;
+    }
+
+    /**
+     * @see model.interfaces.IDocument#getSubSections()
+     */
+    @Override
+    public ArrayList<ISection> getSubSections() {
+        return (ArrayList<ISection>) this.subSections;
+    }
+
+    /**
+     * @see model.interfaces.IDocument#getText()
+     */
+    @Override
+    public IText getText() {
+        return this.text;
+    }
+
+    /**
+     * @see model.interfaces.IDocument#getIindexCurrentSection()
+     */
+    @Override
+    public int indexOfCurrentSection() {
+        int subSectionsSize = this.getSubSections().size();
+        if (this.getSubSections() == null || subSectionsSize == 0) {
+            return -1;
+        }
+        int currentIndex = 0;
+        while (currentIndex < subSectionsSize
+                && !this.getSubSections().get(currentIndex).isCurrentSection()) {
+            currentIndex++;
+        }
+        if (currentIndex == subSectionsSize) {
+            return -1;
+        }
+        else {
+            return currentIndex;
+        }
+    }
+
+    /**
+     * @see model.interfaces.IDocument#isCurrentDocument()
+     */
+    @Override
+    public boolean isCurrentDocument() {
+        this.setChanged();
+        this.notifyObservers();
+        return this.isCurrentDocument;
+    }
+
+    /**
      * @see model.interfaces.IDocument#deleteSection()
      */
     @Override
@@ -133,6 +213,11 @@ class Document extends Observable implements IDocument {
         return this.subSections.remove(this.subSections.get(index));
     }
 
+    @Override
+    public ISection removeSection(int index) {
+        return this.subSections.remove(index);
+    }
+
     /**
      * @see model.interfaces.IDocument#deleteSection(model.interfaces.ISection)
      */
@@ -141,76 +226,6 @@ class Document extends Observable implements IDocument {
         this.setChanged();
         this.notifyObservers();
         return this.subSections.remove(aSection);
-    }
-
-    /**
-     * @see model.interfaces.IDocument#getCurrentSection()
-     */
-    @Override
-    public ISection getCurrentSection() {
-        int sectionsSize = subSections.size();
-        int currentIndex = 0;
-        while (currentIndex < sectionsSize
-                && !getSectionsList().get(currentIndex).isCurrentSection()) {
-            currentIndex++;
-        }
-        if (currentIndex == sectionsSize) {
-            throw new RuntimeException("No current section found!");
-        }
-        return getSectionsList().get(currentIndex).getCurrentSection();
-    }
-
-    /**
-     * @see model.interfaces.IDocument#getIindexCurrentSection()
-     */
-    @Override
-    public int indexOfCurrentSection() {
-        int subSectionsSize = getSubSections().size();
-        if (getSubSections() == null || subSectionsSize == 0) {
-            return -1;
-        }
-        int currentIndex = 0;
-        while (currentIndex < subSectionsSize
-                && !this.getSubSections().get(currentIndex).isCurrentSection()) {
-            currentIndex++;
-        }
-        if (currentIndex == subSectionsSize)
-            return -1;
-        else
-            return currentIndex;
-    }
-
-    /**
-     * @see model.interfaces.IDocument#getSection(int)
-     */
-    @Override
-    public ISection getSection(int index) {
-        return subSections.get(index);
-    }
-
-    /**
-     * @return the sectionsList
-     */
-    public List<ISection> getSectionsList() {
-        return this.subSections;
-    }
-
-    /**
-     * @see model.interfaces.IDocument#getText()
-     */
-    @Override
-    public IText getText() {
-        return this.text;
-    }
-
-    /**
-     * @see model.interfaces.IDocument#isCurrentDocument()
-     */
-    @Override
-    public boolean isCurrentDocument() {
-        this.setChanged();
-        this.notifyObservers();
-        return this.isCurrentDocument;
     }
 
     /**
@@ -234,6 +249,14 @@ class Document extends Observable implements IDocument {
     }
 
     /**
+     * @see model.interfaces.IDocument#setSubSections(java.util.ArrayList)
+     */
+    @Override
+    public void setSubSections(ArrayList<ISection> aSubSections) {
+        this.subSections = aSubSections;
+    }
+
+    /**
      * @see model.interfaces.IDocument#setText(model.interfaces.IText)
      */
     @Override
@@ -249,32 +272,11 @@ class Document extends Observable implements IDocument {
     @Override
     public String toString() {
         String toReturn = "<html>" + this.getText().toString() + "<br/>";
-        int size = subSections.size();
+        int size = this.subSections.size();
         for (int i = 0; i < size; i++) {
-            toReturn += subSections.get(i).toString() + "<br/>";
+            toReturn += this.subSections.get(i).toString() + "<br/>";
         }
         toReturn += "</html>";
         return toReturn;
-    }
-
-    /**
-     * @see model.interfaces.IDocument#getSubSections()
-     */
-    @Override
-    public ArrayList<ISection> getSubSections() {
-        return (ArrayList<ISection>) subSections;
-    }
-
-    /**
-     * @see model.interfaces.IDocument#setSubSections(java.util.ArrayList)
-     */
-    @Override
-    public void setSubSections(ArrayList<ISection> aSubSections) {
-        this.subSections = aSubSections;
-    }
-
-    @Override
-    public ISection removeSection(int index) {
-        return subSections.remove(index);
     }
 }

@@ -10,10 +10,9 @@ import model.interfaces.ICommandVisitor;
  *         Major in Computer and Information System Engineering
  *         Pop.java
  */
-public class Pop implements ICommandVisitor{
-
-	@Override
-	public void visit(String textInput) {
-		BufferMemory.instance().pop();
-	}
+public class Pop implements ICommandVisitor {
+    @Override
+    public void visit(String textInput) {
+        BufferMemory.instance().pop();
+    }
 }

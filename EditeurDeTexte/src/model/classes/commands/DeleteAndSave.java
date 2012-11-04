@@ -13,15 +13,13 @@ import model.interfaces.ILine;
  *         DeleteAndSave.java
  */
 public class DeleteAndSave implements ICommandVisitor {
-
-	@Override
-	public void visit(String textInput) {
-		ILine current = Cursor.instance().getCurrentLine();
-		if (current != null) {
-            //TODO FAUT IL PASSER PAR UN CONSTRUCTEUR PAR DEFAULT
+    @Override
+    public void visit(String textInput) {
+        ILine current = Cursor.instance().getCurrentLine();
+        if (current != null) {
+            // TODO FAUT IL PASSER PAR UN CONSTRUCTEUR PAR DEFAULT
             BufferMemory.instance().push(current);
-            Cursor.instance().getCurrentSection().getText()
-                    .removeLine(current);
+            Cursor.instance().getCurrentSection().getText().removeLine(current);
         }
-	}
+    }
 }

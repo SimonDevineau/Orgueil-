@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import model.interfaces.ICommandVisitor;
 import model.interfaces.ILine;
 import model.interfaces.IText;
 
@@ -20,9 +19,25 @@ class Text extends Observable implements IText {
     private List<ILine> linesList = new ArrayList<ILine>();
 
     public Text() {
-        linesList = new ArrayList<ILine>();
+        this.linesList = new ArrayList<ILine>();
         this.addObserver(Cursor.instance());
         Cursor.instance().setCurrentText(this);
+    }
+
+    /**
+     * @see model.interfaces.IText#addBeforeLine(model.interfaces.ILine,
+     *      model.interfaces.ILine)
+     */
+    @Override
+    // TODO CHECK IF IT IS TRUE
+    public void addBeforeLine(ILine aCurrentLine, ILine aLineToPaste) {
+        if (aCurrentLine != null && aLineToPaste != null
+                && this.linesList.lastIndexOf(aCurrentLine) >= 1) {
+            this.linesList.add(this.linesList.lastIndexOf(aCurrentLine),
+                    aLineToPaste);
+        }
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /**
@@ -31,10 +46,10 @@ class Text extends Observable implements IText {
     @Override
     public void addLine(ILine aLine) {
         if (aLine != null) {
-            linesList.add(aLine);
+            this.linesList.add(aLine);
         }
         else {
-            linesList.add(Factory.createLine());
+            this.linesList.add(Factory.createLine());
         }
         this.setChanged();
         this.notifyObservers();
@@ -48,22 +63,10 @@ class Text extends Observable implements IText {
     public void addLine(ILine aCurrentLine, ILine aLineToPaste) {
         this.setChanged();
         this.notifyObservers();
-        if (aCurrentLine != null && aLineToPaste != null)
-            linesList.add(linesList.lastIndexOf(aCurrentLine), aLineToPaste);
-    }
-
-    /**
-     * @see model.interfaces.IText#addBeforeLine(model.interfaces.ILine,
-     *      model.interfaces.ILine)
-     */
-    @Override
-    // TODO CHECK IF IT IS TRUE
-    public void addBeforeLine(ILine aCurrentLine, ILine aLineToPaste) {
-        if (aCurrentLine != null && aLineToPaste != null
-                && linesList.lastIndexOf(aCurrentLine) >= 1)
-            linesList.add(linesList.lastIndexOf(aCurrentLine), aLineToPaste);
-        this.setChanged();
-        this.notifyObservers();
+        if (aCurrentLine != null && aLineToPaste != null) {
+            this.linesList.add(this.linesList.lastIndexOf(aCurrentLine),
+                    aLineToPaste);
+        }
     }
 
     /**
@@ -71,7 +74,7 @@ class Text extends Observable implements IText {
      */
     @Override
     public ILine getLine(int index) {
-        return linesList.get(index);
+        return this.linesList.get(index);
     }
 
     /**
@@ -79,14 +82,14 @@ class Text extends Observable implements IText {
      */
     @Override
     public ArrayList<ILine> getLines() {
-        return (ArrayList<ILine>) linesList;
+        return (ArrayList<ILine>) this.linesList;
     }
 
     /**
      * @return the linesList
      */
     public List<ILine> getLinesList() {
-        return linesList;
+        return this.linesList;
     }
 
     /**
@@ -94,21 +97,24 @@ class Text extends Observable implements IText {
      */
     @Override
     public boolean hasCursor() {
-        int size = linesList.size();
+        int size = this.linesList.size();
         for (int i = 0; i < size; i++) {
-            if (linesList.get(i).hasCursor())
+            if (this.linesList.get(i).hasCursor()) {
                 return true;
+            }
         }
         return false;
     }
 
     private int indexOfCurrentLine() {
-        int size = linesList.size();
+        int size = this.linesList.size();
         int index = 0;
-        while (index < size && !getLine(index).hasCursor())
+        while (index < size && !this.getLine(index).hasCursor()) {
             index++;
-        if (index == size)
+        }
+        if (index == size) {
             return -1;
+        }
         return index;
     }
 
@@ -116,12 +122,13 @@ class Text extends Observable implements IText {
     public void insertLine(ILine lineToInsert) {
         this.setChanged();
         this.notifyObservers();
-        if (hasCursor()) {
-            int index = indexOfCurrentLine();
-            linesList.add(index + 1, lineToInsert);
+        if (this.hasCursor()) {
+            int index = this.indexOfCurrentLine();
+            this.linesList.add(index + 1, lineToInsert);
         }
-        else
-            addLine(lineToInsert);
+        else {
+            this.addLine(lineToInsert);
+        }
     }
 
     /**
@@ -131,8 +138,9 @@ class Text extends Observable implements IText {
     public void removeLine(ILine aLine) {
         this.setChanged();
         this.notifyObservers();
-        if (aLine != null)
-            linesList.remove(aLine);
+        if (aLine != null) {
+            this.linesList.remove(aLine);
+        }
     }
 
     /**
@@ -150,7 +158,7 @@ class Text extends Observable implements IText {
      */
     @Override
     public int size() {
-        return linesList.size();
+        return this.linesList.size();
     }
 
     /**
@@ -159,7 +167,7 @@ class Text extends Observable implements IText {
     @Override
     public String toString() {
         String toReturn = "";
-        for (ILine line : linesList) {
+        for (ILine line : this.linesList) {
             toReturn += "<br/>" + line.toString() + "<br/>";
         }
         return toReturn;

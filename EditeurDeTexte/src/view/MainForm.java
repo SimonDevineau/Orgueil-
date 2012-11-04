@@ -3,28 +3,19 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import tests.LaunchEditor;
-
-import model.classes.BufferMemory;
-import model.classes.Editor;
 
 public class MainForm extends JFrame {
     /**
@@ -69,12 +60,19 @@ public class MainForm extends JFrame {
         down.add(this.m_Validate);
         down.setBorder(BorderFactory.createTitledBorder("Management"));
         JScrollPane pane = new JScrollPane(up);
-        bufferMemory.setBorder(BorderFactory.createTitledBorder("Memory"));
+        this.bufferMemory.setBorder(BorderFactory.createTitledBorder("Memory"));
         this.getContentPane().add(pane, BorderLayout.NORTH);
         this.getContentPane().add(down, BorderLayout.SOUTH);
-        this.getContentPane().add(new JScrollPane(bufferMemory),
+        this.getContentPane().add(new JScrollPane(this.bufferMemory),
                 BorderLayout.EAST);
         this.setVisible(true);
+    }
+
+    /**
+     * @return the bufferMemory
+     */
+    public JList getBufferMemory() {
+        return this.bufferMemory;
     }
 
     public JTextField getCommand() {
@@ -90,17 +88,10 @@ public class MainForm extends JFrame {
     }
 
     /**
-     * @return the bufferMemory
-     */
-    public JList getBufferMemory() {
-        return bufferMemory;
-    }
-
-    /**
      * @param aBufferMemory
      *            the bufferMemory to set
      */
     public void setBufferMemory(JList aBufferMemory) {
-        bufferMemory = aBufferMemory;
+        this.bufferMemory = aBufferMemory;
     }
 }

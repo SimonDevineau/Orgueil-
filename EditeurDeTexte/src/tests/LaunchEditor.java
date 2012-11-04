@@ -1,13 +1,7 @@
 package tests;
 
-import javax.swing.text.Document;
-
-import utilities.Utilities;
-
 import model.classes.Cursor;
-import model.classes.Factory;
-import model.interfaces.IDocument;
-import controllers.Controller;
+import utilities.Utilities;
 import controllers.FactoryController;
 
 /**
@@ -20,10 +14,14 @@ import controllers.FactoryController;
 public class LaunchEditor {
     public static void main(String[] args) {
         Utilities.changeMenuBar();
-        Controller controller = FactoryController.createController();
-        System.out.println("current Line " + Cursor.instance().getCurrentLine());
-        System.out.println("current text " + Cursor.instance().getCurrentText());
-        System.out.println("current section " + Cursor.instance().getCurrentSection());
-        System.out.println("current doc " + Cursor.instance().getCurrentDocument());
+        FactoryController.createController();
+        System.out
+                .println("current Line " + Cursor.instance().getCurrentLine());
+        System.out
+                .println("current text " + Cursor.instance().getCurrentText());
+        System.out.println("current section "
+                + Cursor.instance().getCurrentSection());
+        System.out.println("current doc "
+                + Cursor.instance().getCurrentDocument());
     }
 }

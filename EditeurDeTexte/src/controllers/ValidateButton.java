@@ -1,14 +1,12 @@
 package controllers;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JTextField;
 
 /**
- * A standard JButton which is just used to validate the command typed.
- * <br/>
+ * A standard JButton which is just used to validate the command typed. <br/>
  * 1 nov. 2012 - EditeurDeTexte.
  * @author Simon Devineau
  *         Ecole des Mines de Nantes
@@ -34,7 +32,7 @@ public class ValidateButton extends AbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent aArg0) {
-        ManageInputText.manageInputText(input.getText());
-        input.setText("");
+        ManageInputText.manageInputText(this.input.getText());
+        this.input.setText("");
     }
 }

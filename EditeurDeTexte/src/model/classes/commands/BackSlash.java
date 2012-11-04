@@ -1,8 +1,8 @@
 package model.classes.commands;
 
-import utilities.Logger;
 import model.classes.Cursor;
 import model.interfaces.ICommandVisitor;
+import utilities.Logger;
 
 /**
  * 22 oct. 2012 - EditeurDeTexte.
@@ -15,8 +15,7 @@ public class BackSlash implements ICommandVisitor {
     @Override
     public void visit(String textInput) {
         try {
-            Cursor.instance().getCurrentLine()
-                    .replaceUnderCursor("\\");
+            Cursor.instance().getCurrentLine().replaceUnderCursor("\\");
         }
         catch (Exception aE) {
             Logger.error("An error of line initialization occured.", aE);

@@ -1,12 +1,5 @@
 package utilities;
 
-import java.awt.Image;
-import java.awt.Toolkit;
-
-import com.apple.eawt.*;
-
-import tests.LaunchEditor;
-import view.MainForm;
 
 /**
  * 1 nov. 2012 - EditeurDeTexte.

@@ -29,6 +29,6 @@ public class ManageMemory implements Observer {
      */
     @Override
     public void update(Observable aArg0, Object aArg1) {
-        list.setListData(BufferMemory.instance().getDocumentStack());
+        this.list.setListData(BufferMemory.instance().getDocumentStack());
     }
 }

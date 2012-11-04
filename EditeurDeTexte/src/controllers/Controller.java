@@ -3,13 +3,9 @@ package controllers;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.ListModel;
-
 import model.classes.BufferMemory;
 import model.classes.Cursor;
-import model.classes.Editor;
 import model.classes.Factory;
-import model.interfaces.IDocument;
 import view.MainForm;
 
 /**
@@ -32,15 +28,30 @@ public class Controller implements Observer {
      */
     public Controller() {
         this.view = new MainForm();
-        inputText = FactoryController.createInputText(view.getCommand());
-        view.getCommand().addKeyListener(inputText);
-        validateButton = FactoryController.createValidateButton(view
+        this.inputText = FactoryController.createInputText(this.view
                 .getCommand());
-        view.getValidate().setAction(validateButton);
+        this.view.getCommand().addKeyListener(this.inputText);
+        this.validateButton = FactoryController.createValidateButton(this.view
+                .getCommand());
+        this.view.getValidate().setAction(this.validateButton);
         Cursor.instance().addObserver(this);
         Cursor.instance().setCurrentDocument(Factory.createDocument());
-        manageMemory = new ManageMemory(view.getBufferMemory());
-        BufferMemory.instance().addObserver(manageMemory);
+        this.manageMemory = new ManageMemory(this.view.getBufferMemory());
+        BufferMemory.instance().addObserver(this.manageMemory);
+    }
+
+    /**
+     * @return the controller in charge of managing the text typed by the user.
+     */
+    public ManageInputText getInputTextManager() {
+        return this.inputText;
+    }
+
+    /**
+     * @return an access to the validate button.
+     */
+    public ValidateButton getValidateButton() {
+        return this.validateButton;
     }
 
     /**
@@ -50,22 +61,8 @@ public class Controller implements Observer {
      */
     @Override
     public void update(Observable aO, Object aArg) {
-        view.getText().setText(
+        this.view.getText().setText(
                 Cursor.instance().getCurrentDocument().toString());
-        view.repaint();
-    }
-
-    /**
-     * @return the controller in charge of managing the text typed by the user.
-     */
-    public ManageInputText getInputTextManager() {
-        return inputText;
-    }
-
-    /**
-     * @return an access to the validate button.
-     */
-    public ValidateButton getValidateButton() {
-        return validateButton;
+        this.view.repaint();
     }
 }

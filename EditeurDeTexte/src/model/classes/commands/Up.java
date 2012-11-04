@@ -21,7 +21,7 @@ public class Up implements ICommandVisitor {
      */
     private void changeSection(ISection aSection, ILine line) {
         // Get the previous section
-        ISection previous = getPreviousSection(aSection);
+        ISection previous = this.getPreviousSection(aSection);
         // If it is null it means that we are at the first root element
         if (previous != null) {
             // Get the text size to check if it null or not
@@ -32,10 +32,12 @@ public class Up implements ICommandVisitor {
              * A if/else statement We could have used a ternary operator but the
              * line would have been to long
              */
-            if (textSize > 0)
+            if (textSize > 0) {
                 previousLine = previous.getText().getLines().get(textSize - 1);
-            else
+            }
+            else {
                 previousLine = previous.getTitle();
+            }
             // Affecting the cursor
             Cursor.instance().setCurrentSection(previous);
             Cursor.instance().setCurrentLine(previousLine);
@@ -78,8 +80,9 @@ public class Up implements ICommandVisitor {
         else {
             // if the section is the first child so we need to go back to the
             // parent section
-            if (aSection.getParent().indexOfCurrentSection() == 0)
+            if (aSection.getParent().indexOfCurrentSection() == 0) {
                 aSection.getParent();
+            }
             // if the parent is not null, so we need to get the
             // following section by using the getParent
             return aSection.getParent().getSubSections()
@@ -92,24 +95,28 @@ public class Up implements ICommandVisitor {
         ISection current = Cursor.instance().getCurrentSection();
         // If the title has the cursor
         if (current.getTitle().hasCursor()) {
-            changeSection(current, current.getTitle());
+            this.changeSection(current, current.getTitle());
         }
         else { // else it means that the text has the cursor
             int index = 0;
             int linesNumber = current.getText().size();
             while (index < linesNumber
-                    && !current.getText().getLine(index).hasCursor())
+                    && !current.getText().getLine(index).hasCursor()) {
                 index++;
-            if (index == linesNumber) // in that case it means that we have a
-                                      // bug in the model
+            }
+            if (index == linesNumber) {
+                // bug in the model
                 throw new RuntimeException("An error occured in the Up command");
-            if (index == 0) // in that case the title has to receive the
-                            // cursor
+            }
+            if (index == 0) {
+                // cursor
                 Cursor.instance().setCurrentLine(current.getTitle());
-            else
+            }
+            else {
                 // or just the previous line
                 Cursor.instance().setCurrentLine(
                         current.getText().getLine(index - 1));
+            }
         }
     }
 }

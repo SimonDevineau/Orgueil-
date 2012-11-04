@@ -45,6 +45,34 @@ public class ConfigurationLoader {
      */
     public static final String   DEFAULT_CONFIG_VALUE = "value";
 
+    // /////////////////////
+    // End of private API //
+    // /////////////////////
+    // /////////////
+    // Public API //
+    // /////////////
+    /**
+     * The method called if the user wants to load another configuration file
+     * with a specific format. The format should be: <configTag configKey="XX"
+     * configValue="YY" />
+     * @param path
+     *            , the path towards the file
+     * @param configTag
+     *            , the name of the tag
+     * @param configKey
+     *            , the name of the key attribute
+     * @param configValue
+     *            , the name of the value
+     */
+    public static void LoadConfigFile(Map<String, String> configuration,
+            String path, String configTag, String configKey, String configValue) {
+        UpdateConfiguration(configuration, path, configTag, configKey,
+                configValue);
+    }
+
+    // ////////////////////
+    // End of Public API //
+    // ////////////////////
     // ///////////////////
     // End of constants //
     // ///////////////////
@@ -75,10 +103,11 @@ public class ConfigurationLoader {
                                 .getNodeValue();
                         String value = node.getAttributes()
                                 .getNamedItem(valueName).getNodeValue();
-                        if (configuration.containsKey(key))
+                        if (configuration.containsKey(key)) {
                             Logger.error("The key "
                                     + key
                                     + " exists already in the configuration files!");
+                        }
                         else {
                             configuration.put(key, value);
                         }
@@ -97,32 +126,4 @@ public class ConfigurationLoader {
                     + " cannot be found; the configuration will not be modified.");
         }
     }
-
-    // /////////////////////
-    // End of private API //
-    // /////////////////////
-    // /////////////
-    // Public API //
-    // /////////////
-    /**
-     * The method called if the user wants to load another configuration file
-     * with a specific format. The format should be: <configTag configKey="XX"
-     * configValue="YY" />
-     * @param path
-     *            , the path towards the file
-     * @param configTag
-     *            , the name of the tag
-     * @param configKey
-     *            , the name of the key attribute
-     * @param configValue
-     *            , the name of the value
-     */
-    public static void LoadConfigFile(Map<String, String> configuration,
-            String path, String configTag, String configKey, String configValue) {
-        UpdateConfiguration(configuration, path, configTag, configKey,
-                configValue);
-    }
-    // ////////////////////
-    // End of Public API //
-    // ////////////////////
 }

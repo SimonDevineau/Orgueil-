@@ -39,16 +39,21 @@ class Section extends Document implements ISection {
 
     public Section() {
         super();
-        hiddenState = StateFactory.createHiddenState(this);
-        deployedState = StateFactory.createDeployedState(this);
-        currentState = deployedState;
-        title = Factory.createLine();
+        this.hiddenState = StateFactory.createHiddenState(this);
+        this.deployedState = StateFactory.createDeployedState(this);
+        this.currentState = this.deployedState;
+        this.title = Factory.createLine();
         this.isCurrentSection = true;
     }
 
     public Section(IDocument parent) {
         this();
-        setParent(parent);
+        this.setParent(parent);
+    }
+
+    public Section(IDocument parent, String aTitle) {
+        this(parent);
+        this.title.append(aTitle);
     }
 
     /**
@@ -56,36 +61,39 @@ class Section extends Document implements ISection {
      */
     public Section(String aTitle) {
         this();
-        title.append(aTitle);
-    }
-
-    public Section(IDocument parent, String aTitle) {
-        this(parent);
-        title.append(aTitle);
+        this.title.append(aTitle);
     }
 
     /**
-     * @see model.interfaces.ISection#getParent()
+     * @see java.util.Observable#addObserver(Observer)
      */
     @Override
-    public IDocument getParent() {
-        return this.parent;
+    public synchronized void addObserver(Observer o) {
+        super.addObserver(o);
+    }
+
+    @Override
+    public void deployOrHide() {
+        if (this.currentState == this.deployedState) {
+            this.currentState = this.hiddenState;
+        }
+        else {
+            this.currentState = this.deployedState;
+        }
     }
 
     /**
-     * @see model.interfaces.ISection#getTitle()
+     * @see model.interfaces.ISection#getCurrentSection()
      */
     @Override
-    public ILine getTitle() {
-        return title;
-    }
-
-    /**
-     * @see model.interfaces.ISection#setParent(model.interfaces.ISection)
-     */
-    @Override
-    public void setParent(IDocument aSection) {
-        aSection.addSection(this);
+    public ISection getCurrentSection() {
+        int index = this.indexOfCurrentSection();
+        if (index == -1) {
+            return this;
+        }
+        else {
+            return this.getSubSections().get(index).getCurrentSection();
+        }
     }
 
     /**
@@ -104,11 +112,46 @@ class Section extends Document implements ISection {
     }
 
     /**
-     * @see model.interfaces.ISection#setTitle(model.interfaces.IText)
+     * @see model.interfaces.ISection#getParent()
      */
     @Override
-    public void setTitle(ILine aLine) {
-        this.title = aLine;
+    public IDocument getParent() {
+        return this.parent;
+    }
+
+    /**
+     * @see model.interfaces.ISection#getTitle()
+     */
+    @Override
+    public ILine getTitle() {
+        return this.title;
+    }
+
+    @Override
+    public int indexOfCurrentSection() {
+        int subSectionsSize = this.getSubSections().size();
+        if (this.getSubSections() == null || subSectionsSize == 0) {
+            return -1;
+        }
+        int currentIndex = 0;
+        while (currentIndex < subSectionsSize
+                && !this.getSubSections().get(currentIndex).isCurrentSection()) {
+            currentIndex++;
+        }
+        if (currentIndex == subSectionsSize) {
+            return -1;
+        }
+        else {
+            return currentIndex;
+        }
+    }
+
+    /**
+     * @see model.interfaces.ISection#isCurrentSection()
+     */
+    @Override
+    public boolean isCurrentSection() {
+        return this.isCurrentSection;
     }
 
     /**
@@ -117,64 +160,9 @@ class Section extends Document implements ISection {
     @Override
     public void setIsCurrentSection(boolean aIsCurrentSection) {
         this.isCurrentSection = aIsCurrentSection;
-        if (this.parent instanceof ISection)
+        if (this.parent instanceof ISection) {
             ((ISection) this.parent).setIsCurrentSection(aIsCurrentSection);
-    }
-
-    /**
-     * @see model.interfaces.ISection#getCurrentSection()
-     */
-    @Override
-    public ISection getCurrentSection() {
-        int index = indexOfCurrentSection();
-        if (index == -1)
-            return this;
-        else
-            return getSubSections().get(index).getCurrentSection();
-    }
-
-    /**
-     * @see java.util.Observable#addObserver(Observer)
-     */
-    @Override
-    public synchronized void addObserver(Observer o) {
-        super.addObserver(o);
-    }
-
-    @Override
-    public String toString() {
-        return currentState.toString();
-    }
-
-    @Override
-    public int indexOfCurrentSection() {
-        int subSectionsSize = getSubSections().size();
-        if (getSubSections() == null || subSectionsSize == 0)
-            return -1;
-        int currentIndex = 0;
-        while (currentIndex < subSectionsSize
-                && !getSubSections().get(currentIndex).isCurrentSection())
-            currentIndex++;
-        if (currentIndex == subSectionsSize)
-            return -1;
-        else
-            return currentIndex;
-    }
-
-    /**
-     * @see model.interfaces.ISection#isCurrentSection()
-     */
-    @Override
-    public boolean isCurrentSection() {
-        return isCurrentSection;
-    }
-
-    @Override
-    public void deployOrHide() {
-        if (currentState == deployedState)
-            currentState = hiddenState;
-        else
-            currentState = deployedState;
+        }
     }
 
     /**
@@ -189,5 +177,26 @@ class Section extends Document implements ISection {
             nbParents++;
         }
         this.nbParents = nbParents;
+    }
+
+    /**
+     * @see model.interfaces.ISection#setParent(model.interfaces.ISection)
+     */
+    @Override
+    public void setParent(IDocument aSection) {
+        aSection.addSection(this);
+    }
+
+    /**
+     * @see model.interfaces.ISection#setTitle(model.interfaces.IText)
+     */
+    @Override
+    public void setTitle(ILine aLine) {
+        this.title = aLine;
+    }
+
+    @Override
+    public String toString() {
+        return this.currentState.toString();
     }
 }

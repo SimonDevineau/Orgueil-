@@ -7,10 +7,9 @@ package model.interfaces;
  * the authorized objects. Only the IStorable objects are going to be stackable
  * in our BufferMemory. <br/>
  * 22 oct. 2012 - EditeurDeTexte.
- * 
  * @author Simon Devineau Ecole des Mines de Nantes Major in Computer and
  *         Information System Engineering IStorable.java
  */
 public interface IStorable {
-	// No methods because it is just an encapsulation type
+    // No methods because it is just an encapsulation type
 }

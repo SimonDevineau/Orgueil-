@@ -25,7 +25,7 @@ class Line extends Observable implements ILine {
      * Default constructor which creates an empty line
      */
     Line() {
-        _Line = new StringBuilder();
+        this._Line = new StringBuilder();
         Cursor.instance().setCurrentLine(this);
         this.addObserver(Cursor.instance());
     }
@@ -37,34 +37,41 @@ class Line extends Observable implements ILine {
      */
     Line(CharSequence sequence) {
         this();
-        addUnderCursor(sequence);
+        this.addUnderCursor(sequence);
+    }
+
+    @Override
+    public synchronized void addObserver(Observer o) {
+        super.addObserver(o);
     }
 
     @Override
     public void addUnderCursor(CharSequence insertion) {
         // TODO vérifier si c'est _CursorLocation ou _CursorLocation+1
-        if (hasCursor()
-                && Cursor.instance().getCurrentPosition() < _Line.length()) {
-            _Line.insert(Cursor.instance().getCurrentPosition(), insertion);
+        if (this.hasCursor()
+                && Cursor.instance().getCurrentPosition() < this._Line.length()) {
+            this._Line
+                    .insert(Cursor.instance().getCurrentPosition(), insertion);
             Cursor.instance()
                     .setCurrentPosition(
                             Cursor.instance().getCurrentPosition()
                                     + insertion.length());
-            setChanged();
-            notifyObservers();
+            this.setChanged();
+            this.notifyObservers();
         }
-        else if (hasCursor()
-                && Cursor.instance().getCurrentPosition() >= _Line.length()) {
-            _Line.insert(_Line.length(), insertion);
+        else if (this.hasCursor()
+                && Cursor.instance().getCurrentPosition() >= this._Line
+                        .length()) {
+            this._Line.insert(this._Line.length(), insertion);
             Cursor.instance().setCurrentPosition(
-                    _Line.length() + insertion.length());
+                    this._Line.length() + insertion.length());
         }
     }
 
     @Override
     public void append(CharSequence content) {
-        if (hasCursor()) {
-            _Line.append(content);
+        if (this.hasCursor()) {
+            this._Line.append(content);
             Cursor.instance().setCurrentPosition(
                     Cursor.instance().getCurrentPosition() + content.length());
             this.setChanged();
@@ -74,8 +81,8 @@ class Line extends Observable implements ILine {
 
     @Override
     public void deleteUnderCursor() {
-        if (hasCursor()) {
-            _Line.deleteCharAt(Cursor.instance().getCurrentPosition());
+        if (this.hasCursor()) {
+            this._Line.deleteCharAt(Cursor.instance().getCurrentPosition());
             this.setChanged();
             this.notifyObservers();
         }
@@ -83,16 +90,21 @@ class Line extends Observable implements ILine {
 
     @Override
     public boolean hasCursor() {
-        return _IsCurrent;
+        return this._IsCurrent;
+    }
+
+    @Override
+    public int length() {
+        return this._Line.length();
     }
 
     @Override
     public void replaceUnderCursor(CharSequence replacement) {
-        if (hasCursor()) {
+        if (this.hasCursor()) {
             // TODO vérifier les index
             // Copying the start of the line (before the cursor)
-            StringBuilder tmp = new StringBuilder(_Line.substring(0, Cursor
-                    .instance().getCurrentPosition()));
+            StringBuilder tmp = new StringBuilder(this._Line.substring(0,
+                    Cursor.instance().getCurrentPosition()));
             // Adding the replacement
             tmp.append(replacement);
             // TODO vérifier les index
@@ -101,25 +113,29 @@ class Line extends Observable implements ILine {
                     + replacement.length();
             // If the line is longer than the new cursor location we need
             // to append the rest of the line
-            if (_Line.length() > newCursorLocation) {
-                tmp.append(_Line.substring(newCursorLocation));
+            if (this._Line.length() > newCursorLocation) {
+                tmp.append(this._Line.substring(newCursorLocation));
             }
             // We store the new variables.
-            _Line = tmp;
+            this._Line = tmp;
             Cursor.instance().setCurrentPosition(newCursorLocation);
             this.setChanged();
             this.notifyObservers();
         }
     }
 
+    /*
+    *//**
+     * @see model.interfaces.ILine#hasCursor()
+     */
+    /*
+     * @Override public boolean hasCursor() { //TODO equals or ==, plutot == car
+     * on veut que ca soit la meme case m�moire return
+     * Cursor.getCursorInstance().getCurrentLine().equals(this); }
+     */
     @Override
-    public synchronized void addObserver(Observer o) {
-        super.addObserver(o);
-    }
-
-    @Override
-    public int length() {
-        return _Line.length();
+    public void setCurrent(boolean isCurrent) {
+        this._IsCurrent = isCurrent;
     }
 
     /**
@@ -134,51 +150,38 @@ class Line extends Observable implements ILine {
             // FBefore adding the cursor, we get all the char placed before this
             // one
             while (index < Cursor.instance().getCurrentPosition() - 1
-                    && index < _Line.length()) {
-                toReturn.append(_Line.charAt(index));
+                    && index < this._Line.length()) {
+                toReturn.append(this._Line.charAt(index));
                 index++;
             }
             // If there is no char before the cursor, the line is empty, we add
             // an "_" to display a fake cursor
-            if (_Line.length() == 0) {
+            if (this._Line.length() == 0) {
                 toReturn.append("<span style=\"background-color:red;text-decoration:blink;\">"
                         + "_" + "</span>");
             }
             // If there are chars before we place the cursor on the
             // corresponding char and complete the line
             else {
-                if (index < _Line.length() || index == 0) {
+                if (index < this._Line.length() || index == 0) {
                     toReturn.append("<span style=\"text-decoration:underline;background-color:red;text-decoration:blink;\">"
-                            + _Line.charAt(index) + "</span>");
+                            + this._Line.charAt(index) + "</span>");
                 }
                 else {
                     toReturn.append("<span style=\"text-decoration:underline;background-color:red;text-decoration:blink;\">"
-                            + _Line.charAt(_Line.length() - 1) + "</span>");
+                            + this._Line.charAt(this._Line.length() - 1)
+                            + "</span>");
                 }
                 index++;
-                while (index < _Line.length()) {
-                    toReturn.append(_Line.charAt(index));
+                while (index < this._Line.length()) {
+                    toReturn.append(this._Line.charAt(index));
                     index++;
                 }
             }
         }
         else {
-            toReturn = _Line;
+            toReturn = this._Line;
         }
         return toReturn.toString();
-    }
-
-    /*
-    *//**
-     * @see model.interfaces.ILine#hasCursor()
-     */
-    /*
-     * @Override public boolean hasCursor() { //TODO equals or ==, plutot == car
-     * on veut que ca soit la meme case m�moire return
-     * Cursor.getCursorInstance().getCurrentLine().equals(this); }
-     */
-    @Override
-    public void setCurrent(boolean isCurrent) {
-        _IsCurrent = isCurrent;
     }
 }
