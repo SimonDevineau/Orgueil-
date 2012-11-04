@@ -3,6 +3,8 @@ package controllers;
 import javax.swing.JTextField;
 
 /**
+ * The factory dedicated to the controllers.
+ * <br/>
  * 1 nov. 2012 - EditeurDeTexte.
  * @author Simon Devineau
  *         Ecole des Mines de Nantes

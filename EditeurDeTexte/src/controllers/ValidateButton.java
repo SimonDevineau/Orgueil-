@@ -7,6 +7,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JTextField;
 
 /**
+ * A standard JButton which is just used to validate the command typed.
+ * <br/>
  * 1 nov. 2012 - EditeurDeTexte.
  * @author Simon Devineau
  *         Ecole des Mines de Nantes

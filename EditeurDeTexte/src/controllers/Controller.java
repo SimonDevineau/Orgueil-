@@ -49,10 +49,18 @@ public class Controller implements Observer {
         view.repaint();
     }
     
+    /**
+     * 
+     * @return the controller in charge of managing the text typed by the user.
+     */
     public ManageInputText getInputTextManager() {
 		return inputText;
 	}
     
+    /**
+     * 
+     * @return an access to the validate button.
+     */
     public ValidateButton getValidateButton() {
 		return validateButton;
 	}
