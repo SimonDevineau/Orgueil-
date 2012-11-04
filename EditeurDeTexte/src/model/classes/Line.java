@@ -184,4 +184,22 @@ class Line extends Observable implements ILine {
         }
         return toReturn.toString();
     }
+
+    @Override
+    public String toStringWithoutHTML() {
+        String toReturn = "";
+        String debut = "";
+        String fin = "";
+        int index = 0;
+        while (index < this._Line.length()) {
+            toReturn += (this._Line.charAt(index));
+            index++;
+        }
+        if (toReturn.contains("<span") && toReturn.contains("</span>")) {
+            debut = toReturn.substring(index, toReturn.indexOf("<span"));
+            fin = toReturn.substring(toReturn.lastIndexOf("</span>"));
+        }
+        System.out.println(debut + fin);
+        return debut + fin;
+    }
 }

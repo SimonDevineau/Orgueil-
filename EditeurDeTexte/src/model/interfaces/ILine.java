@@ -75,4 +75,9 @@ public interface ILine extends IStorable {
      */
     @Override
     String toString();
+
+    /**
+     * @return a string without html
+     */
+    String toStringWithoutHTML();
 }

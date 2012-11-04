@@ -70,4 +70,12 @@ public class Factory {
     public static IText createText() {
         return new Text();
     }
+
+    /**
+     * @param aStringWithoutHTML
+     * @return
+     */
+    public static ILine createLine(String aStringWithoutHTML) {
+        return new Line(aStringWithoutHTML);
+    }
 }
