@@ -89,8 +89,6 @@ public class Up implements ICommandVisitor {
 
     @Override
     public void visit(String textInput) {
-        System.out.println("up + cursorSections "
-                + Cursor.instance().getCurrentDocument().getSubSections());
         ISection current = Cursor.instance().getCurrentSection();
         // If the title has the cursor
         if (current.getTitle().hasCursor()) {

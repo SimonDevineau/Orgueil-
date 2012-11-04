@@ -93,7 +93,13 @@ class Section extends Document implements ISection {
      */
     @Override
     public int getNbParents() {
-        this.setNbParents();
+        int nbParents = 0;
+        ISection section = this;
+        while (section.getParent() != null) {
+            section = (ISection) section.getParent();
+            nbParents++;
+        }
+        this.nbParents = nbParents;
         return nbParents;
     }
 
@@ -178,8 +184,7 @@ class Section extends Document implements ISection {
     public void setNbParents() {
         int nbParents = 0;
         ISection section = this;
-        while (!(section.getParent() instanceof IDocument)
-                && section.getParent() != null) {
+        while (section.getParent() != null) {
             section = (ISection) section.getParent();
             nbParents++;
         }

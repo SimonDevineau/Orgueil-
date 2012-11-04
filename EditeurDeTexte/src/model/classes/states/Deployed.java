@@ -34,8 +34,12 @@ class Deployed implements IState {
             }
         }
         result.append("</br>");
-        for (ISection subSection : linkedSection.getSubSections())
-            result.append(subSection.toString());
+        /*
+         * for (ISection subSection : linkedSection.getSubSections()) {
+         * result.append("&nbsp;<br/>");
+         * result.append(subSection.toString());
+         * }
+         */
         return result.toString();
     }
 }

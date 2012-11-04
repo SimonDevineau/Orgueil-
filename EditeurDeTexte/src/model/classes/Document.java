@@ -87,7 +87,6 @@ class Document extends Observable implements IDocument {
     public boolean addSection(ISection aSection) {
         if (this.subSections.size() == 0) {
             this.addSection(aSection, 0);
-            System.out.println("subSectionsSize " + subSections.size());
         }
         else {
             this.addSection(aSection, indexOfCurrentSection() + 1);
@@ -98,7 +97,6 @@ class Document extends Observable implements IDocument {
     @Override
     public void addSection(ISection aSection, int index) {
         subSections.add(index, aSection);
-        //aSection.setParent(this.getCurrentSection());
         for (ISection section : subSections) {
             section.setIsCurrentSection(false);
         }
