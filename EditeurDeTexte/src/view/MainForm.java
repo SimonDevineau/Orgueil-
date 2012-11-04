@@ -34,10 +34,13 @@ public class MainForm extends JFrame {
     public static final String     DEFAULT_TITLE        = "Text Editor";
     private static final String    DEFAULT_COMMAND_LINE = "Please, type your command here to start using the software";
     private static final int       DEFAULT_COLUMN_WIDTH = 40;
-    private static final Dimension DEFAULT_DIMENSION    = new Dimension(640,
+    private static final Dimension MINIMUM_DIMENSION    = new Dimension(700,
                                                                 480);
-    private static final Dimension MINIMUM_DIMENSION    = new Dimension(500,
-                                                                480);
+    private static final Dimension MAX_DIMENSION        = new Dimension(
+                                                                Toolkit.getDefaultToolkit()
+                                                                        .getScreenSize().width,
+                                                                Toolkit.getDefaultToolkit()
+                                                                        .getScreenSize().height);
     private JLabel                 m_Text               = new JLabel(
                                                                 DEFAULT_COMMAND_LINE);
     private JTextField             m_Command            = new JTextField(
@@ -53,7 +56,8 @@ public class MainForm extends JFrame {
                     LaunchEditor.class.getResource("images/notes.png")));
         }
         this.setTitle(DEFAULT_TITLE);
-        this.setSize(DEFAULT_DIMENSION);
+        this.setMinimumSize(MINIMUM_DIMENSION);
+        this.setSize(MAX_DIMENSION);
         this.setLayout(new GridLayout(3, 1));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel up = new JPanel(new FlowLayout());

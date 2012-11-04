@@ -28,7 +28,10 @@ public class TestEditor {
         for(int i = 0 ; i < 70 ; i++)
         	invoke(c, "\\o", SLEEP_TIME_FOR);
         invoke(c, "\\s", SLEEP_TIME);
-        invoke(c, " ---- Une insertion après avoir descendu le curseur!---- ", SLEEP_TIME);
+        invoke(c, " ---- Une insertion après avoir descendu le curseur, suivi d'un copier!---- ", SLEEP_TIME);
+        invoke(c, "\\w", SLEEP_TIME);
+        invoke(c, " Enfin un coller ", SLEEP_TIME);
+        invoke(c, "\\y", SLEEP_TIME);
         invoke(c, "\\* La démonstration va maintenant se quitter!", 2 * SLEEP_TIME);
         System.exit(0);
 	}
