@@ -62,4 +62,14 @@ public class Factory {
     public static ISection createSection(String aTitle) {
         return new Section(aTitle);
     }
+
+    /**
+     * @param aCurrentDocument
+     * @param aTitle
+     * @return
+     */
+    public static ISection createSection(IDocument parent,
+            String aTitle) {
+        return new Section(parent, aTitle);
+    }
 }

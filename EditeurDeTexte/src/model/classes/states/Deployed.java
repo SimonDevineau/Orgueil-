@@ -28,9 +28,9 @@ class Deployed implements IState {
         // Work on the subsections
         int nbchildren = linkedSection.getSubSections().size();
         if (nbchildren > 0) {
-            for (int i = 0; i <= nbchildren; i++) {
-                result.append(linkedSection.getSubSections().get(nbchildren)
-                        .toString());
+            for (int i = 0; i < nbchildren; i++) {
+                result.append(linkedSection.getSubSections().get(i).toString());
+                result.append("</br>");
             }
         }
         result.append("</br>");
