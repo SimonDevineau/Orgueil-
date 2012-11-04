@@ -98,6 +98,7 @@ class Document extends Observable implements IDocument {
     @Override
     public void addSection(ISection aSection, int index) {
         subSections.add(index, aSection);
+        //aSection.setParent(this.getCurrentSection());
         for (ISection section : subSections) {
             section.setIsCurrentSection(false);
         }

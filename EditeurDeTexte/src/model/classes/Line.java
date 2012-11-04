@@ -153,7 +153,7 @@ class Line extends Observable implements ILine {
                 }
                 else {
                     toReturn.append("<span style=\"text-decoration:underline;background-color:red;text-decoration:blink;\">"
-                            + _Line.charAt(_Line.length()) + "</span>");
+                            + _Line.charAt(_Line.length() - 1) + "</span>");
                 }
                 index++;
                 while (index < _Line.length()) {

@@ -59,7 +59,7 @@ class Section extends Document implements ISection {
         title.append(aTitle);
     }
 
-    public Section(ISection parent, String aTitle) {
+    public Section(IDocument parent, String aTitle) {
         this(parent);
         title.append(aTitle);
     }
@@ -93,6 +93,7 @@ class Section extends Document implements ISection {
      */
     @Override
     public int getNbParents() {
+        this.setNbParents();
         return nbParents;
     }
 
@@ -164,10 +165,10 @@ class Section extends Document implements ISection {
 
     @Override
     public void deployOrHide() {
-    	if(currentState == deployedState)
-    		currentState = hiddenState;
-    	else
-    		currentState = deployedState;
+        if (currentState == deployedState)
+            currentState = hiddenState;
+        else
+            currentState = deployedState;
     }
 
     /**
@@ -177,7 +178,8 @@ class Section extends Document implements ISection {
     public void setNbParents() {
         int nbParents = 0;
         ISection section = this;
-        while (!(section.getParent() instanceof IDocument)) {
+        while (!(section.getParent() instanceof IDocument)
+                && section.getParent() != null) {
             section = (ISection) section.getParent();
             nbParents++;
         }

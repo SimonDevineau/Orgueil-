@@ -15,10 +15,22 @@ import model.interfaces.ICommandVisitor;
 public class AddSection implements ICommandVisitor {
     @Override
     public void visit(String textInput) {
-        String title = textInput.substring(2);
+        String title = textInput.substring(1);
+        int index = 0;
+        while (title.charAt(index) == '*') {
+            index++;
+        }
+        title = title.substring(index);
         try {
-            Cursor.instance().getCurrentDocument()
-                    .addSection(Factory.createSection(title));
+            if (index == 1) {
+                Cursor.instance().getCurrentDocument()
+                        .addSection(Factory.createSection(title));
+            }
+            else if (index > Cursor.instance().getCurrentSection()
+                    .getNbParents()) {
+                Cursor.instance().getCurrentSection()
+                        .addSection(Factory.createSection(title));
+            }
         }
         catch (Exception aE) {
             Logger.error(
