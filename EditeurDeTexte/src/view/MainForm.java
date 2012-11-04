@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 
 import tests.LaunchEditor;
 
+import model.classes.BufferMemory;
 import model.classes.Editor;
 
 public class MainForm extends JFrame {
@@ -43,6 +45,7 @@ public class MainForm extends JFrame {
                                                                 DEFAULT_COLUMN_WIDTH);
     private JButton                m_Validate           = new JButton(
                                                                 "Validate");
+    private JList                  bufferMemory         = new JList();
 
     public MainForm() {
         if (!System.getProperty("os.name").toLowerCase().contains("mac os")) {
@@ -51,7 +54,7 @@ public class MainForm extends JFrame {
         }
         this.setTitle(DEFAULT_TITLE);
         this.setSize(DEFAULT_DIMENSION);
-        this.setLayout(new GridLayout(2, 1));
+        this.setLayout(new GridLayout(3, 1));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel up = new JPanel(new FlowLayout());
         up.setMinimumSize(MINIMUM_DIMENSION);
@@ -62,8 +65,11 @@ public class MainForm extends JFrame {
         down.add(this.m_Validate);
         down.setBorder(BorderFactory.createTitledBorder("Management"));
         JScrollPane pane = new JScrollPane(up);
+        bufferMemory.setBorder(BorderFactory.createTitledBorder("Memory"));
         this.getContentPane().add(pane, BorderLayout.NORTH);
         this.getContentPane().add(down, BorderLayout.SOUTH);
+        this.getContentPane().add(new JScrollPane(bufferMemory),
+                BorderLayout.EAST);
         this.setVisible(true);
     }
 
@@ -77,5 +83,20 @@ public class MainForm extends JFrame {
 
     public JButton getValidate() {
         return this.m_Validate;
+    }
+
+    /**
+     * @return the bufferMemory
+     */
+    public JList getBufferMemory() {
+        return bufferMemory;
+    }
+
+    /**
+     * @param aBufferMemory
+     *            the bufferMemory to set
+     */
+    public void setBufferMemory(JList aBufferMemory) {
+        bufferMemory = aBufferMemory;
     }
 }

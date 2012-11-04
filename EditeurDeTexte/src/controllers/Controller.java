@@ -3,6 +3,9 @@ package controllers;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ListModel;
+
+import model.classes.BufferMemory;
 import model.classes.Cursor;
 import model.classes.Editor;
 import model.classes.Factory;
@@ -22,6 +25,7 @@ public class Controller implements Observer {
     private MainForm        view = new MainForm();
     private ManageInputText inputText;
     private ValidateButton  validateButton;
+    private ManageMemory    manageMemory;
 
     /**
      * Create the view and initialize the controller and observer
@@ -35,6 +39,8 @@ public class Controller implements Observer {
         view.getValidate().setAction(validateButton);
         Cursor.instance().addObserver(this);
         Cursor.instance().setCurrentDocument(Factory.createDocument());
+        manageMemory = new ManageMemory(view.getBufferMemory());
+        BufferMemory.instance().addObserver(manageMemory);
     }
 
     /**
@@ -43,25 +49,23 @@ public class Controller implements Observer {
      *      document when a change is done
      */
     @Override
-    public void update(Observable aO, Object aArg       ) {
+    public void update(Observable aO, Object aArg) {
         view.getText().setText(
                 Cursor.instance().getCurrentDocument().toString());
         view.repaint();
     }
-    
+
     /**
-     * 
      * @return the controller in charge of managing the text typed by the user.
      */
     public ManageInputText getInputTextManager() {
-		return inputText;
-	}
-    
+        return inputText;
+    }
+
     /**
-     * 
      * @return an access to the validate button.
      */
     public ValidateButton getValidateButton() {
-		return validateButton;
-	}
+        return validateButton;
+    }
 }

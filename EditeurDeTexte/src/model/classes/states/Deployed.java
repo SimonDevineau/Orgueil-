@@ -20,6 +20,7 @@ class Deployed implements IState {
     public String toString() {
         StringBuilder result = new StringBuilder();
         int nbParents = linkedSection.getNbParents();
+        result.append("<br/>");
         for (int i = 0; i <= nbParents; i++) {
             result.append("*");
         }
@@ -30,10 +31,8 @@ class Deployed implements IState {
         if (nbchildren > 0) {
             for (int i = 0; i < nbchildren; i++) {
                 result.append(linkedSection.getSubSections().get(i).toString());
-                result.append("</br>");
             }
         }
-        result.append("</br>");
         /*
          * for (ISection subSection : linkedSection.getSubSections()) {
          * result.append("&nbsp;<br/>");
