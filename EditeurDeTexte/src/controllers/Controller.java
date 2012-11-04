@@ -48,4 +48,12 @@ public class Controller implements Observer {
                 Cursor.instance().getCurrentDocument().toString());
         view.repaint();
     }
+    
+    public ManageInputText getInputTextManager() {
+		return inputText;
+	}
+    
+    public ValidateButton getValidateButton() {
+		return validateButton;
+	}
 }
