@@ -4,136 +4,151 @@ import java.util.ArrayList;
 import java.util.Observer;
 
 /**
+ * This class is the main class for the editor because it is the representation
+ * of the document. A document is made of
+ * <ol>
+ * <li>an introduction which is a text</li>
+ * <li>A list of sections which are the first children of the tree structure</li>
+ * </ol>
+ * 
  * 10 oct. 2012 - EditeurDeTexte.
- * @author Simon Devineau & Pierre Reliquet
- *         Ecole des Mines de Nantes
- *         Major in Computer and Information System Engineering
- *         IDocument.java
+ * 
+ * @author Simon Devineau & Pierre Reliquet Ecole des Mines de Nantes Major in
+ *         Computer and Information System Engineering IDocument.java
  */
 public interface IDocument extends IStorable {
-    /**
-     * Add a line to the document at the suitable position.
-     * @param line
-     *            , the line to add
-     */
-    void addLine(ILine line);
 
-    /**
-     * The method used to add a new observer on the line. This observer is used
-     * in order to be able to notify when the line get the cursor.
-     * @param o
-     *            , the new Observer
-     */
-    void addObserver(Observer o);
+	/**
+	 * Adds a line to the document at the suitable position.
+	 * 
+	 * @param line
+	 *            , the line to add
+	 */
+	void addLine(ILine line);
 
-    /**
-     * @param section
-     *            , the section to insert after the current section, the one
-     *            with the cursor
-     * @return true if the section has been added successfully.
-     */
-    boolean addSection(ISection section);
+	/**
+	 * The method used to add a new observer on the line. This observer is used
+	 * in order to be able to notify when the line get the cursor.
+	 * 
+	 * @param o
+	 *            , the new Observer
+	 */
+	void addObserver(Observer o);
 
-    /**
-     * @param section
-     *            , the section to insert after the current section, the one
-     *            with the cursor
-     * @param index
-     *            , the index where the new section should be added?
-     * @return true if the section has been added successfully.
-     */
-    void addSection(ISection section, int index);
+	/**
+	 * This method adds the section after the current one.
+	 * @param section
+	 *            , the section to insert after the current section, the one
+	 *            with the cursor
+	 * @return true if the section has been added successfully.
+	 */
+	boolean addSection(ISection section);
 
-    /**
-     * @param section
-     *            , the section to append at the end of the sections
-     * @return true if the section has been added successfully.
-     */
-    boolean appendSection(ISection section);
+	/**
+	 * This method inserts the section at the specified position.
+	 * @param section
+	 *            , the section to insert after the current section, the one
+	 *            with the cursor
+	 * @param index
+	 *            , the index where the new section should be added?
+	 */
+	void addSection(ISection section, int index);
 
-    /**
-     * @return true if the current section, the one which has the cursor, has
-     *         been
-     *         deleted successfully.
-     */
-    boolean removeSection();
+	/**
+	 * Adds the section at the end of the subsections.
+	 * @param section
+	 *            , the section to append at the end of the sections
+	 * @return true if the section has been added successfully.
+	 */
+	boolean appendSection(ISection section);
 
-    /**
-     * @param section
-     *            the section to delete
-     * @return true if the section has been deleted successfully
-     */
-    boolean removeSection(ISection section);
-    
-    /**
-     * 
-     * @param index, the index to remove
-     * @return the section removed
-     */
-    ISection removeSection(int index);
+	/**
+	 * Removes the current section.
+	 * @return true if the current section, the one which has the cursor, has
+	 *         been deleted successfully.
+	 */
+	boolean removeSection();
 
-    /**
-     * @param obj
-     *            , the object to be tested
-     * @return true if obj is equal with this
-     */
-    @Override
-    boolean equals(Object obj);
+	/**
+	 * Removes the section specified and given has an argument.
+	 * @param section
+	 *            the section to delete
+	 * @return true if the section has been deleted successfully
+	 */
+	boolean removeSection(ISection section);
 
-    /**
-     * @return the current section, the only one which has the cursor
-     */
-    ISection getCurrentSection();
+	/**
+	 * Removes the section at the specified index
+	 * @param index
+	 *            , the index to remove
+	 * @return the section removed
+	 */
+	ISection removeSection(int index);
 
-    /**
-     * @return the current section index , the only one which has the cursor
-     */
-    int indexOfCurrentSection();
+	/**
+	 * @param obj
+	 *            , the object to be tested
+	 * @return true if obj is equal with this
+	 */
+	@Override
+	boolean equals(Object obj);
 
-    /**
-     * @param index
-     *            , the index of the section to get
-     * @return the section indexed by the index parameter.
-     */
-    ISection getSection(int index);
+	/**
+	 * @return the current section, the only one which has the cursor
+	 */
+	ISection getCurrentSection();
 
-    /**
-     * @return the current introduction text of the document.
-     */
-    IText getText();
+	/**
+	 * @return the current section index , the only one which has the cursor
+	 */
+	int indexOfCurrentSection();
 
-    /**
-     * @return true if it is the current document
-     */
-    boolean isCurrentDocument();
+	/**
+	 * @param index
+	 *            , the index of the section to get
+	 * @return the section indexed by the index parameter.
+	 */
+	ISection getSection(int index);
 
-    /**
-     * @param isCurrentDocument
-     *            , true if it the current document
-     */
-    void setIsCurrentDocument(boolean isCurrentDocument);
+	/**
+	 * @return the current introduction text of the document.
+	 */
+	IText getText();
 
-    /**
-     * Sets the new introduction text
-     * @param text
-     *            , the text to set.
-     */
-    void setText(IText text);
+	/**
+	 * @return true if it is the current document
+	 */
+	boolean isCurrentDocument();
 
-    /**
-     * @return the string representation of the document.
-     */
-    @Override
-    String toString();
+	/**
+	 * @param isCurrentDocument
+	 *            , true if it the current document
+	 */
+	void setIsCurrentDocument(boolean isCurrentDocument);
 
-    /**
-     * @return the subsections list of the current section
-     */
-    ArrayList<ISection> getSubSections();
+	/**
+	 * Sets the new introduction text
+	 * 
+	 * @param text
+	 *            , the text to set.
+	 */
+	void setText(IText text);
 
-    /**
-     * Set the list of sub-sections
-     * @param subSections
-     */
-    void setSubSections(ArrayList<ISection> subSections);
+	/**
+	 * @return the string representation of the document.
+	 */
+	@Override
+	String toString();
+
+	/**
+	 * @return the subsections list of the current section
+	 */
+	ArrayList<ISection> getSubSections();
+
+	/**
+	 * Set the list of sub-sections
+	 * 
+	 * @param subSections
+	 */
+	void setSubSections(ArrayList<ISection> subSections);
 }
