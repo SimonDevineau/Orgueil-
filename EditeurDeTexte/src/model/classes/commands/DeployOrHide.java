@@ -18,6 +18,6 @@ public class DeployOrHide implements ICommandVisitor {
 		//TODO properly
 		ISection current = Cursor.instance().getCurrentSection();
 		if(current!=null)
-        	current.setIsCurrentSection(!current.isCurrentSection());
+        	current.deployOrHide();
 	}
 }
