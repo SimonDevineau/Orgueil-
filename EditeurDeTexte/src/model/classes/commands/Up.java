@@ -47,7 +47,7 @@ public class Up implements ICommandVisitor {
                     Cursor.instance().getCurrentDocument().getText());
             Cursor.instance().setCurrentLine(
                     Cursor.instance().getCurrentDocument().getText()
-                            .getLine(textSize));
+                            .getLine(textSize - 1));
         }
     }
 
@@ -66,7 +66,7 @@ public class Up implements ICommandVisitor {
                 int currentIndex = Cursor.instance().getCurrentDocument()
                         .indexOfCurrentSection();
                 return Cursor.instance().getCurrentDocument()
-                        .getSection(currentIndex);
+                        .getSection(currentIndex - 1);
             }
             catch (Exception e) {
                 // if the exception is thrown it means that the section was the
@@ -89,8 +89,9 @@ public class Up implements ICommandVisitor {
 
     @Override
     public void visit(String textInput) {
+        System.out.println("up + cursorSections "
+                + Cursor.instance().getCurrentDocument().getSubSections());
         ISection current = Cursor.instance().getCurrentSection();
-        System.out.println("current " + current);
         // If the title has the cursor
         if (current.getTitle().hasCursor()) {
             changeSection(current, current.getTitle());

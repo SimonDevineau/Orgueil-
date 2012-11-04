@@ -18,7 +18,6 @@ class Deployed implements IState {
 
     @Override
     public String toString() {
-        System.out.println("coucou deployed");
         StringBuilder result = new StringBuilder();
         int nbParents = linkedSection.getNbParents();
         for (int i = 0; i <= nbParents; i++) {

@@ -62,7 +62,6 @@ public class ManageInputText implements KeyListener {
                     .get(command).visit(textInput);
         }
         else {
-            System.out.println("add under curseur "+ textInput);
             Cursor.instance().getCurrentLine().addUnderCursor(textInput);
         }
     }

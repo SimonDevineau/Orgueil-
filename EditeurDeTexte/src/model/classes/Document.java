@@ -87,9 +87,10 @@ class Document extends Observable implements IDocument {
     public boolean addSection(ISection aSection) {
         if (this.subSections.size() == 0) {
             this.addSection(aSection, 0);
+            System.out.println("subSectionsSize " + subSections.size());
         }
         else {
-            this.addSection(aSection, indexOfCurrentSection());
+            this.addSection(aSection, indexOfCurrentSection() + 1);
         }
         return this.subSections.contains(aSection);
     }
@@ -166,31 +167,18 @@ class Document extends Observable implements IDocument {
     @Override
     public int indexOfCurrentSection() {
         int subSectionsSize = getSubSections().size();
-        System.out.println("\nLe nombre de sous sections = " + subSectionsSize);
-        System.out.println("\nLa liste de sous section est elle vide "
-                + (this.getSubSections() == null));
         if (getSubSections() == null || subSectionsSize == 0) {
             return -1;
         }
         int currentIndex = 0;
-        System.out.println("monte moi la current " + this.getCurrentSection());
-        // this.getSubSections().get(currentIndex).setIsCurrentSection(true);
-        System.out.println("est ce que "
-                + this.getSubSections().get(currentIndex) + "est current "
-                + this.getSubSections().get(currentIndex).isCurrentSection());
         while (currentIndex < subSectionsSize
                 && !this.getSubSections().get(currentIndex).isCurrentSection()) {
-            System.out.println("est ce que "
-                    + this.getSubSections().get(currentIndex)
-                    + "est current "
-                    + this.getSubSections().get(currentIndex)
-                            .isCurrentSection());
             currentIndex++;
         }
         if (currentIndex == subSectionsSize)
             return -1;
         else
-            return 0;
+            return currentIndex;
     }
 
     /**
