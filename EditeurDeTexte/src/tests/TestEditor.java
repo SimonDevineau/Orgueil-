@@ -31,6 +31,11 @@ public class TestEditor {
         invoke(c,
                 "\\* Test d'ajout d'une autre section (que nous allons cacher et déployer)!",
                 SLEEP_TIME);
+        invoke(c,
+                "\\* Test d'ajout d'une sous section",
+                SLEEP_TIME);
+        invoke(c, "\\n", SLEEP_TIME);
+        invoke(c, "\\n", SLEEP_TIME);
         invoke(c, "\\p", SLEEP_TIME);
         invoke(c, "\\p", SLEEP_TIME);
         for (int i = 0; i < 10; i++) {

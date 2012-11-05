@@ -168,7 +168,7 @@ class Text extends Observable implements IText {
     public String toString() {
         String toReturn = "";
         for (ILine line : this.linesList) {
-            toReturn += "<br/>" + line.toString() + "<br/>";
+            toReturn += "<br/>" + line.toString();
         }
         return toReturn;
     }

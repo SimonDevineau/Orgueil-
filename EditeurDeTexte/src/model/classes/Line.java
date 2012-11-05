@@ -56,6 +56,7 @@ class Line extends Observable implements ILine {
                     .setCurrentPosition(
                             Cursor.instance().getCurrentPosition()
                                     + insertion.length());
+          
         }
         else if (this.hasCursor()
                 && Cursor.instance().getCurrentPosition() >= this._Line
@@ -64,6 +65,7 @@ class Line extends Observable implements ILine {
             Cursor.instance().setCurrentPosition(
                     this._Line.length() + insertion.length());
         }
+      
         this.setChanged();
         this.notifyObservers();
     }

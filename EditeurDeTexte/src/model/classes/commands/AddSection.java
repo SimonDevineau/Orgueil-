@@ -31,8 +31,6 @@ public class AddSection implements ICommandVisitor {
             }
             else if (index > Cursor.instance().getCurrentSection()
                     .getNbParents()) {
-                ISection section = Factory.createSection(title);
-                section.getText().addLine(Factory.createLine());
                 Cursor.instance().getCurrentSection()
                         .addSection(Factory.createSection(title));
             }
