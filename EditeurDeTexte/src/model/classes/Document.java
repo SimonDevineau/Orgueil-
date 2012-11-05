@@ -20,7 +20,7 @@ import model.interfaces.IText;
  *         can have subsections...
  */
 class Document extends Observable implements IDocument {
-    /**
+    /** 
      * The introduction text of the document
      */
     protected IText          text              = Factory.createText();

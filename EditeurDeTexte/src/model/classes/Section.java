@@ -19,7 +19,8 @@ class Section extends Document implements ISection {
      * The parent section.
      */
     // The value is null because a section hasn't got necessarily a parent
-    protected IDocument parent           = null;
+    protected IDocument parent           = Cursor.instance()
+                                                 .getCurrentDocument();
     /**
      * The current state which is used to print the section. This is used to
      * implement the state pattern. It enables to delegate instead of doing some
@@ -103,7 +104,9 @@ class Section extends Document implements ISection {
     public int getNbParents() {
         int nbParents = 0;
         ISection section = this;
-        while (section.getParent() != null) {
+        while (section.getParent() != null
+                && section.getParent() != Cursor.instance()
+                        .getCurrentDocument()) {
             section = (ISection) section.getParent();
             nbParents++;
         }
@@ -184,7 +187,7 @@ class Section extends Document implements ISection {
      */
     @Override
     public void setParent(IDocument aSection) {
-        aSection.addSection(this);
+        this.parent = aSection;
     }
 
     /**
