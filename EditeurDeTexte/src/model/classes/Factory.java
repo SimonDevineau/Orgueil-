@@ -78,4 +78,12 @@ public class Factory {
     public static ILine createLine(String aStringWithoutHTML) {
         return new Line(aStringWithoutHTML);
     }
+
+    /**
+     * @param aCurrentDoc
+     * @return
+     */
+    public static ISection createSection(IDocument aCurrentDoc) {
+        return new Section(aCurrentDoc);
+    }
 }

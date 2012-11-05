@@ -204,4 +204,12 @@ class Line extends Observable implements ILine {
         System.out.println(debut + fin);
         return debut + fin;
     }
+    
+    /**
+     * @see model.interfaces.ILine#getText()
+     */
+    @Override
+    public String getText() {
+        return _Line.toString();
+    }
 }

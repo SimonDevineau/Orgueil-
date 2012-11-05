@@ -80,4 +80,6 @@ public interface ILine extends IStorable {
      * @return a string without html
      */
     String toStringWithoutHTML();
+    
+    String getText();
 }

@@ -17,18 +17,23 @@ public class UpgradeSectionAndSubsections implements ICommandVisitor {
         ISection current = Cursor.instance().getCurrentSection();
         // if the parent is null it means that we are at the root level
         // and we do not have to do anything.
-        if (!(current.getParent()==Cursor.instance().getCurrentDocument())) {
+        if (!(current.getParent() == Cursor.instance().getCurrentDocument())) {
             ISection parent = (ISection) current.getParent();
-            if (parent.getParent() instanceof IDocument) { // So the parent is
-                                                           // at the root
+            if (current.getParent() == Cursor.instance().getCurrentDocument()) { // So
+// the parent is
+                // at the root
                 // level
                 IDocument currentDoc = Cursor.instance().getCurrentDocument();
-                currentDoc.addSection(parent.removeSection(parent
-                        .indexOfCurrentSection()));
+                ISection section = parent.removeSection(parent
+                        .indexOfCurrentSection());
+                section.setParent(currentDoc);
+                currentDoc.addSection(section);
             }
             else {
-                parent.getParent().addSection(
-                        parent.removeSection(parent.indexOfCurrentSection()));
+                ISection section = parent.removeSection(parent
+                        .indexOfCurrentSection());
+                section.setParent(parent.getParent());
+                parent.getParent().addSection(section);
             }
         }
     }

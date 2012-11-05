@@ -15,4 +15,5 @@
     <config key="\G" value="model.classes.commands.UpgradeSectionAndSubsections" />
     <config key="\p" value="model.classes.commands.DeployOrHide" />
     <config key="\*" value="model.classes.commands.AddSection" />
+    <config key="\\" value="model.classes.commands.BackSlash" />
 </CommandsConfiguration>

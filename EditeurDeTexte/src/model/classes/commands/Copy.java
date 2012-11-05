@@ -2,6 +2,7 @@ package model.classes.commands;
 
 import model.classes.BufferMemory;
 import model.classes.Cursor;
+import model.classes.Factory;
 import model.interfaces.ICommandVisitor;
 import model.interfaces.ILine;
 
@@ -15,8 +16,8 @@ import model.interfaces.ILine;
 public class Copy implements ICommandVisitor {
     @Override
     public void visit(String textInput) {
-        ILine current = Cursor.instance().getCurrentLine();
-      
+        ILine current = Factory.createLine(Cursor.instance().getCurrentLine()
+                .getText());
         if (current != null) {
             BufferMemory.instance().push(current);
         }
