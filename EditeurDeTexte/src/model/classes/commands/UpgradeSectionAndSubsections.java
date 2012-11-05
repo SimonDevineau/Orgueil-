@@ -17,7 +17,7 @@ public class UpgradeSectionAndSubsections implements ICommandVisitor {
         ISection current = Cursor.instance().getCurrentSection();
         // if the parent is null it means that we are at the root level
         // and we do not have to do anything.
-        if (!(current.getParent() instanceof IDocument)) {
+        if (!(current.getParent()==Cursor.instance().getCurrentDocument())) {
             ISection parent = (ISection) current.getParent();
             if (parent.getParent() instanceof IDocument) { // So the parent is
                                                            // at the root
