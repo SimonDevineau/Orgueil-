@@ -36,9 +36,13 @@ public class Down implements ICommandVisitor {
      */
     private ISection getNextSection(ISection aSection) {
         // if the parent is null it means that we are at the root level
-        if (aSection.getParent() instanceof IDocument
-                || aSection.getParent() == null) {
+        if (aSection.getParent() == Cursor.instance().getCurrentDocument()) {
             try {
+                if (Cursor.instance().getCurrentSection().getSubSections()
+                        .size() > 0) {
+                    return Cursor.instance().getCurrentSection()
+                            .getSubSections().get(0);
+                }
                 // Trying to get the element after the current section at the
                 // root level
                 int currentIndex = Cursor.instance().getCurrentDocument()
@@ -56,7 +60,7 @@ public class Down implements ICommandVisitor {
             }
         }
         else {
-            // if the section is the first child so we need to go back to the
+            // if the section is the last child so we need to go to the next
             // parent section
             if (aSection.getParent().indexOfCurrentSection() == aSection
                     .getParent().getSubSections().size() - 1) {
