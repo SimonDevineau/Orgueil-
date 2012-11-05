@@ -19,7 +19,7 @@ public class AddSection implements ICommandVisitor {
     public void visit(String textInput) {
         String title = textInput.substring(1);
         int index = 0;
-        while (title.charAt(index) == '*') {
+        while (index < title.length() && title.charAt(index) == '*') {
             index++;
         }
         title = title.substring(index);
