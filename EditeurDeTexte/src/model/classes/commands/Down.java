@@ -90,6 +90,15 @@ public class Down implements ICommandVisitor {
                     && !current.getText().getLine(index).hasCursor()) {
                 index++;
             }
+            if (Cursor.instance().getCurrentText() == Cursor.instance()
+                    .getCurrentDocument().getText()) {
+                Cursor.instance().setCurrentSection(
+                        Cursor.instance().getCurrentDocument().getSection(0));
+                Cursor.instance().setCurrentLine(
+                        Cursor.instance().getCurrentDocument().getSection(0)
+                                .getTitle());
+                return;
+            }
             if (index == linesNumber) {
                 throw new RuntimeException(
                         "An error occured in the Down command line 52, an error exists in the model because no line has the cursor");

@@ -61,12 +61,12 @@ class Text extends Observable implements IText {
      */
     @Override
     public void addLine(ILine aCurrentLine, ILine aLineToPaste) {
-        this.setChanged();
-        this.notifyObservers();
         if (aCurrentLine != null && aLineToPaste != null) {
             this.linesList.add(this.linesList.lastIndexOf(aCurrentLine),
                     aLineToPaste);
         }
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /**

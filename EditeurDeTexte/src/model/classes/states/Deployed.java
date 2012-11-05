@@ -20,7 +20,6 @@ class Deployed implements IState {
     public String toString() {
         StringBuilder result = new StringBuilder();
         int nbParents = this.linkedSection.getNbParents();
-        result.append("<br/>");
         for (int i = 0; i <= nbParents; i++) {
             result.append("*");
         }

@@ -3,6 +3,7 @@ package model.classes.commands;
 import model.classes.Cursor;
 import model.classes.Factory;
 import model.interfaces.ICommandVisitor;
+import model.interfaces.ISection;
 import utilities.Logger;
 
 /**
@@ -23,11 +24,15 @@ public class AddSection implements ICommandVisitor {
         title = title.substring(index);
         try {
             if (index == 1) {
+                ISection section = Factory.createSection(title);
+                section.getText().addLine(Factory.createLine());
                 Cursor.instance().getCurrentDocument()
-                        .addSection(Factory.createSection(title));
+                        .addSection(section);
             }
             else if (index > Cursor.instance().getCurrentSection()
                     .getNbParents()) {
+                ISection section = Factory.createSection(title);
+                section.getText().addLine(Factory.createLine());
                 Cursor.instance().getCurrentSection()
                         .addSection(Factory.createSection(title));
             }
