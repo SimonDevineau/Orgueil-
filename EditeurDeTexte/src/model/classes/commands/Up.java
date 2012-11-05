@@ -60,9 +60,9 @@ public class Up implements ICommandVisitor {
      */
     private ISection getPreviousSection(ISection aSection) {
         // if the parent is null it means that we are at the root level
-        if (aSection.getParent() instanceof IDocument
-                || aSection.getParent() == null) {
+        if (aSection.getParent()==Cursor.instance().getCurrentDocument()) {
             try {
+
                 // Trying to get the element before the current section at the
                 // root level
                 int currentIndex = Cursor.instance().getCurrentDocument()
@@ -81,7 +81,7 @@ public class Up implements ICommandVisitor {
             // if the section is the first child so we need to go back to the
             // parent section
             if (aSection.getParent().indexOfCurrentSection() == 0) {
-                aSection.getParent();
+               return (ISection) aSection.getParent();
             }
             // if the parent is not null, so we need to get the
             // following section by using the getParent
